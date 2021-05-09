@@ -10,12 +10,12 @@ namespace Solarponics.IngestionServer.Domain
     {
         private readonly Dictionary<Type, IMessageHandler> _handlers;
 
-        public MessageHandlerSelector()
+        public MessageHandlerSelector(ISensorRepository sensorRepository)
         {
             _handlers = new Dictionary<Type, IMessageHandler>
             {
-                {typeof(NewSensorReading), new NewSensorReadingMessageHandler()},
-                {typeof(ClientHandshakeRequest), new ClientHandshakeRequestMessageHandler()}
+                { typeof(NewSensorReading), new NewSensorReadingMessageHandler(sensorRepository) },
+                { typeof(ClientHandshakeRequest), new ClientHandshakeRequestMessageHandler(sensorRepository) }
             };
         }
 

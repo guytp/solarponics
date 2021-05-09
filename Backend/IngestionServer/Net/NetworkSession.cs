@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Threading;
 using NetCoreServer;
 using Solarponics.IngestionServer.Abstractions;
+using Solarponics.Models;
 using Solarponics.Models.Messages;
 
 namespace Solarponics.IngestionServer.Net
@@ -20,7 +21,7 @@ namespace Solarponics.IngestionServer.Net
             _opCodeToTypeConverter = opCodeToTypeConverter;
         }
 
-        public ClientHandshakeRequest ClientHandshake { get; set; }
+        public SensorModule SensorModule { get; set; }
 
         protected override void OnConnected()
         {
@@ -44,7 +45,7 @@ namespace Solarponics.IngestionServer.Net
             Console.WriteLine($"Command TCP session with Id {Id} disconnected!");
         }
 
-        protected override void OnReceived(byte[] buffer, long offset, long size)
+        protected override async void OnReceived(byte[] buffer, long offset, long size)
         {
             IMessage message = null;
             try
@@ -66,7 +67,7 @@ namespace Solarponics.IngestionServer.Net
                 if (handler == null)
                     throw new NotImplementedException();
 
-                var response = handler.Handle(message, this);
+                var response = await handler.Handle(message, this);
                 if (response == null) return;
 
                 SendMessage(response);

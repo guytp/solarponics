@@ -10,7 +10,7 @@ namespace Solarponics.IngestionServer.Net
     {
         private readonly INetworkSessionFactory _sessionFactory;
 
-        public NetworkServer(IPAddress address, int port, INetworkSessionFactory sessionFactory) : base(address, port)
+        public NetworkServer(INetworkSessionFactory sessionFactory) : base(IPAddress.Any, 4201)
         {
             _sessionFactory = sessionFactory;
         }

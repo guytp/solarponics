@@ -21,9 +21,9 @@ namespace Solarponics.SensorModuleEmulator
             TemperatureReadingCommand =
                 new RelayCommand(_ => SendReading(SensorType.Temperature, decimal.Parse(Temperature)));
             HumidityReadingCommand =
-                new RelayCommand(_ => SendReading(SensorType.Temperature, decimal.Parse(Humidity)));
+                new RelayCommand(_ => SendReading(SensorType.Humidity, decimal.Parse(Humidity)));
             CarbonDioxideReadingCommand =
-                new RelayCommand(_ => SendReading(SensorType.Temperature, decimal.Parse(CarbonDioxide)));
+                new RelayCommand(_ => SendReading(SensorType.CarbonDioxide, decimal.Parse(CarbonDioxide)));
             Temperature = "15.2";
             Humidity = "57.3";
             CarbonDioxide = "1532";
@@ -63,7 +63,7 @@ namespace Solarponics.SensorModuleEmulator
                 Name = "SP-CFS-SNS-01",
                 Sequence = _sequence++,
                 SerialNumber = "SN01",
-                UniqueIdentifier = Guid.NewGuid()
+                UniqueIdentifier = Guid.Parse("3ab5328e-e490-4939-8968-60f5fdfb9b97")
             });
         }
 

@@ -1,9 +1,10 @@
-﻿using Solarponics.Models.Messages;
+﻿using System.Threading.Tasks;
+using Solarponics.Models.Messages;
 
 namespace Solarponics.IngestionServer.Abstractions
 {
     public interface IMessageHandler
     {
-        IMessage Handle(IMessage inbound, INetworkSession session);
+        Task<IMessage> Handle(IMessage inbound, INetworkSession session);
     }
 }

@@ -1,9 +1,9 @@
-﻿using Solarponics.Models.Messages;
+﻿using Solarponics.Models;
 
 namespace Solarponics.IngestionServer.Abstractions
 {
     public interface INetworkSession
     {
-        ClientHandshakeRequest ClientHandshake { get; set; }
+        SensorModule SensorModule { get; set; }
     }
 }
