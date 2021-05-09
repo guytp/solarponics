@@ -1,6 +1,6 @@
 ﻿namespace Solarponics.Models.Messages
 {
-    public abstract class MessageBase
+    public abstract class MessageBase : IMessage
     {
         private static ulong _sequence;
         private static readonly object SequenceLocker = new object();

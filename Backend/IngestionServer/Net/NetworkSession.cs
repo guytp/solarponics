@@ -4,27 +4,30 @@ using System.Net.Sockets;
 using System.Text.Json;
 using System.Threading;
 using NetCoreServer;
-using Solarponics.Server.Handlers;
+using Solarponics.IngestionServer.Abstractions;
 using Solarponics.Models.Messages;
 
-namespace Solarponics.Server
+namespace Solarponics.IngestionServer.Net
 {
-    public class CommandSession: TcpSession
+    public class NetworkSession : TcpSession, INetworkSession
     {
-        private readonly MessageHandler _messageHandler;
-        public ClientHandshakeRequest ClientHandshake { get; set; }
+        private readonly IMessageHandlerSelector _messageHandlerSelector;
+        private readonly IOpCodeToTypeConverter _opCodeToTypeConverter;
 
-        public CommandSession(TcpServer server) : base(server)
+        public NetworkSession(INetworkServer server, IMessageHandlerSelector messageHandlerSelector, IOpCodeToTypeConverter opCodeToTypeConverter) : base(server as TcpServer)
         {
-            _messageHandler = new MessageHandler();
+            _messageHandlerSelector = messageHandlerSelector;
+            _opCodeToTypeConverter = opCodeToTypeConverter;
         }
+
+        public ClientHandshakeRequest ClientHandshake { get; set; }
 
         protected override void OnConnected()
         {
             Console.WriteLine($"Command TCP session with Id {Id} connected!");
         }
 
-        private void SendMessage(MessageBase message, bool async = true)
+        private void SendMessage(IMessage message, bool async = true)
         {
             var raw = JsonSerializer.SerializeToUtf8Bytes(message, message.GetType());
             var output = new byte[raw.Length + 1];
@@ -43,13 +46,13 @@ namespace Solarponics.Server
 
         protected override void OnReceived(byte[] buffer, long offset, long size)
         {
-            MessageBase message = null;
+            IMessage message = null;
             try
             {
                 Console.WriteLine("Received " + size + " bytes at offset " + offset);
-                var type = OpCodeToTypeConverter.TypeForOpCode(buffer[offset]);
+                var type = _opCodeToTypeConverter.TypeForOpCode(buffer[offset]);
                 message =
-                    (MessageBase) JsonSerializer.Deserialize(
+                    (IMessage) JsonSerializer.Deserialize(
                         buffer.Skip(1 + (int) offset).Take((int) size - 1).ToArray(), type);
                 if (message == null)
                 {
@@ -59,19 +62,22 @@ namespace Solarponics.Server
 
                 Console.WriteLine($"Incoming {message.GetType().Name}");
 
-                var response = _messageHandler.HandleMessage(message, this);
-                if (response == null)
-                {
-                    return;
-                }
+                var handler = _messageHandlerSelector.GetHandlerForMessage(message);
+                if (handler == null)
+                    throw new NotImplementedException();
+
+                var response = handler.Handle(message, this);
+                if (response == null) return;
 
                 SendMessage(response);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error in session {Id} - disconnecting: {ex.Message}");
-                SendMessage(new ErrorMessage("Unexpected error handling request: " + ex.Message, message?.Sequence ?? 0), false);
-                while (this.BytesPending > 0)
+                SendMessage(
+                    new ErrorMessage("Unexpected error handling request: " + ex.Message, message?.Sequence ?? 0),
+                    false);
+                while (BytesPending > 0)
                     Thread.Yield();
                 Disconnect();
             }
@@ -82,5 +88,4 @@ namespace Solarponics.Server
             Console.WriteLine($"Command TCP session caught an error with code {error}");
         }
     }
-
 }

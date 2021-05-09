@@ -1,0 +1,3 @@
+﻿CREATE ROLE [WebApi]
+    AUTHORIZATION [dbo];
+

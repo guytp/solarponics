@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
+using Solarponics.IngestionServer.Abstractions;
 using Solarponics.Models.Messages;
 
-namespace Solarponics.Server
+namespace Solarponics.IngestionServer.Domain
 {
-    public static class OpCodeToTypeConverter
+    public class OpCodeToTypeConverter : IOpCodeToTypeConverter
     {
-        private static readonly Dictionary<byte, Type> map;
+        private readonly Dictionary<byte, Type> _map;
 
-        static OpCodeToTypeConverter()
+        public OpCodeToTypeConverter()
         {
-            map = new Dictionary<byte, Type>();
+            _map = new Dictionary<byte, Type>();
             var messageBaseType = typeof(MessageBase);
             var ass = messageBaseType.Assembly;
             var types = ass.GetTypes()
@@ -21,13 +21,13 @@ namespace Solarponics.Server
             {
                 var obj = (MessageBase) Activator.CreateInstance(type);
                 if (obj == null) continue;
-                map.Add(obj.OpCode, type);
+                _map.Add(obj.OpCode, type);
             }
         }
 
-        public static Type TypeForOpCode(byte opCode)
+        public Type TypeForOpCode(byte opCode)
         {
-            return map[opCode];
+            return _map[opCode];
         }
     }
 }

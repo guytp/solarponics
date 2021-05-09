@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Solarponics.Server.Exceptions
+namespace Solarponics.IngestionServer.Exceptions
 {
     public class ClientMissingHandshakeException : Exception
     {
