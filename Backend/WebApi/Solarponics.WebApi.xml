@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Solarponics.WebApi</name>
+    </assembly>
+    <members>
+        <member name="T:Solarponics.WebApi.Controllers.SensorModuleController">
+            <summary>
+                Provides access to information about sensor modules.
+            </summary>
+        </member>
+        <member name="M:Solarponics.WebApi.Controllers.SensorModuleController.Get">
+            <summary>
+                Gets a list of all sensor modules.
+            </summary>
+            <returns>
+                An OK result containing all sensor modules.
+            </returns>
+        </member>
+        <member name="T:Solarponics.WebApi.Controllers.SensorReadingController">
+            <summary>
+                Get data to display on charts and reports.
+            </summary>
+        </member>
+        <member name="M:Solarponics.WebApi.Controllers.SensorReadingController.GetAggregate(System.Int32,Solarponics.Models.AggregateTimeframe)">
+            <summary>
+                Gets aggregate sensor data to use for charting.
+            </summary>
+            <param name="id">The sensor to get the data for.</param>
+            <param name="timeframe">The timeframe to aggregate data by.</param>
+            <returns>An array of SensorReading objects to use for charting.</returns>
+        </member>
+        <member name="T:Solarponics.WebApi.Swagger.SwaggerBasePathFilter">
+            <summary>
+                This filter allows the root path of the URL to be rewritten to cope with being behind a load balancer - i.e. if we
+                are at /api-name rather than /.  It
+                also allows hostname to be updated.
+            </summary>
+        </member>
+        <member name="M:Solarponics.WebApi.Swagger.SwaggerBasePathFilter.Apply(Microsoft.OpenApi.Models.OpenApiDocument,Swashbuckle.AspNetCore.SwaggerGen.DocumentFilterContext)">
+            <summary>
+                Applies this filter to the current document.
+            </summary>
+            <param name="swaggerDoc">
+                The swagger document to apply from.
+            </param>
+            <param name="context">
+                The current document context.
+            </param>
+        </member>
+        <member name="P:Solarponics.WebApi.Swagger.SwaggerConfig.OverrideRootUrl">
+            <summary>
+            Specify the URL prefix to use when constructing Swagger documents.  If this is null or empty the current server and the root of it will be used.  Set this to a value when the API
+            is sitting behind an API gateway, reverse proxy, etc. and you want the public facing address returned.  This impacts the Swagger UI and not the contents of the JSON.
+            </summary>
+        </member>
+        <member name="P:Solarponics.WebApi.Swagger.SwaggerConfig.BasePathOverrides">
+            <summary>
+            Specify optional settings to change how the servers are added to Swagger.json.
+            </summary>
+        </member>
+    </members>
+</doc>
