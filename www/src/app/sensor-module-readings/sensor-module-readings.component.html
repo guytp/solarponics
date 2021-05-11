@@ -1,0 +1,10 @@
+<button type="button" mat-button (click)="this.reloadData();" color="primary">
+  Refresh
+</button>
+
+<div *ngFor="let sensorModule of sensorModules">
+  <h2>{{sensorModule.name}} ({{sensorModule.location}} {{sensorModule.room}})</h2>
+  <div *ngFor="let sensor of sensorModule.sensors">
+    <app-sensor-chart [sensor]="sensor"></app-sensor-chart>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+Sensor: <span *ngIf="sensor != null">{{sensor.type}}</span>
+        <table>
+          <tr>
+            <td>Time</td>
+            <td>Min</td>
+            <td>Avg</td>
+            <td>Max</td>
+          </tr>
+          <tr *ngFor="let reading of readings">
+            <td>{{reading.time}}</td>
+            <td>{{reading.minimum}}</td>
+            <td>{{reading.average}}</td>
+            <td>{{reading.maximum}}</td>
+          </tr>
+
+        </table>
