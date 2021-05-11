@@ -1,7 +1,6 @@
 ﻿create procedure SensorModuleAdd
 (
 	@roomId INT,
-	@uniqueIdentifier UNIQUEIDENTIFIER,
 	@serialNumber NVARCHAR(50),
 	@name NVARCHAR(50)
 )
@@ -9,7 +8,7 @@ as
 begin
 	SET NOCOUNT ON
 
-	INSERT INTO [SensorModule] (RoomId, [UniqueIdentifier], SerialNumber, [Name]) VALUES(@roomId, @uniqueIdentifier, @serialNumber, @name)
+	INSERT INTO [SensorModule] (RoomId, SerialNumber, [Name]) VALUES(@roomId, @serialNumber, @name)
 
 	SELECT SCOPE_IDENTITY() Id
 end

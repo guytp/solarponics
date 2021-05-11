@@ -27,7 +27,7 @@ namespace Solarponics.WebApi.Controllers
         /// <param name="id">The sensor to get the data for.</param>
         /// <param name="timeframe">The timeframe to aggregate data by.</param>
         /// <returns>An array of SensorReading objects to use for charting.</returns>
-        [HttpGet("/by-sensor-id/{id}/aggregate-by/{timeframe}")]
+        [HttpGet("by-sensor-id/{id}/aggregate-by/{timeframe}")]
         [ProducesResponseType((int) HttpStatusCode.OK, Type = typeof(SensorReading[]))]
         [ProducesResponseType((int) HttpStatusCode.NotFound)]
         public async Task<IActionResult> GetAggregate(int id, AggregateTimeframe timeframe)

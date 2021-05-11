@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Solarponics.Models
+﻿namespace Solarponics.Models
 {
     public class SensorModule
     {
@@ -8,7 +6,6 @@ namespace Solarponics.Models
         public string Location { get; set; }
         public int Id { get; set; }
         public Sensor[] Sensors { get; set; }
-        public Guid UniqueIdentifier { get; set; }
         public string SerialNumber { get; set; }
         public string Name { get; set; }
     }

@@ -60,10 +60,8 @@ namespace Solarponics.SensorModuleEmulator
         {
             SendCommand(new ClientHandshakeRequest
             {
-                Name = "SP-CFS-SNS-01",
                 Sequence = _sequence++,
                 SerialNumber = "SN01",
-                UniqueIdentifier = Guid.Parse("3ab5328e-e490-4939-8968-60f5fdfb9b97")
             });
         }
 

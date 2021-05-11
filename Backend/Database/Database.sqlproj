@@ -79,7 +79,7 @@
     <Build Include="dbo\Stored Procedures\ReadingAggregateAdd.sql" />
     <Build Include="dbo\Stored Procedures\ReadingAdd.sql" />
     <Build Include="Security\Permissions.sql" />
-    <Build Include="dbo\Stored Procedures\SensorModuleGetByUniqueIdentifier.sql" />
+    <Build Include="dbo\Stored Procedures\SensorModuleGetBySerialNumber.sql" />
     <Build Include="dbo\Stored Procedures\SensorModuleGetById.sql" />
     <Build Include="dbo\Stored Procedures\SensorModuleGetAll.sql" />
     <Build Include="dbo\Stored Procedures\ReadingAggregateGet.sql" />

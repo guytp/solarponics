@@ -21,8 +21,8 @@ namespace Solarponics.IngestionServer.MessageHandlers
 
             var request = (ClientHandshakeRequest) inbound;
 
-            var sensorModule = await _sensorRepository.GetSensorModule(request.UniqueIdentifier);
-            if (sensorModule == null || sensorModule.Name != request.Name || sensorModule.SerialNumber != request.SerialNumber)
+            var sensorModule = await _sensorRepository.GetSensorModule(request.SerialNumber);
+            if (sensorModule == null)
                 throw new SensorModuleNotFoundException();
 
             session.SensorModule = sensorModule;

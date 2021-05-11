@@ -9,8 +9,8 @@ namespace Solarponics.IngestionServer.Data
 {
     public class SensorRepository : ISensorRepository
     {
-        private const string ProcedureNameSensorModuleGetByUniqueIdentifier =
-            "[dbo].[SensorModuleGetByUniqueIdentifier]";
+        private const string ProcedureNameSensorModuleGetBySerialNumber =
+            "[dbo].[SensorModuleGetBySerialNumber]";
 
         private const string ProcedureNameReadingAdd = "[dbo].[ReadingAdd]";
 
@@ -21,13 +21,13 @@ namespace Solarponics.IngestionServer.Data
 
         private IDatabaseConnection Connection { get; }
 
-        public async Task<SensorModule> GetSensorModule(Guid uniqueIdentifier)
+        public async Task<SensorModule> GetSensorModule(string serialNumber)
         {
             using var storedProcedure = Connection.CreateStoredProcedure(
-                ProcedureNameSensorModuleGetByUniqueIdentifier,
+                ProcedureNameSensorModuleGetBySerialNumber,
                 new[]
                 {
-                    new StoredProcedureParameter("uniqueIdentifier", uniqueIdentifier)
+                    new StoredProcedureParameter("serialNumber", serialNumber)
                 });
             await storedProcedure.ExecuteReaderAsync();
             var module = await storedProcedure.GetFirstOrDefaultRowAsync<SensorModule>();
