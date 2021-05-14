@@ -1,4 +1,81 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+body {
+  background-color: #303030;
+  color: #FFFFFF;
+  font-family: Roboto, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
+  margin: 0;
+}
+
+header {
+  background-color: #9c27b0;
+  font-size: 22px;
+  font-weight: 300;
+  margin-bottom: 20px;
+  padding-bottom: 30px;
+  padding-left: 20px;
+  padding-top: 30px;
+}
+
+/** * Backgrounds */
+
+.dark {
+  /** * Text */
+  background: #1b1e27;
+}
+
+.dark .ngx-charts text { fill: #a0aabe; }
+
+.dark .ngx-charts .tooltip-anchor { fill: #fff; }
+
+.dark .ngx-charts .gridline-path { stroke: #2f3646; }
+
+.dark .ngx-charts .refline-path { stroke: #455066; }
+
+.dark .ngx-charts .reference-area { fill: #fff; }
+
+.dark .ngx-charts .grid-panel.odd rect { fill: rgba(255, 255, 255, 0.05); }
+
+.dark .ngx-charts .force-directed-graph .edge { stroke: #455066; }
+
+.dark .ngx-charts .number-card p { color: #f0f1f6; }
+
+.dark .ngx-charts .gauge .background-arc path { fill: #2f3646; }
+
+.dark .ngx-charts .gauge .gauge-tick path { stroke: #a0aabe; }
+
+.dark .ngx-charts .gauge .gauge-tick text { fill: #a0aabe; }
+
+.dark .ngx-charts .linear-gauge .background-bar path { fill: #2f3646; }
+
+.dark .ngx-charts .linear-gauge .units { fill: #72809b; }
+
+.dark .ngx-charts .timeline .brush-background { fill: rgba(255, 255, 255, 0.05); }
+
+.dark .ngx-charts .timeline .brush .selection {
+  fill: rgba(255, 255, 255, 0.1);
+  stroke: #aaa;
+}
+
+.dark .ngx-charts .polar-chart .polar-chart-background { fill: #1e222e; }
+
+.dark .chart-legend .legend-labels { background: rgba(255, 255, 255, 0.05) !important; }
+
+.dark .chart-legend .legend-item:hover { color: #fff; }
+
+.dark .chart-legend .legend-label:hover { color: #fff !important; }
+
+.dark .chart-legend .legend-label .active .legend-label-text { color: #fff !important; }
+
+.dark .chart-legend .scale-legend-label { color: #a0aabe; }
+
+.dark .advanced-pie-legend { color: #a0aabe; }
+
+.dark .advanced-pie-legend .legend-item:hover { color: #fff !important; }
+
+.dark .number-card .number-card-label {
+  color: #a0aabe;
+  font-size: 0.8em;
+}

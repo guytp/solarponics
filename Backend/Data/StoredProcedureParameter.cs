@@ -14,6 +14,10 @@ namespace Solarponics.Data
             {
                 DbType = DbType.Guid;
             }
+            else if (value is DateTime)
+            {
+                DbType = DbType.DateTime;
+            }
         }
 
         public DbType DbType { get; set; }

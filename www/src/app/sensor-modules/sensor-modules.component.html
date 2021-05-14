@@ -1,0 +1,15 @@
+<button type="button" mat-raised-button color="primary" (click)="this.reloadData();" style="margin-bottom: 20px;">
+  Refresh
+</button>
+
+<mat-expansion-panel *ngFor="let sensorModule of sensorModules" [expanded]="true">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{sensorModule.name}}
+    </mat-panel-title>
+    <mat-panel-description>
+      {{sensorModule.location}} {{sensorModule.room}}
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <app-sensor-module-readings [sensors]="sensorModule.sensors"></app-sensor-module-readings>
+</mat-expansion-panel>

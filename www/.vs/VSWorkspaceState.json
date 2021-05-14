@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\api-client",
+    "\\src\\app\\models",
+    "\\src\\app\\sensor-chart",
+    "\\src\\app\\sensor-module-readings",
+    "\\src\\app\\sensor-modules",
+    "\\src\\environments"
+  ],
+  "SelectedNode": "\\src\\app\\sensor-modules\\sensor-modules.component.html",
+  "PreviewInSolutionExplorer": false
+}
