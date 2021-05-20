@@ -1,7 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-
+.page-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
 body {
   background-color: #303030;
   color: #FFFFFF;
@@ -19,8 +23,34 @@ header {
   padding-top: 30px;
 }
 
-/** * Backgrounds */
 
+header .menu-button {
+  margin-right: 24px;
+  min-width: 0;
+  padding: 0;
+  line-height: normal;
+}
+
+
+.sidenav-container {
+  flex: 1;
+  min-height: 300px;
+}
+.sidenav {
+  min-width: 240px;
+}
+.sidenav a {
+    display: block;
+    padding: 6px 24px;
+    width: 100%;
+    text-align: left;
+  }
+
+.form-field {
+  width: 80%;
+}
+
+/** * Backgrounds */
 .dark {
   /** * Text */
   background: #1b1e27;

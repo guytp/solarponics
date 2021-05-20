@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Solarponics';
+  isMenuOpen: boolean;
+
+  public onSidenavClick(): void {
+    this.isMenuOpen = false;
+  }
 }

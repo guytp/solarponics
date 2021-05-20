@@ -17,6 +17,36 @@
                 An OK result containing all sensor modules.
             </returns>
         </member>
+        <member name="M:Solarponics.WebApi.Controllers.SensorModuleController.ProvisioningQueueGet">
+            <summary>
+                Gets a list of all sensor modules that are approved for provisioning but not yet provisioned.
+            </summary>
+            <returns>
+                An OK result containing all configs of pending modules.
+            </returns>
+        </member>
+        <member name="M:Solarponics.WebApi.Controllers.SensorModuleController.ProvisioningQueueAdd(Solarponics.Models.SensorModuleConfig)">
+            <summary>
+                Adds the details of a sensor that can be provisioned.
+            </summary>
+            <param name="config">
+                The configuration for the new sensor.
+            </param>
+            <returns>
+                A NoContent response.
+            </returns>
+        </member>
+        <member name="M:Solarponics.WebApi.Controllers.SensorModuleController.ProvisioningQueueDelete(System.String)">
+            <summary>
+                Removes a sensor module that is pending provisioning.
+            </summary>
+            <param name="serialNumber">
+                The serial number of the sensor module.
+            </param>
+            <returns>
+                A NoContent response if successful or NotFound if the serial number was not found.
+            </returns>
+        </member>
         <member name="T:Solarponics.WebApi.Controllers.SensorReadingController">
             <summary>
                 Get data to display on charts and reports.

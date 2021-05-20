@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SensorModule, SensorModule as ISensorModule } from "../models/sensor-module";
-import { SensorModuleApiClient } from "../api-client/sensor-module-api-client";
+import { DataAggregationService } from "../data-aggregation-service/data-aggregation-service";
 
 @Component({
   selector: 'app-sensor-modules',
@@ -11,16 +11,16 @@ export class SensorModulesComponent implements OnInit {
   sensorModules: SensorModule[];
   error: any;
 
-  constructor(private readonly apiClient: SensorModuleApiClient) { }
+  constructor(private readonly dataAggregationService: DataAggregationService) { }
 
   ngOnInit(): void {
-    this.reloadData();
+    this.sensorModules = this.dataAggregationService.sensorModules;
+    this.dataAggregationService.sensorModulesObservable.subscribe((sensorModules) => {
+      this.sensorModules = sensorModules;
+    });
   }
 
   reloadData() {
-    this.apiClient.getSensorModules().subscribe(
-      (data: ISensorModule[]) => this.sensorModules = data, // success path
-      error => this.error = error // error path
-    );
+    this.dataAggregationService.reloadData(true);
   }
 }

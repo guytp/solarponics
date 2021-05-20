@@ -70,12 +70,7 @@
     <Build Include="dbo\Tables\Sensor.sql" />
     <Build Include="dbo\Tables\Reading.sql" />
     <Build Include="dbo\Tables\ReadingAggregate.sql" />
-    <Build Include="Security\CommandServer.sql" />
     <Build Include="Security\WebApi.sql" />
-    <Build Include="dbo\Stored Procedures\LocationAdd.sql" />
-    <Build Include="dbo\Stored Procedures\RoomAdd.sql" />
-    <Build Include="dbo\Stored Procedures\SensorModuleAdd.sql" />
-    <Build Include="dbo\Stored Procedures\SensorAdd.sql" />
     <Build Include="dbo\Stored Procedures\ReadingAggregateAdd.sql" />
     <Build Include="dbo\Stored Procedures\ReadingAdd.sql" />
     <Build Include="Security\Permissions.sql" />
@@ -83,5 +78,13 @@
     <Build Include="dbo\Stored Procedures\SensorModuleGetById.sql" />
     <Build Include="dbo\Stored Procedures\SensorModuleGetAll.sql" />
     <Build Include="dbo\Stored Procedures\ReadingAggregateGet.sql" />
+    <Build Include="dbo\Tables\SensorModuleProvisioningQueue.sql" />
+    <Build Include="Security\ProvisioningServer.sql" />
+    <Build Include="Security\IngestionServer.sql" />
+    <Build Include="dbo\Stored Procedures\SensorModuleProvisioningQueueGetBySerialNumber.sql" />
+    <Build Include="dbo\Stored Procedures\SensorModuleProvisioningQueueGetAll.sql" />
+    <Build Include="dbo\Stored Procedures\SensorModuleProvisioningQueueDelete.sql" />
+    <Build Include="dbo\Stored Procedures\SensorModuleProvisioningQueueAdd.sql" />
+    <Build Include="dbo\Stored Procedures\SensorModuleProvisionFromQueue.sql" />
   </ItemGroup>
 </Project>

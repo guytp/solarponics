@@ -1,4 +1,4 @@
-﻿create procedure ReadingAdd
+create procedure ReadingAdd
 (
 	@sensorId INT,
 	@reading DECIMAL(12, 4),
@@ -58,6 +58,6 @@ end
 
 GO
 GRANT EXECUTE
-    ON OBJECT::[dbo].[ReadingAdd] TO [CommandServer]
+    ON OBJECT::[dbo].[ReadingAdd] TO [IngestionServer]
     AS [dbo];
 

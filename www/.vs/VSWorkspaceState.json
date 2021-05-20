@@ -5,11 +5,12 @@
     "\\src\\app",
     "\\src\\app\\api-client",
     "\\src\\app\\models",
+    "\\src\\app\\provision-sensor-module",
     "\\src\\app\\sensor-chart",
     "\\src\\app\\sensor-module-readings",
     "\\src\\app\\sensor-modules",
     "\\src\\environments"
   ],
-  "SelectedNode": "\\src\\app\\sensor-modules\\sensor-modules.component.html",
+  "SelectedNode": "\\src\\app\\app.module.ts",
   "PreviewInSolutionExplorer": false
 }
