@@ -68,25 +68,25 @@ namespace Solarponics.WebApi.Data
                     new StoredProcedureParameter("@location", config.Location),
                     new StoredProcedureParameter("@room", config.Room),
                     new StoredProcedureParameter("@numberTemperatureSensors",
-                        config.SensorModuleSensorConfig.TemperatureSensors),
+                        config.SensorConfig?.TemperatureSensors ?? 0),
                     new StoredProcedureParameter("@numberHumiditySensors",
-                        config.SensorModuleSensorConfig.HumiditySensors),
+                        config.SensorConfig?.HumiditySensors ?? 0),
                     new StoredProcedureParameter("@numberCarbonDioxideSensors",
-                        config.SensorModuleSensorConfig.CarbonDioxideSensors),
+                        config.SensorConfig?.CarbonDioxideSensors ?? 0),
                     new StoredProcedureParameter("@networkType", config.NetworkType),
                     new StoredProcedureParameter("@wirelessSsid",
-                        config.NetworkType == NetworkType.Wireless ? config.WirelessConfig.Ssid : null),
+                        config.NetworkType == NetworkType.Wireless ? config.WirelessConfig?.Ssid : null),
                     new StoredProcedureParameter("@wirelessKey",
-                        config.NetworkType == NetworkType.Wireless ? config.WirelessConfig.Key : null),
+                        config.NetworkType == NetworkType.Wireless ? config.WirelessConfig?.Key : null),
                     new StoredProcedureParameter("@ipType", config.IpConfigType),
                     new StoredProcedureParameter("@ipAddress",
-                        config.IpConfigType == IpConfigType.Dhcp ? null : config.StaticIpConfig.Address),
+                        config.IpConfigType == IpConfigType.Dhcp ? null : config.StaticIpConfig?.Address),
                     new StoredProcedureParameter("@ipBroadcast",
-                        config.IpConfigType == IpConfigType.Dhcp ? null : config.StaticIpConfig.Brodcast),
+                        config.IpConfigType == IpConfigType.Dhcp ? null : config.StaticIpConfig?.Broadcast),
                     new StoredProcedureParameter("@ipGateway",
-                        config.IpConfigType == IpConfigType.Dhcp ? null : config.StaticIpConfig.Gateway),
+                        config.IpConfigType == IpConfigType.Dhcp ? null : config.StaticIpConfig?.Gateway),
                     new StoredProcedureParameter("@ipDns",
-                        config.IpConfigType == IpConfigType.Dhcp ? null : config.StaticIpConfig.Dns),
+                        config.IpConfigType == IpConfigType.Dhcp ? null : config.StaticIpConfig?.Dns),
                     new StoredProcedureParameter("@serverAddress", config.ServerAddress)
                 });
             await storedProcedure.ExecuteNonQueryAsync();
@@ -122,14 +122,14 @@ namespace Solarponics.WebApi.Data
                 Name = row.Name,
                 Location = row.Location,
                 Room = row.Room,
-                SensorModuleSensorConfig = new SensorModuleSensorConfig
+                SensorConfig = new SensorModuleSensorConfig
                 {
                     CarbonDioxideSensors = row.NumberCarbonDioxideSensors,
                     HumiditySensors = row.NumberHumiditySensors,
                     TemperatureSensors = row.NumberTemperatureSensors
                 },
-                NetworkType = row.NetworkType,
-                WirelessConfig = row.NetworkType != NetworkType.Wireless
+                NetworkType = (NetworkType)row.NetworkType,
+                WirelessConfig = (NetworkType)row.NetworkType != NetworkType.Wireless
                     ? null
                     : new WirelessConfig
                     {
@@ -137,13 +137,13 @@ namespace Solarponics.WebApi.Data
                         Ssid = row.WirelessSsid
                     },
                 ServerAddress = row.ServerAddress,
-                IpConfigType = row.IpConfigType,
-                StaticIpConfig = row.IpConfigType == IpConfigType.Dhcp
+                IpConfigType = (IpConfigType)row.IpType,
+                StaticIpConfig = (IpConfigType)row.IpType == IpConfigType.Dhcp
                     ? null
                     : new IpConfig
                     {
                         Address = row.IpAddress,
-                        Brodcast = row.IpBrodcast,
+                        Broadcast = row.IpBrodcast,
                         Dns = row.IpDns,
                         Gateway = row.IpGateway
                     }

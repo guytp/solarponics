@@ -27,4 +27,38 @@ export class DataAggregationService {
     }
   }
 
+  get locations(): string[] {
+    let response = [];
+    if (!this.sensorModules)
+        return response;
+
+
+    for (let module of this.sensorModules) {
+      if (response.includes(module.location))
+        continue;
+
+        response.push(module.location);
+      }
+
+    return response.sort();
+  }
+
+  roomsForLocation(location: string): string[] {
+    let response = [];
+    if (!this.sensorModules)
+      return response;
+
+    for (let module of this.sensorModules) {
+      if (module.location !== location)
+        continue;
+
+      if (response.includes(module.room))
+        continue;
+
+      response.push(module.room);
+    }
+
+    return response.sort();
+  }
+
 }

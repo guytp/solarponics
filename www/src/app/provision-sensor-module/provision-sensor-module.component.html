@@ -5,7 +5,7 @@
 - List of existing data in grid
 -->
 
-<h2>Provision Sensor Module</h2>
+<h2>Provision New Sensor Module</h2>
 
 <p>Add the details of a new sensor module to provision below, then hit the Go button.</p>
 
@@ -50,7 +50,7 @@
              [formControl]="location"
              [matAutocomplete]="autoLocations" />
       <mat-autocomplete #autoLocations="matAutocomplete">
-        <mat-option *ngFor="let l of locations" [value]="location">
+        <mat-option *ngFor="let l of locations" [value]="l">
           {{l}}
         </mat-option>
       </mat-autocomplete>
@@ -74,7 +74,7 @@
              [formControl]="room"
              [matAutocomplete]="autoRooms">
       <mat-autocomplete #autoRooms="matAutocomplete">
-        <mat-option *ngFor="let r of rooms" [value]="room">
+        <mat-option *ngFor="let r of rooms" [value]="r">
           {{r}}
         </mat-option>
       </mat-autocomplete>
@@ -259,3 +259,107 @@
 </mat-grid-list>
 
 <mat-divider></mat-divider>
+
+<h2 style="margin-top: 20px;">Awaiting Provisioning</h2>
+
+<p *ngIf="!awaitingProvisioningConfigs || awaitingProvisioningConfigs.length == 0">
+  There are no sensors waiting to be provisioned.
+</p>
+
+<table mat-table [dataSource]="awaitingProvisioningConfigs" *ngIf="awaitingProvisioningConfigs && awaitingProvisioningConfigs.length > 0">
+
+  <!--"SerialNumber", "Name", "Location", "Room", "NetworkType", "IpConfig", "ServerAddress"-->
+
+  <ng-container matColumnDef="SerialNumber">
+    <th mat-header-cell *matHeaderCellDef>Serial #</th>
+    <td mat-cell *matCellDef="let element">{{element.serialNumber}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="Name">
+    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <td mat-cell *matCellDef="let element">{{element.name}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="Location">
+    <th mat-header-cell *matHeaderCellDef>Location</th>
+    <td mat-cell *matCellDef="let element">{{element.location}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="Room">
+    <th mat-header-cell *matHeaderCellDef>Room</th>
+    <td mat-cell *matCellDef="let element">{{element.room}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="NumberTemperature">
+    <th mat-header-cell *matHeaderCellDef># Temp</th>
+    <td mat-cell *matCellDef="let element">{{element.sensorConfig.temperatureSensors}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="NumberHumidity">
+    <th mat-header-cell *matHeaderCellDef># Humidity</th>
+    <td mat-cell *matCellDef="let element">{{element.sensorConfig.humiditySensors}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="NumberCarbonDioxide">
+    <th mat-header-cell *matHeaderCellDef># CO2</th>
+    <td mat-cell *matCellDef="let element">{{element.sensorConfig.carbonDioxideSensors}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="NetworkType">
+    <th mat-header-cell *matHeaderCellDef>Network Type</th>
+    <td mat-cell *matCellDef="let element">{{element.networkType}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="WirelessSsid">
+    <th mat-header-cell *matHeaderCellDef>SSID</th>
+    <td mat-cell *matCellDef="let element">{{element.wirelessConfig?.ssid}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="WirelessKey">
+    <th mat-header-cell *matHeaderCellDef>Key</th>
+    <td mat-cell *matCellDef="let element">{{element.wirelessConfig?.key}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="IpConfig">
+    <th mat-header-cell *matHeaderCellDef>IP Config</th>
+    <td mat-cell *matCellDef="let element">{{element.ipConfigType}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="IpAddress">
+    <th mat-header-cell *matHeaderCellDef>IP</th>
+    <td mat-cell *matCellDef="let element">{{element.staticIpConfig?.address}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="IpBroadcast">
+    <th mat-header-cell *matHeaderCellDef>Broadcast</th>
+    <td mat-cell *matCellDef="let element">{{element.staticIpConfig?.broadcast}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="IpGateway">
+    <th mat-header-cell *matHeaderCellDef>Gateway</th>
+    <td mat-cell *matCellDef="let element">{{element.staticIpConfig?.gateway}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="IpDns">
+    <th mat-header-cell *matHeaderCellDef>DNS</th>
+    <td mat-cell *matCellDef="let element">{{element.staticIpConfig?.dns}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="ServerAddress">
+    <th mat-header-cell *matHeaderCellDef>Server</th>
+    <td mat-cell *matCellDef="let element">{{element.serverAddress}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="Buttons">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-button class="menu-button" (click)="deleteConfig(element.serialNumber)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>

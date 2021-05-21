@@ -14,6 +14,7 @@ import { MatDividerModule } from "@angular/material/divider";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatTableModule } from "@angular/material/table";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxChartsModule }from '@swimlane/ngx-charts';
 import { SensorModuleReadingsComponent } from './sensor-module-readings/sensor-module-readings.component';
@@ -47,6 +48,7 @@ import { DataAggregationService } from "./data-aggregation-service/data-aggregat
     MatDividerModule,
     MatAutocompleteModule,
     MatGridListModule,
+    MatTableModule,
     NgxChartsModule,
     FormsModule,
     ReactiveFormsModule

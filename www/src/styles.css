@@ -13,6 +13,10 @@ body {
   margin: 0;
 }
 
+table {
+  width: 100%;
+}
+
 header {
   background-color: #9c27b0;
   font-size: 22px;

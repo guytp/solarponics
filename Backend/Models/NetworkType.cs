@@ -2,7 +2,8 @@
 {
     public enum NetworkType
     {
-        Wireless,
-        Wired
+        Unknown = 0,
+        Wireless = 1,
+        Wired = 2
     }
 }

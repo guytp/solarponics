@@ -126,7 +126,11 @@ namespace Solarponics.WebApi
 
             services.AddMvc()
                 .AddApplicationPart(Assembly.GetEntryAssembly())
-                .AddControllersAsServices();
+                .AddControllersAsServices()
+                .AddJsonOptions(opts =>
+                {
+                    opts.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                });
 
             services.AddSwaggerGen(
                 c =>

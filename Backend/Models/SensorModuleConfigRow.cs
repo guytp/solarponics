@@ -9,10 +9,10 @@
         public byte NumberTemperatureSensors { get; set; }
         public byte NumberHumiditySensors { get; set; }
         public byte NumberCarbonDioxideSensors { get; set; }
-        public NetworkType NetworkType { get; set; }
+        public byte NetworkType { get; set; }
         public string WirelessSsid { get; set; }
         public string WirelessKey { get; set; }
-        public IpConfigType IpConfigType { get; set; }
+        public byte IpType { get; set; }
         public string IpAddress { get; set; }
         public string IpBrodcast { get; set; }
         public string IpGateway { get; set; }

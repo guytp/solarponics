@@ -6,7 +6,7 @@
         public string Name { get; set; }
         public string Location { get; set; }
         public string Room { get; set; }
-        public SensorModuleSensorConfig SensorModuleSensorConfig { get; set; }
+        public SensorModuleSensorConfig SensorConfig { get; set; }
         public NetworkType NetworkType { get; set; }
         public WirelessConfig WirelessConfig { get; set; }
         public IpConfigType IpConfigType { get; set; }
