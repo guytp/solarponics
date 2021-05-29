@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Solarponics.IngestionServer.Abstractions;
 using Solarponics.Models.Messages;
+using Solarponics.Networking.Abstractions;
 
-namespace Solarponics.IngestionServer.Domain
+namespace Solarponics.Networking.Domain
 {
     public class OpCodeToTypeConverter : IOpCodeToTypeConverter
     {

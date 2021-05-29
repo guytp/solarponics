@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Windows.Input;
 using Solarponics.Models;
 using Solarponics.Models.Messages;
+using Solarponics.Models.Messages.Ingestion;
 using Solarponics.SensorModuleEmulator.Net;
 
 namespace Solarponics.SensorModuleEmulator

@@ -1,4 +1,4 @@
-﻿namespace Solarponics.Models.Messages
+﻿namespace Solarponics.Models.Messages.Ingestion
 {
     public class ServerHandshakeResponse : MessageBase
     {

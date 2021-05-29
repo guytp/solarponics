@@ -4,12 +4,15 @@ using System.Threading.Tasks;
 using Solarponics.IngestionServer.Abstractions;
 using Solarponics.IngestionServer.Exceptions;
 using Solarponics.Models.Messages;
+using Solarponics.Models.Messages.Ingestion;
+using Solarponics.Networking.Abstractions;
 
 namespace Solarponics.IngestionServer.MessageHandlers
 {
     public class NewSensorReadingMessageHandler : IMessageHandler
     {
         private readonly ISensorRepository _sensorRepository;
+
         public NewSensorReadingMessageHandler(ISensorRepository sensorRepository)
         {
             _sensorRepository = sensorRepository;
@@ -17,13 +20,14 @@ namespace Solarponics.IngestionServer.MessageHandlers
 
         public async Task<IMessage> Handle(IMessage r, INetworkSession session)
         {
-            if (session.SensorModule == null) throw new ClientMissingHandshakeException();
+            var sensorModule = (session as IIngestionNetworkSession)?.SensorModule;
+            if (sensorModule == null) throw new ClientMissingHandshakeException();
 
             var request = (NewSensorReading) r;
             Console.WriteLine(
-                "Sensor " + request.Type + " = " + request.Reading + " on " + session.SensorModule.Name);
+                "Sensor " + request.Type + " = " + request.Reading + " on " + sensorModule.Name);
 
-            var sensor = session.SensorModule.Sensors.FirstOrDefault(s => s.Number == request.Number && s.Type == request.Type);
+            var sensor = sensorModule.Sensors.FirstOrDefault(s => s.Number == request.Number && s.Type == request.Type);
             if (sensor == null)
                 throw new SensorNotFoundException(request.Type, request.Number);
 

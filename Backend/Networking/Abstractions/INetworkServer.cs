@@ -1,4 +1,4 @@
-﻿namespace Solarponics.IngestionServer.Abstractions
+﻿namespace Solarponics.Networking.Abstractions
 {
     public interface INetworkServer
     {

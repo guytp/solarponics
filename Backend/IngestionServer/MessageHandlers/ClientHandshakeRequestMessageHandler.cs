@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Solarponics.IngestionServer.Abstractions;
 using Solarponics.IngestionServer.Exceptions;
 using Solarponics.Models.Messages;
+using Solarponics.Models.Messages.Ingestion;
+using Solarponics.Networking.Abstractions;
 
 namespace Solarponics.IngestionServer.MessageHandlers
 {
@@ -17,15 +19,16 @@ namespace Solarponics.IngestionServer.MessageHandlers
 
         public async Task<IMessage> Handle(IMessage inbound, INetworkSession session)
         {
-            if (session.SensorModule != null) throw new Exception("Already performed handshake with client");
+            var sensorModule = (session as IIngestionNetworkSession)?.SensorModule;
+            if (sensorModule != null) throw new Exception("Already performed handshake with client");
 
             var request = (ClientHandshakeRequest) inbound;
 
-            var sensorModule = await _sensorRepository.GetSensorModule(request.SerialNumber);
+            sensorModule = await _sensorRepository.GetSensorModule(request.SerialNumber);
             if (sensorModule == null)
                 throw new SensorModuleNotFoundException();
 
-            session.SensorModule = sensorModule;
+            ((IIngestionNetworkSession)session).SensorModule = sensorModule;
 
             return new ServerHandshakeResponse
             {

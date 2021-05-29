@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Solarponics.IngestionServer.Abstractions
+namespace Solarponics.Networking.Abstractions
 {
     public interface IOpCodeToTypeConverter
     {

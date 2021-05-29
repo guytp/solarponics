@@ -1,14 +1,14 @@
-﻿using Solarponics.IngestionServer.Abstractions;
-using Solarponics.IngestionServer.Net;
+﻿using Solarponics.IngestionServer.Net;
+using Solarponics.Networking.Abstractions;
 
 namespace Solarponics.IngestionServer.Domain
 {
-    public class NetworkSessionFactory : INetworkSessionFactory
+    public class IngestionNetworkSessionFactory : INetworkSessionFactory
     {
         private readonly IMessageHandlerSelector _messageHandlerSelector;
         private readonly IOpCodeToTypeConverter _opCodeToTypeConverter;
 
-        public NetworkSessionFactory(IMessageHandlerSelector messageHandlerSelector,
+        public IngestionNetworkSessionFactory(IMessageHandlerSelector messageHandlerSelector,
             IOpCodeToTypeConverter opCodeToTypeConverter)
         {
             _messageHandlerSelector = messageHandlerSelector;
@@ -17,7 +17,7 @@ namespace Solarponics.IngestionServer.Domain
 
         public INetworkSession Create(INetworkServer server)
         {
-            return new NetworkSession(server, _messageHandlerSelector, _opCodeToTypeConverter);
+            return new IngestionNetworkSession(server, _messageHandlerSelector, _opCodeToTypeConverter);
         }
     }
 }

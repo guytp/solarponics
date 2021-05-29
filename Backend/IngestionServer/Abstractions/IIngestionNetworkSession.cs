@@ -1,8 +1,9 @@
 ﻿using Solarponics.Models;
+using Solarponics.Networking.Abstractions;
 
 namespace Solarponics.IngestionServer.Abstractions
 {
-    public interface INetworkSession
+    public interface IIngestionNetworkSession : INetworkSession
     {
         SensorModule SensorModule { get; set; }
     }

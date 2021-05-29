@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Solarponics.Networking.Abstractions;
 
-namespace Solarponics.IngestionServer
+namespace Solarponics.Networking
 {
     public class NetworkServerWorker : BackgroundService
     {

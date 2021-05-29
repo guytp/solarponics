@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Solarponics.Models.Messages
+namespace Solarponics.Models.Messages.Ingestion
 {
     public class NewSensorReading : MessageBase
     {

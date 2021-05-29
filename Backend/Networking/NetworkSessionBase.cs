@@ -4,28 +4,26 @@ using System.Net.Sockets;
 using System.Text.Json;
 using System.Threading;
 using NetCoreServer;
-using Solarponics.IngestionServer.Abstractions;
-using Solarponics.Models;
 using Solarponics.Models.Messages;
+using Solarponics.Networking.Abstractions;
 
-namespace Solarponics.IngestionServer.Net
+namespace Solarponics.Networking
 {
-    public class NetworkSession : TcpSession, INetworkSession
+    public abstract class NetworkSessionBase : TcpSession, INetworkSession
     {
         private readonly IMessageHandlerSelector _messageHandlerSelector;
         private readonly IOpCodeToTypeConverter _opCodeToTypeConverter;
 
-        public NetworkSession(INetworkServer server, IMessageHandlerSelector messageHandlerSelector, IOpCodeToTypeConverter opCodeToTypeConverter) : base(server as TcpServer)
+        protected NetworkSessionBase(INetworkServer server, IMessageHandlerSelector messageHandlerSelector,
+            IOpCodeToTypeConverter opCodeToTypeConverter) : base(server as TcpServer)
         {
             _messageHandlerSelector = messageHandlerSelector;
             _opCodeToTypeConverter = opCodeToTypeConverter;
         }
 
-        public SensorModule SensorModule { get; set; }
-
         protected override void OnConnected()
         {
-            Console.WriteLine($"Command TCP session with Id {Id} connected!");
+            Console.WriteLine($"TCP session with Id {Id} connected!");
         }
 
         private void SendMessage(IMessage message, bool async = true)
@@ -42,7 +40,7 @@ namespace Solarponics.IngestionServer.Net
 
         protected override void OnDisconnected()
         {
-            Console.WriteLine($"Command TCP session with Id {Id} disconnected!");
+            Console.WriteLine($"TCP session with Id {Id} disconnected!");
         }
 
         protected override async void OnReceived(byte[] buffer, long offset, long size)
@@ -86,7 +84,7 @@ namespace Solarponics.IngestionServer.Net
 
         protected override void OnError(SocketError error)
         {
-            Console.WriteLine($"Command TCP session caught an error with code {error}");
+            Console.WriteLine($"TCP session caught an error with code {error}");
         }
     }
 }

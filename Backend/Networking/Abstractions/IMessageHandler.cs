@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Solarponics.Models.Messages;
 
-namespace Solarponics.IngestionServer.Abstractions
+namespace Solarponics.Networking.Abstractions
 {
     public interface IMessageHandler
     {
