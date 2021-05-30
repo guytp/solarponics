@@ -5,7 +5,7 @@ namespace Solarponics.ProvisioningServer.Net
 {
     public class ProvisioningNetworkServer : NetworkServerBase
     {
-        public ProvisioningNetworkServer(INetworkSessionFactory sessionFactory) : base(sessionFactory, 4202)
+        public ProvisioningNetworkServer(INetworkSessionFactory sessionFactory) : base(sessionFactory, 4203)
         {
         }
     }

@@ -70,7 +70,7 @@ BEGIN
 	SELECT @i = 1
 	WHILE @i <= @numberCarbonDioxideSensors
 	BEGIN
-		INSERT INTO [Sensor] (SensorModuleId, [Type], [Number]) VALUES(@sensorModuleId, 'Carbon Dioxide', @i)
+		INSERT INTO [Sensor] (SensorModuleId, [Type], [Number]) VALUES(@sensorModuleId, 'CarbonDioxide', @i)
 		SELECT @i = @i + 1
 	END
 

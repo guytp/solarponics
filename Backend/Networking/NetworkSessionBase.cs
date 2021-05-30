@@ -6,6 +6,7 @@ using System.Threading;
 using NetCoreServer;
 using Solarponics.Models.Messages;
 using Solarponics.Networking.Abstractions;
+using Solarponics.Networking.Exceptions;
 
 namespace Solarponics.Networking
 {
@@ -74,7 +75,7 @@ namespace Solarponics.Networking
             {
                 Console.WriteLine($"Error in session {Id} - disconnecting: {ex.Message}");
                 SendMessage(
-                    new ErrorMessage("Unexpected error handling request: " + ex.Message, message?.Sequence ?? 0),
+                    new ErrorMessage("Unexpected error handling request: " + ex.Message, message?.Sequence ?? 0, (ex as ClientException)?.Urn),
                     false);
                 while (BytesPending > 0)
                     Thread.Yield();

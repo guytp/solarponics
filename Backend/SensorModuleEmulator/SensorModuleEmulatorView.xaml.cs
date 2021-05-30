@@ -1,10 +1,10 @@
-﻿using System.Windows;
+﻿using System.Windows.Controls;
 
 namespace Solarponics.SensorModuleEmulator
 {
-    public partial class SensorModuleEmulatorWindow : Window
+    public partial class SensorModuleEmulatorView : UserControl
     {
-        public SensorModuleEmulatorWindow()
+        public SensorModuleEmulatorView()
         {
             InitializeComponent();
             DataContext = new SensorModuleEmulatorViewModel();

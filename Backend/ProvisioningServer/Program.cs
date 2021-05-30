@@ -1,5 +1,8 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Solarponics.Networking;
+using Solarponics.Networking.Abstractions;
+using Solarponics.ProvisioningServer.Data;
 using Solarponics.ProvisioningServer.Domain;
 using Solarponics.ProvisioningServer.Net;
 
@@ -16,7 +19,7 @@ namespace Solarponics.ProvisioningServer
                     "Provisioning Server",
                     (context, services) =>
                     {
-                        // Repo
+                        services.AddTransient<IProvisioningRepository, ProvisioningRepository>();
                     });
             host.Build().Run();
         }

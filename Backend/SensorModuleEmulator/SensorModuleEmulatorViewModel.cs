@@ -27,6 +27,7 @@ namespace Solarponics.SensorModuleEmulator
                 new RelayCommand(_ => SendReading(SensorType.CarbonDioxide, decimal.Parse(CarbonDioxide)));
             Temperature = "15.2";
             Humidity = "57.3";
+            SerialNumber = "SN01";
             CarbonDioxide = "1532";
             _client = new CommandClient("127.0.0.1", 4201);
             _client.LogMessage += (_, e) => AddLog(e.Log);
@@ -41,6 +42,7 @@ namespace Solarponics.SensorModuleEmulator
         public string Temperature { get; set; }
         public string Humidity { get; set; }
         public string CarbonDioxide { get; set; }
+        public string SerialNumber { get; set; }
         public string Log { get; private set; }
 
 #pragma warning disable CS0067
@@ -62,7 +64,7 @@ namespace Solarponics.SensorModuleEmulator
             SendCommand(new ClientHandshakeRequest
             {
                 Sequence = _sequence++,
-                SerialNumber = "SN01",
+                SerialNumber = SerialNumber,
             });
         }
 
