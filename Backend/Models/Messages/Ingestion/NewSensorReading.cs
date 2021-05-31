@@ -12,6 +12,6 @@ namespace Solarponics.Models.Messages.Ingestion
 
         public byte Number { get; set; }
 
-        public DateTime Time { get; set; }
+        public ulong Timestamp { get; set; }
     }
 }

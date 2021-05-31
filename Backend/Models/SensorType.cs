@@ -2,9 +2,9 @@
 {
     public enum SensorType
     {
-        Unknown,
-        Temperature,
-        CarbonDioxide,
-        Humidity
+        Unknown = 0,
+        Temperature = 1,
+        CarbonDioxide = 2,
+        Humidity = 3
     }
 }

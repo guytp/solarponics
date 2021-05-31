@@ -14,6 +14,7 @@ void main_normal_loop() {
   buzzer_loop();
   sensor_runner_loop();
   net_wifi_loop();
+  ingestion_client_loop();
   if (isBuzzerOn) {
     buzzer_off();
   }

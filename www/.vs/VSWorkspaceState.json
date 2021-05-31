@@ -2,8 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\app"
+    "\\src\\app",
+    "\\src\\app\\sensor-chart",
+    "\\src\\app\\sensor-module-readings",
+    "\\src\\app\\sensor-modules"
   ],
-  "SelectedNode": "\\src\\app\\app.component.html",
+  "SelectedNode": "\\src\\app\\sensor-chart\\sensor-chart.component.ts",
   "PreviewInSolutionExplorer": false
 }

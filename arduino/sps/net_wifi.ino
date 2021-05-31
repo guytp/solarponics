@@ -1,4 +1,3 @@
-#include <WiFi.h>
 String netWifiSsid;
 String netWifiKey;
 int netWifiLastStatus = -777;
@@ -54,7 +53,7 @@ void net_wifi_loop() {
   }
 
   if (isConnected) {
-    // TODO: Start netServerConnection here
+    ingestion_client_start();
   } else if (netWifiLastStatus == WL_CONNECTED) {
     Serial.println("Disconnected, restarting");
     screen_clear();

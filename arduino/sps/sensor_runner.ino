@@ -1,6 +1,3 @@
-#include "DHT.h"
-#include "MHZ.h"
-
 #define DHTPIN 13     // what digital pin we're connected to on the node mcu 1.0
 #define DHTTYPE DHT22   // DHT 22  (AM2302), AM2321
 #define MHZRX 12
@@ -70,4 +67,12 @@ void sensor_runner_update_dht_readings() {
 
   humidity = h;
   temperature = t;
+}
+
+float sensor_runner_temperature() {
+  return temperature;
+}
+
+float sensor_runner_humidity() {
+  return humidity;
 }

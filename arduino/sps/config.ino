@@ -1,4 +1,3 @@
-#include <ArduinoNvs.h>
 #include "EEPROM.h"
 
 void config_setup() {

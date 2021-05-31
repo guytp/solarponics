@@ -76,7 +76,7 @@ namespace Solarponics.SensorModuleEmulator
                 Type = type,
                 Reading = reading,
                 Number = 1,
-                Time = DateTime.UtcNow
+                Timestamp = (ulong)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds
             });
         }
 

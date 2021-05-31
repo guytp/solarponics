@@ -31,7 +31,8 @@ namespace Solarponics.IngestionServer.MessageHandlers
             if (sensor == null)
                 throw new SensorNotFoundException(request.Type, request.Number);
 
-            await _sensorRepository.AddReading(sensor.Id, request.Reading, request.Time);
+            var time = new DateTime(1970, 1, 1, 0, 0, 0).AddSeconds(request.Timestamp);
+            await _sensorRepository.AddReading(sensor.Id, request.Reading, time);
 
             return new AcknowledgeResponse(r.Sequence);
         }

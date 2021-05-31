@@ -1,4 +1,3 @@
-#include <WiFi.h>
 int provisioningNetWifiLastStatus = -777;
 bool provisioningNetProvisioningHasStarted = false;
 bool provisioningNetFirstCheck = false;
@@ -47,7 +46,7 @@ void provisioning_net_wifi_loop() {
 
   if (isConnected) {
     provisioningNetProvisioningHasStarted = true;
-    provisioning_checker_start();
+    provisioning_client_start();
   } else if (provisioningNetProvisioningHasStarted) {
     Serial.println("Provisioning aborted due to new WiFi status, rebooting");
     ESP.restart();

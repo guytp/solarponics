@@ -15,7 +15,8 @@ namespace Solarponics.IngestionServer.Domain
             SetupHandlers(new Dictionary<Type, IMessageHandler>
             {
                 {typeof(NewSensorReading), new NewSensorReadingMessageHandler(sensorRepository)},
-                {typeof(ClientHandshakeRequest), new ClientHandshakeRequestMessageHandler(sensorRepository)}
+                {typeof(ClientHandshakeRequest), new ClientHandshakeRequestMessageHandler(sensorRepository)},
+                {typeof(TimeRequest), new TimeRequestMessageHandler()}
             });
         }
     }

@@ -1,3 +1,9 @@
+#include <ArduinoJson.h>
+#include <WiFi.h>
+#include <ArduinoNvs.h>
+#include <LiquidCrystal_I2C.h>
+#include "DHT.h"
+#include "MHZ.h"
 #define SerialNumber "0A0A0A0A"
 #define RESETCONFIGPIN 4
 
