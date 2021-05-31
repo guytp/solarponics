@@ -29,7 +29,7 @@ void screen_provisioning() {
   lcd.setCursor(4, 2);
   lcd.print("Provisioning");
   lcd.setCursor(1, 3);
-  lcd.print("SSID:  Sp-"SerialNumber);
+  lcd.print("  S/N:  "SerialNumber);
 }
 
 void screen_wifi_status(String ssid, bool isConnected) {
@@ -46,10 +46,12 @@ void screen_wifi_status(String ssid, bool isConnected) {
   int leftOffset = (20 - message.length()) / 2;
   lcd.setCursor(leftOffset, 1);
   lcd.print(message);
+  lcd.setCursor(3, 2);
   if (!isConnected)
   {
-    lcd.setCursor(3, 2);
     lcd.print("NOT  CONNECTED");
+  } else {
+    lcd.print("              ");
   }
 }
 

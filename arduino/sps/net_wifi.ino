@@ -1,65 +1,67 @@
 #include <WiFi.h>
 String netWifiSsid;
+String netWifiKey;
 int netWifiLastStatus = -777;
-bool netWiFiBuzzerOn;
-unsigned long netWiFiBuzzerStart;
+bool netWifiUseWifi;
+bool netWifiUseStaticIp;
+bool netWifiFirstCheck = false;
+bool netWifiSecondCheck = false;
 
 void net_wifi_setup() {
+  netWifiUseWifi = config_get_use_wifi();
+  if (!netWifiUseWifi)
+    return;
+
   netWifiSsid = config_get_ssid();
-  String ssidKey = config_get_ssid_key();
-  String ipString = config_get_ip();
-  String gatewayString = config_get_gateway();
-  String broadcastString = config_get_broadcast();
-  String dnsString = config_get_dns();
-  IPAddress ip;
-  IPAddress gateway;
-  IPAddress broadcast;
-  IPAddress dns;
-  ip.fromString(ipString);
-  gateway.fromString(gatewayString);
-  broadcast.fromString(broadcastString);
-  dns.fromString(dnsString);
-  Serial.print("Configuring WiFi for ");
-  Serial.print(ip);
-  Serial.print(" ");
-  Serial.print(broadcast);
-  Serial.print(" gw ");
-  Serial.print(gateway);
-  Serial.print(" dns ");
-  Serial.println(dns);
-  WiFi.config(ip, dns, gateway, broadcast);
-  Serial.print("Connecting to ");
-  Serial.println(netWifiSsid);
-  WiFi.begin(netWifiSsid.c_str(), ssidKey.c_str());
+  netWifiKey  = config_get_ssid_key();
+
+  netWifiUseStaticIp = config_get_use_static_ip();
+  wifi_connect(netWifiSsid.c_str(), netWifiKey.c_str(), netWifiUseStaticIp);
 }
 
 void net_wifi_loop() {
   int status = WiFi.status();
+  bool isConnected = status == WL_CONNECTED;
+  
   if (status == netWifiLastStatus)
   {
-    if (!netWiFiBuzzerOn && status != WL_CONNECTED && millis() > netWiFiBuzzerStart)
-    {
-      buzzer_cycle_on();
-      buzzer_cycle_set_interval(1000);
-      netWiFiBuzzerOn = true;
+    // If we cannot connect within 15 seconds, reboot
+    if (!isConnected and millis() > 5000 && !netWifiFirstCheck) {
+      Serial.println("Resetting WiFi (try 1)");
+      wifi_connect(netWifiSsid.c_str(), netWifiKey.c_str(), netWifiUseStaticIp);
+      netWifiFirstCheck = true;
+    }
+    else if (!isConnected and millis() > 10000 && !netWifiSecondCheck) {
+      Serial.println("Resetting WiFi (try 2)");
+      wifi_connect(netWifiSsid.c_str(), netWifiKey.c_str(), netWifiUseStaticIp);
+      netWifiSecondCheck = true;
+    }
+    else if (!isConnected && millis() > 15000) {
+      Serial.println("WiFi not connected, rebooting");
+      ESP.restart();
     }
     return;
   }
 
-  bool isConnected = status == WL_CONNECTED;
-  Serial.print("WiFi status changed to ");
-  Serial.print(status);
-  Serial.print(". Connected? ");
-  Serial.println(isConnected ? "yes" : "no");
+  Serial.print("WiFi status changed to: ");
+  const char * statusMessage = wifi_get_status_message(status);
+  Serial.println(statusMessage);
   screen_wifi_status(netWifiSsid, isConnected);
 
   if (isConnected) {
-    net_server_connection_start();
-    buzzer_cycle_off();
-    netWiFiBuzzerOn = false;
-  } else {
-    net_server_connection_stop();
-    netWiFiBuzzerStart = millis() + 5000;
+      Serial.print("IP Address ");
+      Serial.println(WiFi.localIP());
   }
+
+  if (isConnected) {
+    // TODO: Start netServerConnection here
+  } else if (netWifiLastStatus == WL_CONNECTED) {
+    Serial.println("Disconnected, restarting");
+    screen_clear();
+    screen_text("Disconnected");
+    delay(5000);
+    ESP.restart();
+  }
+  
   netWifiLastStatus = status;
 }

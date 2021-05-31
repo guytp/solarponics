@@ -21,8 +21,7 @@ namespace Solarponics.ProvisioningServer.MessageHandlers
 
             var config = await _repo.GetConfig(request.SerialNumber);
             if (config == null)
-                throw new ClientException("urn:sp:provisioning:unknown-serial-number",
-                    "The supplied serial number is not available for provisioning");
+                throw new ClientException("urn:sp:bad-sn", "The supplied serial number is not available for provisioning");
 
             await _repo.Provision(request.SerialNumber);
 

@@ -28,11 +28,11 @@ export class SensorChartComponent   {
   }
 
   get sensorType(): string {
-    if (this.sensor.type == "1")
+    if (this.sensor.type == "Temperature")
       return "Temperature";
-    else if (this.sensor.type == "2")
+    else if (this.sensor.type == "CarbonDioxide")
       return "Carbon Dioxide";
-    else if (this.sensor.type == "3")
+    else if (this.sensor.type == "Humidity")
       return "Humidity";
     return `Unknown (${this.sensor.type})`;
   }

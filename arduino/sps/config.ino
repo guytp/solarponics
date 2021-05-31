@@ -23,6 +23,32 @@ void config_set_isProvisioned() {
   NVS.setInt("isProvisioned", 1);
 }
 
+bool config_get_use_static_ip() {
+  int val = NVS.getInt("useStaticIp") == 1;
+  Serial.print("Config useStaticIp = ");
+  Serial.println(val);
+  return val == 1;
+}
+
+void config_set_use_static_ip(bool value) {
+  Serial.print("Setting useStaticIp = ");
+  Serial.println(value ? "1" : "0");
+  NVS.setInt("useStaticIp", value ? 1 : 0);
+}
+
+bool config_get_use_wifi() {
+  int val = NVS.getInt("useWifi") == 1;
+  Serial.print("Config useWifi= ");
+  Serial.println(val);
+  return val == 1;
+}
+
+void config_set_use_wifi(bool value) {
+  Serial.print("Setting useWifi = ");
+  Serial.println(value ? "1" : "0");
+  NVS.setInt("useWifi", value ? 1 : 0);
+}
+
 String config_get_ssid() {
   String val = NVS.getString("ssid");
   Serial.print("Config ssid = ");
@@ -37,17 +63,17 @@ void config_set_ssid(char * value) {
 }
 
 String config_get_ssid_key() {
-  String val = NVS.getString("ssidKey");
-  Serial.print("Config ssidKey = ");
+  String val = NVS.getString("netWifiKey");
+  Serial.print("Config netWifiKey = ");
   Serial.println(val);
   return val;
 }
 
 
 void config_set_ssid_key(char * value) {
-  Serial.print("Setting ssidKey = ");
+  Serial.print("Setting netWifiKey = ");
   Serial.println(value);
-  NVS.setString("ssidKey", value);
+  NVS.setString("netWifiKey", value);
 }
 
 String config_get_ip() {

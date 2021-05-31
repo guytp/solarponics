@@ -2,15 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\app",
-    "\\src\\app\\api-client",
-    "\\src\\app\\models",
-    "\\src\\app\\provision-sensor-module",
-    "\\src\\app\\sensor-chart",
-    "\\src\\app\\sensor-module-readings",
-    "\\src\\app\\sensor-modules",
-    "\\src\\environments"
+    "\\src\\app"
   ],
-  "SelectedNode": "\\src\\app\\app.module.ts",
+  "SelectedNode": "\\src\\app\\app.component.html",
   "PreviewInSolutionExplorer": false
 }

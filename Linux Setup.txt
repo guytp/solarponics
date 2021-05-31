@@ -1,0 +1,56 @@
+sudo -i
+adduser solarponics
+apt-get update
+apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu  $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+apt-get update
+apt-get install -y docker-ce docker-ce-cli containerd.io
+usermod -aG docker solarponics
+usermod -aG sudo solarponics
+su - solarponics
+mkdir -p data/dhcp-provisioning data/dhcp-ingestion data/provisioning data/ingestion data/www data/dns/etc data/dns/lib data/dns/log data/dns/cache
+nano -w data/dhcp-provisioning/dhcpd.conf
+nano -w data/dhcp-ingestion/dhcpd.conf
+nano -w data/dns/named.conf
+exit
+nano -w /etc/systemd/resolved.conf
+ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
+systemctl restart systemd-resolved
+docker run -dti --init --net host --name dhcp-provisioning --restart unless-stopped -v "/home/solarponics/data/dhcp-provisioning":/data networkboot/dhcpd enp6s0
+docker run -dti --init --net host --name dhcp-ingestion --restart unless-stopped -v "/home/solarponics/data/dhcp-ingestion":/data networkboot/dhcpd enp7s0
+docker run -dti --name=bind9 --net host --restart=unless-stopped --volume /home/solarponics/data/dns/etc:/etc/bind --volume /home/solarponics/data/dns/cache:/var/cache/bind --volume /home/solarponics/data/dns/lib:/var/lib/bind --volume /home/solarponics/data/dns/log:/var/log internetsystemsconsortium/bind9:9.11
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu/20.04/mssql-server-2019.list)"
+curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list | sudo tee /etc/apt/sources.list.d/msprod.list
+apt-get update
+apt-get install -y mssql-server mssql-tools
+/opt/mssql/bin/mssql-conf setup
+systemctl enable mssql-server
+systemctl status mssql-server --no-pager
+echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~solarponics/.bashrc
+source ~/.bashrc
+wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+dpkg -i packages-microsoft-prod.deb
+apt-get update
+apt-get install -y apt-transport-https aspnetcore-runtime-3.1
+apt-get install -y nginx
+ln -s /etc/nginx/sites-available/solarponics /etc/nginx/sites-enabled/solarponics
+rm /etc/nginx/sites-enabled/default
+
+
+
+[ Deploy DB / Provisioning / Ingestion / www ]
+
+
+
+chmod a+r /home/solarponics/data/www
+chmod -R a+r /home/solarponics/data/www/*
+systemctl restart nginx
+
+Configs to Copy
+	data/*
+	/etc/netplan/*
+	/etc/nginx/sites-available/solarponics
+	/etc/systemd/resolved.conf

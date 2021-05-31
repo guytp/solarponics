@@ -1,4 +1,4 @@
- #define SerialNumber "0A0A0A0A"
+#define SerialNumber "0A0A0A0A"
 #define RESETCONFIGPIN 4
 
 bool isProvisioned = false;
@@ -33,6 +33,10 @@ void loop(){
 
 
 bool sps_provisioning_checks() {
+  if (!config_get_isProvisioned()) {
+    return false;
+  }
+  
   sps_check_for_config_reset();
   if (config_get_isProvisioned()) {
     return true;

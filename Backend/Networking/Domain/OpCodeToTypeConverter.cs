@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Solarponics.Models.Messages;
 using Solarponics.Networking.Abstractions;
+using Solarponics.Networking.Exceptions;
 
 namespace Solarponics.Networking.Domain
 {
@@ -27,6 +28,10 @@ namespace Solarponics.Networking.Domain
 
         public Type TypeForOpCode(byte opCode)
         {
+            if (!_map.ContainsKey(opCode))
+            {
+                throw new ClientException("urn:sp:badopcode", "Unknown opcode " + opCode);
+            }
             return _map[opCode];
         }
     }

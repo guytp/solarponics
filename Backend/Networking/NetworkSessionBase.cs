@@ -50,6 +50,7 @@ namespace Solarponics.Networking
             try
             {
                 Console.WriteLine("Received " + size + " bytes at offset " + offset);
+                Console.WriteLine(BitConverter.ToString(buffer, (int)offset, (int)size));
                 var type = _opCodeToTypeConverter.TypeForOpCode(buffer[offset]);
                 message =
                     (IMessage) JsonSerializer.Deserialize(
@@ -74,6 +75,7 @@ namespace Solarponics.Networking
             catch (Exception ex)
             {
                 Console.WriteLine($"Error in session {Id} - disconnecting: {ex.Message}");
+                Console.WriteLine(ex);
                 SendMessage(
                     new ErrorMessage("Unexpected error handling request: " + ex.Message, message?.Sequence ?? 0, (ex as ClientException)?.Urn),
                     false);

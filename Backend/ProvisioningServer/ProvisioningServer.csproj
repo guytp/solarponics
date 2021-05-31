@@ -1,11 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyName>Solarponics.ProvisioningServer</AssemblyName>
     <RootNamespace>Solarponics.ProvisioningServer</RootNamespace>
+    <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
   </PropertyGroup>
+
 
   <ItemGroup>
     <ProjectReference Include="..\Data\Data.csproj" />
