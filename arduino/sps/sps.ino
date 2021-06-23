@@ -3,14 +3,15 @@
 #include <ArduinoNvs.h>
 #include <LiquidCrystal_I2C.h>
 #include "DHT.h"
-#include "MHZ.h"
+#include <MHZ.h>
 #define SerialNumber "0A0A0A0A"
+#define FirmwareVersion "0.1"
 #define RESETCONFIGPIN 4
 
 bool isProvisioned = false;
 
 void setup(){
-  Serial.begin(115200);
+  Serial.begin(9600);
   while(!Serial) {;}
   Serial.println("Device starting up");
 

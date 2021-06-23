@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "WebApi\WebApi.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProvisioningServer", "ProvisioningServer\ProvisioningServer.csproj", "{684522D1-10E0-4785-B715-F93C708E831F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Networking", "Networking\Networking.csproj", "{F4F630FE-FA84-4674-AF77-BB530F70796A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Networking", "Networking\Networking.csproj", "{F4F630FE-FA84-4674-AF77-BB530F70796A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductionManager", "ProductionManager\ProductionManager.csproj", "{26F42C94-76C8-44EA-BC85-C83F2B064F11}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +61,10 @@ Global
 		{F4F630FE-FA84-4674-AF77-BB530F70796A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4F630FE-FA84-4674-AF77-BB530F70796A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4F630FE-FA84-4674-AF77-BB530F70796A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26F42C94-76C8-44EA-BC85-C83F2B064F11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26F42C94-76C8-44EA-BC85-C83F2B064F11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26F42C94-76C8-44EA-BC85-C83F2B064F11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26F42C94-76C8-44EA-BC85-C83F2B064F11}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

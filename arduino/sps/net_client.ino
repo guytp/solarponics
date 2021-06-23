@@ -1,10 +1,29 @@
+bool netClientInstantFail = false;
+int netClientFailCount = 0;
+
+void net_client_instant_fail(bool value) {
+  netClientInstantFail = value;
+}
+
 void net_client_fail(String log, String screen) {
-  Serial.println("Fatal network error");
-  Serial.println(log);
-  screen_clear();
-  screen_text(screen);
-  delay(5000);
-  ESP.restart();
+  if (!netClientInstantFail) {
+    netClientFailCount++;      
+  }
+
+  if (netClientInstantFail || netClientFailCount > 5)
+  {
+    Serial.println("Fatal network error");
+    Serial.println(log);
+    screen_clear();
+    screen_text(screen);
+    delay(5000);
+    ESP.restart();
+  } else {
+    Serial.print("Network error, ignoring it this time ");
+    Serial.print(netClientFailCount);
+    Serial.println("/5");
+    Serial.println(log);
+  }
 }
 
 void net_client_json_parse(JsonDocument &doc, WiFiClient &client) {

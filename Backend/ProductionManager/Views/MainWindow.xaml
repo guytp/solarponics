@@ -1,0 +1,25 @@
+﻿<Window x:Class="Solarponics.ProductionManager.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:abstractions="clr-namespace:Solarponics.ProductionManager.Abstractions"
+        xmlns:views="clr-namespace:Solarponics.ProductionManager.Views"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=abstractions:IMainWindowViewModel}"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        ShowInTaskbar="True"
+        ResizeMode="NoResize"
+        Background="#071D27"
+        Title="Solarponics Production Manager" Height="450" Width="800">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <views:StatusBarView VerticalAlignment="Top" DataContext="{Binding Path=StatusBarViewModel}" Margin="-20,-20,-20,0" />
+        <Image Source="pack://application:,,,/Solarponics.ProductionManager;component/Images/solarponics_horztl_trans.png" StretchDirection="DownOnly" HorizontalAlignment="Left" Margin="0,20,0,0" />
+        <UserControl Grid.Row="1" Content="{Binding Path=ActiveView, PresentationTraceSources.TraceLevel=High}" />
+    </Grid>
+</Window>

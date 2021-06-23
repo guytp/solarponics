@@ -3,8 +3,9 @@ DynamicJsonDocument provisioningClientDoc(4096);
     
 void provisioning_client_start() {
   // Setup screen
+  net_client_instant_fail(true);
   if (!provisioningClientClient.connect("192.168.42.1", 4203)) {
-    net_client_fail("Cannot connect to provisioning server", "Cannot Connect");
+    net_client_fail("Cannot connect to provisioning server", "Cannot Connect Prov");
     return;
   }
   screen_text("Connected");

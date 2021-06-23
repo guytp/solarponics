@@ -11,11 +11,12 @@ unsigned long ingestionClientExpectedAck = 0;
 
 void ingestion_client_start()
 {
+  net_client_instant_fail(false);
   String server = config_get_server();
   Serial.print("Remote server is at ");
   Serial.println(server);
   if (!ingestionClientClient.connect(server.c_str(), 4201)) {
-    net_client_fail("Cannot connect to ingestion server", "Cannot Connect");
+    net_client_fail("Cannot connect to ingestion server", "Cannot Connect Ing");
     return;
   }
 
@@ -54,13 +55,20 @@ void ingestion_client_loop()
 
   if (millis() > ingestionClientNextSensorPush) {
     ingestion_client_send_reading(sensor_runner_temperature(), 1);
-    //ingestion_client_send_reading(sensor_runner_carbon_dioxide(), 2);
+    ingestion_client_send_reading(carbon_dioxide_value(), 2);
     ingestion_client_send_reading(sensor_runner_humidity(), 3);
     ingestionClientNextSensorPush = millis() + 15000;
   }
 }
 
 void ingestion_client_send_reading(float value, uint8_t type) {
+  if (value <= 0) {
+    Serial.print("Skipping reading of ");
+    Serial.print(type);
+    Serial.println(" as it is <= 0");
+    return;
+  }
+  
   Serial.print("Sending ");
   Serial.print(type);
   Serial.print(" reading of ");

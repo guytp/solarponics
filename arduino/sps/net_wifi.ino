@@ -1,6 +1,7 @@
 String netWifiSsid;
 String netWifiKey;
 int netWifiLastStatus = -777;
+bool netWifiUpdateScreen = false;
 bool netWifiUseWifi;
 bool netWifiUseStaticIp;
 bool netWifiFirstCheck = false;
@@ -36,8 +37,13 @@ void net_wifi_loop() {
       netWifiSecondCheck = true;
     }
     else if (!isConnected && millis() > 15000) {
-      Serial.println("WiFi not connected, rebooting");
+      net_client_instant_fail(true);
+      net_client_fail("WiFi not connected, rebooting", "WiFi No Conn");
       ESP.restart();
+    }
+
+    if (netWifiUpdateScreen) {
+      screen_wifi_status(netWifiSsid, isConnected);
     }
     return;
   }
@@ -63,4 +69,8 @@ void net_wifi_loop() {
   }
   
   netWifiLastStatus = status;
+}
+
+void net_wifi_update_screen() {
+  netWifiUpdateScreen = true;
 }

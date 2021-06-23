@@ -28,7 +28,8 @@ void provisioning_net_wifi_loop() {
       provisioningNetSecondCheck = true;
     }
     else if (!isConnected && millis() > 15000) {
-      Serial.println("WiFi not connected, rebooting");
+      net_client_instant_fail(true);
+      net_client_fail("WiFi not connected, rebooting", "WiFi No Conn Prov");
       ESP.restart();
     }
     return;
