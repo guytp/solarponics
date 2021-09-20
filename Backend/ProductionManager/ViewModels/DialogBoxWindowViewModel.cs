@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
-using Solarponics.ProductionManager.Abstractions;
+using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Commands;
 using Solarponics.ProductionManager.Enums;
 using Solarponics.ProductionManager.EventArgs;

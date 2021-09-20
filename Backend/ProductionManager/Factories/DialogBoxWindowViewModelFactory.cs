@@ -1,4 +1,5 @@
 ﻿using Solarponics.ProductionManager.Abstractions;
+using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.ViewModels;
 
 namespace Solarponics.ProductionManager.Factories

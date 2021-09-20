@@ -88,5 +88,24 @@
     <Build Include="dbo\Stored Procedures\SensorModuleProvisionFromQueue.sql" />
     <Build Include="dbo\Tables\User.sql" />
     <Build Include="dbo\Stored Procedures\UserAuthenticate.sql" />
+    <Build Include="dbo\Tables\Audit.sql" />
+    <Build Include="dbo\Tables\Autoclave.sql" />
+    <Build Include="dbo\Tables\Culture.sql" />
+    <Build Include="dbo\Tables\ProductionManager.sql" />
+    <Build Include="dbo\Tables\ProductionManagerSerialDevice.sql" />
+    <Build Include="dbo\Tables\Recipe.sql" />
+    <Build Include="dbo\Tables\Shelf.sql" />
+    <Build Include="dbo\Tables\Supplier.sql" />
+    <Build Include="dbo\Tables\WasteReason.sql" />
+    <Build Include="dbo\Stored Procedures\AuditAdd.sql" />
+    <Build Include="dbo\Stored Procedures\SupplierAdd.sql" />
+    <Build Include="dbo\Stored Procedures\SupplierDelete.sql" />
+    <Build Include="dbo\Stored Procedures\SupplierGet.sql" />
+    <Build Include="dbo\Stored Procedures\SupplierUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\RecipeAdd.sql" />
+    <Build Include="dbo\Stored Procedures\RecipeDelete.sql" />
+    <Build Include="dbo\Stored Procedures\RecipeGet.sql" />
+    <Build Include="dbo\Stored Procedures\RecipeUpdate.sql" />
+    <Build Include="dbo\Tables\ProductionManagerPrinter.sql" />
   </ItemGroup>
 </Project>

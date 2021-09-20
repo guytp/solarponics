@@ -1,5 +1,6 @@
 ﻿using System;
 using Solarponics.ProductionManager.Abstractions;
+using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Enums;
 
 namespace Solarponics.ProductionManager.Domain

@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[WasteReason]
+(
+	[Id] INT NOT NULL PRIMARY KEY,
+	[Reason] NVARCHAR(200) NOT NULL
+)

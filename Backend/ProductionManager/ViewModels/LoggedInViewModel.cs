@@ -1,31 +1,28 @@
-﻿using System.Windows.Input;
-using Solarponics.Models;
+﻿using Solarponics.Models;
 using Solarponics.ProductionManager.Abstractions;
-using Solarponics.ProductionManager.Commands;
+using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Core;
 
 namespace Solarponics.ProductionManager.ViewModels
 {
     public class LoggedInViewModel : ViewModelBase, ILoggedInViewModel
     {
-        private readonly IAuthenticationSession authenticationSession;
-        private readonly INavigator navigator;
-
-        public LoggedInViewModel(INavigator navigator, IAuthenticationSession authenticationSession)
+        public LoggedInViewModel(IAuthenticationSession authenticationSession, IMainMenuItemCategoryViewModel mainMenuItemCategoryViewModel, ILoggedInButtonsViewModel loggedInButtonsViewModel)
         {
-            this.navigator = navigator;
-            this.authenticationSession = authenticationSession;
-            LogoutCommand = new RelayCommand(_ => Logout());
+            authenticationSession.Logout += OnLogout;
+            this.MainMenuItemCategoryViewModel = mainMenuItemCategoryViewModel;
+            this.LoggedInButtonsViewModel = loggedInButtonsViewModel;
         }
 
         public User User { get; set; }
-        public ICommand LogoutCommand { get; }
+        
+        public ILoggedInButtonsViewModel LoggedInButtonsViewModel { get; }
 
-        private void Logout()
+        public IMainMenuItemCategoryViewModel MainMenuItemCategoryViewModel { get; }
+        
+        private void OnLogout(object sender, System.EventArgs e)
         {
-            User = null;
-            authenticationSession.SetUser(null);
-            navigator.ReturnToLogin();
+            this.User = null;
         }
     }
 }

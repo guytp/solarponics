@@ -5,6 +5,7 @@ using Autofac;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 using Solarponics.ProductionManager.Abstractions;
+using Solarponics.ProductionManager.Abstractions.Views;
 using Solarponics.ProductionManager.Data;
 
 namespace Solarponics.ProductionManager

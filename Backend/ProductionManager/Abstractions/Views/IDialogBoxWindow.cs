@@ -1,6 +1,6 @@
 ﻿using Solarponics.ProductionManager.Enums;
 
-namespace Solarponics.ProductionManager.Abstractions
+namespace Solarponics.ProductionManager.Abstractions.Views
 {
     public interface IDialogBoxWindow
     {

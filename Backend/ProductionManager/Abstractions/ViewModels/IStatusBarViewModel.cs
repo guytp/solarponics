@@ -1,4 +1,4 @@
-﻿namespace Solarponics.ProductionManager.Abstractions
+﻿namespace Solarponics.ProductionManager.Abstractions.ViewModels
 {
     public interface IStatusBarViewModel
     {

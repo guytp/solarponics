@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using Solarponics.ProductionManager.EventArgs;
 
-namespace Solarponics.ProductionManager.Abstractions
+namespace Solarponics.ProductionManager.Abstractions.ViewModels
 {
     public interface IDialogBoxWindowViewModel
     {

@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[Supplier]
+(
+	[Id] INT NOT NULL PRIMARY KEY,
+	[Name] NVARCHAR(200) NOT NULL,
+	IsDeleted BIT NOT NULL DEFAULT(0),
+)

@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[Autoclave]
+(
+	[Id] INT NOT NULL PRIMARY KEY,
+	[RoomId] INT NOT NULL,
+	[Name] NVARCHAR(100) NOT NULL,
+	[Details] NVARCHAR(MAX) NOT NULL,
+	FOREIGN KEY (RoomId) REFERENCES Room(Id)
+)

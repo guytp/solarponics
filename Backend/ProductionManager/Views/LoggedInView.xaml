@@ -1,13 +1,22 @@
-﻿<views:ViewBase x:Class="Solarponics.ProductionManager.Views.LoggedInView"
+﻿<core:ViewBase x:Class="Solarponics.ProductionManager.Views.LoggedInView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:abstractions="clr-namespace:Solarponics.ProductionManager.Abstractions"
+             xmlns:viewModelAbstractions="clr-namespace:Solarponics.ProductionManager.Abstractions.ViewModels"
              xmlns:views="clr-namespace:Solarponics.ProductionManager.Views"
+             xmlns:core="clr-namespace:Solarponics.ProductionManager.Core"
              mc:Ignorable="d" 
-             d:DataContext="{d:DesignInstance Type=abstractions:ILoggedInViewModel}">
+             d:DataContext="{d:DesignInstance Type=viewModelAbstractions:ILoggedInViewModel}">
     <Grid>
-          <Button Command="{Binding Path=LogoutCommand}" Content="Logout" HorizontalAlignment="Center" VerticalAlignment="Top" Padding="15,5,15,5" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <views:MainMenuItemCategoryView Grid.Row="0" DataContext="{Binding MainMenuItemCategoryViewModel}" />
+
+        <views:LoggedInButtonsView Grid.Row="2" DataContext="{Binding LoggedInButtonsViewModel}" />
     </Grid>
-</views:ViewBase>
+</core:ViewBase>

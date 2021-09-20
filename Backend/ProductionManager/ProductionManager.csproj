@@ -40,4 +40,14 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="Views\CultureBookInView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\SetupHardwareView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+  </ItemGroup>
+
 </Project>

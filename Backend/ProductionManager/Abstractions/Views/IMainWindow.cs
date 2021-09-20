@@ -1,4 +1,4 @@
-﻿namespace Solarponics.ProductionManager.Abstractions
+﻿namespace Solarponics.ProductionManager.Abstractions.Views
 {
     public interface IMainWindow
     {

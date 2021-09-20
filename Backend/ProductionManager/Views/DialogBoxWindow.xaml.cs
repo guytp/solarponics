@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
-using Solarponics.ProductionManager.Abstractions;
+using Solarponics.ProductionManager.Abstractions.ViewModels;
+using Solarponics.ProductionManager.Abstractions.Views;
 using Solarponics.ProductionManager.Enums;
 
 namespace Solarponics.ProductionManager.Views

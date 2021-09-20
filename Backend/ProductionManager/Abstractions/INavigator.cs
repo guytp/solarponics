@@ -1,4 +1,5 @@
 ﻿using System;
+using Solarponics.ProductionManager.Abstractions.Views;
 using Solarponics.ProductionManager.EventArgs;
 
 namespace Solarponics.ProductionManager.Abstractions
