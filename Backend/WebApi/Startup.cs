@@ -158,7 +158,9 @@ namespace Solarponics.WebApi
             services.AddTransient<IDatabaseConnection, DatabaseConnection>();
             services.AddSingleton<IStoredProcedureFactory, DapperStoredProcedureFactory>();
             services.AddSingleton<IDbConnectionFactory, SqlDbConnectionFactory>();
+            services.AddSingleton<IJwtIssuer, JwtIssuer>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<ISupplierRepository, SupplierRepository>();
             services.AddTransient<ISensorModuleRepository, SensorModuleRepository>();
             services.AddTransient<ISensorReadingRepository, SensorReadingRepository>();
         }

@@ -1,13 +1,9 @@
 ﻿namespace Solarponics.Models
 {
-    public class User
+    public class Supplier
     {
         public int Id { get; set; }
 
-        public short UserId { get; set; }
-
         public string Name { get; set; }
-
-        public string[] Roles => new [] { "Admin" };
     }
 }

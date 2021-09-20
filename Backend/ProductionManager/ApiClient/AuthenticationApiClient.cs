@@ -17,7 +17,7 @@ namespace Solarponics.ProductionManager.ApiClient
             refitClient = RestService.For<IAuthenticationApiClient>(settings.ApiBaseUrl, new RefitSettings());
         }
 
-        public async Task<User> Authenticate(AuthenticateRequest request)
+        public async Task<AuthenticateResponse> Authenticate(AuthenticateRequest request)
         {
             try
             {

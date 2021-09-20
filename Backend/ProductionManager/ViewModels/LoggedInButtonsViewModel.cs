@@ -35,7 +35,7 @@ namespace Solarponics.ProductionManager.ViewModels
         
         private void Logout()
         {
-            authenticationSession.SetUser(null);
+            authenticationSession.SetUser(null, null);
             navigator.ReturnToLogin();
         }
         

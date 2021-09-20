@@ -9,6 +9,6 @@ namespace Solarponics.ProductionManager.Abstractions
     public interface IAuthenticationApiClient
     {
         [Put("/auth")]
-        Task<User> Authenticate(AuthenticateRequest request);
+        Task<AuthenticateResponse> Authenticate(AuthenticateRequest request);
     }
 }

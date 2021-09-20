@@ -41,7 +41,7 @@ namespace Solarponics.ProductionManager.ViewModels
 
             try
             {
-                var user = await apiClient.Authenticate(new AuthenticateRequest
+                var authenticateResponse = await apiClient.Authenticate(new AuthenticateRequest
                 {
                     UserId = short.Parse(UserId),
                     Pin = short.Parse(Pin)
@@ -50,14 +50,14 @@ namespace Solarponics.ProductionManager.ViewModels
                 UserId = null;
                 Pin = null;
 
-                if (user == null)
+                if (authenticateResponse == null)
                 {
                     dialogBox.Show("Your login details are not correct.  Please check and try again.");
                     return;
                 }
 
-                this.loggedInView.LoggedInViewModel.User = user;
-                this.authenticationSession.SetUser(user);
+                this.loggedInView.LoggedInViewModel.User = authenticateResponse.User;
+                this.authenticationSession.SetUser(authenticateResponse.User, authenticateResponse.AuthenticationToken);
                 this.navigator.NavigateTo(this.loggedInView);
             }
             catch (Exception ex)
