@@ -48,6 +48,7 @@ namespace Solarponics.ProductionManager
             builder.RegisterType<DialogBox>().As<IDialogBox>();
 
             builder.RegisterType<AuthenticationApiClient>().As<IAuthenticationApiClient>();
+            builder.RegisterType<SupplierApiClient>().As<ISupplierApiClient>();
 
             builder.RegisterType<CultureBookInView>().As<ICultureBookInView>().SingleInstance();
             builder.RegisterType<CultureBookInViewModel>().As<ICultureBookInViewModel>().SingleInstance();

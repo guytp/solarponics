@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Culture]
 (
-	[Id] INT NOT NULL PRIMARY KEY,
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
 	[SupplierId] INT NOT NULL,
 	[BookedInUserId] INT NOT NULL,
 	[MediumType] INT NOT NULL,

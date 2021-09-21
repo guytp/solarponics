@@ -24,7 +24,9 @@ namespace Solarponics.ProductionManager.Domain
             if (view == ActiveView)
                 return;
 
+            ActiveView?.ViewModel?.OnHide();
             ActiveView = view;
+            view?.ViewModel?.OnShow();
             ViewChanged?.Invoke(this, new ViewEventArgs(view));
         }
 

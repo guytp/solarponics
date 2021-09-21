@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[ProductionManagerHardwareDevice]
 (
-	[Id] INT NOT NULL PRIMARY KEY,
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
 	[ProductionManagerId] INT NOT NULL,
 	[DeviceType] TINYINT NOT NULL,
 	[DriverName] NVARCHAR(500) NOT NULL,

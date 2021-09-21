@@ -17,6 +17,7 @@ BEGIN
 
 	EXEC AuditAdd @table = 'Supplier', @column = 'Name', @action = 'Add', @userId = @userId, @key = @id, @newValue = @name
 
+	SELECT @id [Id]
 
 	COMMIT TRAN
 
