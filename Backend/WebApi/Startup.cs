@@ -161,6 +161,7 @@ namespace Solarponics.WebApi
             services.AddSingleton<IJwtIssuer, JwtIssuer>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ISupplierRepository, SupplierRepository>();
+            services.AddTransient<IRecipeRepository, RecipeRepository>();
             services.AddTransient<ISensorModuleRepository, SensorModuleRepository>();
             services.AddTransient<ISensorReadingRepository, SensorReadingRepository>();
         }

@@ -40,6 +40,8 @@ namespace Solarponics.ProductionManager.ViewModels
         public override async Task OnShow()
         {
             this.Suppliers = await this.supplierApiClient.Get();
+            this.SelectedSupplier = null;
+            this.NewName = null;
         }
         
         private async void Add()

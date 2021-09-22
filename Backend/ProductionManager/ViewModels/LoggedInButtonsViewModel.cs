@@ -1,4 +1,5 @@
-﻿using Solarponics.ProductionManager.Abstractions;
+﻿using PropertyChanged;
+using Solarponics.ProductionManager.Abstractions;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Commands;
 using Solarponics.ProductionManager.Core;
@@ -39,6 +40,7 @@ namespace Solarponics.ProductionManager.ViewModels
             navigator.ReturnToLogin();
         }
         
+        [SuppressPropertyChangedWarnings]
         private void OnViewChanged(object sender, EventArgs.ViewEventArgs e)
         {
             this.IsHomeVisible = e.View != HomeView;
