@@ -1,4 +1,4 @@
-﻿using Solarponics.ProductionManager.Abstractions;
+﻿using Solarponics.ProductionManager.Abstractions.Factories;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.ViewModels;
 

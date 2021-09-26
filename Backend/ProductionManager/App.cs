@@ -5,6 +5,7 @@ using Autofac;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 using Solarponics.ProductionManager.Abstractions;
+using Solarponics.ProductionManager.Abstractions.Hardware;
 using Solarponics.ProductionManager.Abstractions.Views;
 using Solarponics.ProductionManager.Data;
 
@@ -19,6 +20,8 @@ namespace Solarponics.ProductionManager
 
         public IComponentLocator ComponentLocator { get; private set; }
 
+        public IHardwareProvider HardwareProvider { get; private set; }
+
         internal static void HandleUnhandledError(Exception ex)
         {
             var message = "A fatal error occurred." + Environment.NewLine + Environment.NewLine + ex;
@@ -29,7 +32,7 @@ namespace Solarponics.ProductionManager
             Environment.Exit(1);
         }
 
-        private void OnStartup(object sender, StartupEventArgs e)
+        private async void OnStartup(object sender, StartupEventArgs e)
         {
             try
             {
@@ -51,6 +54,9 @@ namespace Solarponics.ProductionManager
                 containerBuilder.RegisterModule(autoFacModule);
                 var container = containerBuilder.Build();
                 ComponentLocator = container.Resolve<IComponentLocator>();
+
+                HardwareProvider = this.ComponentLocator.ResolveComponent<IHardwareProvider>();
+                await HardwareProvider.Start();
 
                 var mainWindow = container.Resolve<IMainWindow>();
                 mainWindow.Show();

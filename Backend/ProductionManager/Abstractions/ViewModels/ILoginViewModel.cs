@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace Solarponics.ProductionManager.Abstractions
+namespace Solarponics.ProductionManager.Abstractions.ViewModels
 {
     public interface ILoginViewModel : IViewModel
     {

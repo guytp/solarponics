@@ -4,7 +4,7 @@ using Refit;
 using Solarponics.Models;
 using Solarponics.Models.WebApi;
 
-namespace Solarponics.ProductionManager.Abstractions
+namespace Solarponics.ProductionManager.Abstractions.ApiClients
 {
     public interface IAuthenticationApiClient
     {

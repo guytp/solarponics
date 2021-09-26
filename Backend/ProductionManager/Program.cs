@@ -9,6 +9,7 @@ namespace Solarponics.ProductionManager
         {
             try
             {
+                System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
                 var app = new App();
                 app.Run();
             }

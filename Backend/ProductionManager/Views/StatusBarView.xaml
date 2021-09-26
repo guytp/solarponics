@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:abstractions="clr-namespace:Solarponics.ProductionManager.Abstractions"
+             xmlns:abstractions="clr-namespace:Solarponics.ProductionManager.Abstractions.ViewModels"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=abstractions:IStatusBarViewModel}"
              d:DesignWidth="800">

@@ -2,7 +2,7 @@
 using Solarponics.Models;
 using System.Threading.Tasks;
 
-namespace Solarponics.ProductionManager.Abstractions
+namespace Solarponics.ProductionManager.Abstractions.ApiClients
 {
     public interface ISupplierApiClient
     {

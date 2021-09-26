@@ -5,10 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:core="clr-namespace:Solarponics.ProductionManager.Core"
              xmlns:views="clr-namespace:Solarponics.ProductionManager.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             xmlns:abstractions="clr-namespace:Solarponics.ProductionManager.Abstractions.ViewModels"
+             d:DataContext="{d:DesignInstance Type=abstractions:ISetupHardwareViewModel}"
+             mc:Ignorable="d" IsEnabled="{Binding Path=IsUiEnabled}">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
@@ -16,6 +21,20 @@
 
         <views:ViewHeader Category="Setup" Title="Hardware" Grid.Row="0" />
 
-        <views:LoggedInButtonsView Grid.Row="2" DataContext="{Binding LoggedInButtonsViewModel}" />
+        <views:SerialDeviceSettingsView DataContext="{Binding Path=BarcodeScanner}" Header="Barcode Scanner" Grid.Row="1" Margin="20" />
+        <views:PrinterSettingsView DataContext="{Binding Path=LabelPrinter}" Grid.Row="2" Margin="20" />
+        <views:SerialDeviceSettingsView DataContext="{Binding Path=Scale}" Header="Scale" Grid.Row="3" Margin="20" />
+
+        <Grid Margin="0,0,0,20" Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Command="{Binding Path=SaveCommand}" IsEnabled="{Binding Path=IsSaveEnabled}" Content="Save" HorizontalAlignment="Center" VerticalAlignment="Top" Padding="50,15,50,15" FontSize="24" Width="250" />
+
+            <Button Grid.Column="1" Command="{Binding Path=LabelPrintCommand}" IsEnabled="{Binding Path=IsLabelTestEnabled}" Content="Label Test" HorizontalAlignment="Center" VerticalAlignment="Top" Padding="50,15,50,15" FontSize="24" Width="250" />
+        </Grid>
+
+        <views:LoggedInButtonsView Grid.Row="4" DataContext="{Binding LoggedInButtonsViewModel}" Margin="0,80,0,4" Grid.RowSpan="2" />
     </Grid>
 </core:ViewBase>

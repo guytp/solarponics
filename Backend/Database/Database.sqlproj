@@ -92,7 +92,7 @@
     <Build Include="dbo\Tables\Autoclave.sql" />
     <Build Include="dbo\Tables\Culture.sql" />
     <Build Include="dbo\Tables\ProductionManager.sql" />
-    <Build Include="dbo\Tables\ProductionManagerSerialDevice.sql" />
+    <Build Include="dbo\Tables\ProductionManagerHardwareSerialDevice.sql" />
     <Build Include="dbo\Tables\Recipe.sql" />
     <Build Include="dbo\Tables\Shelf.sql" />
     <Build Include="dbo\Tables\Supplier.sql" />
@@ -106,6 +106,15 @@
     <Build Include="dbo\Stored Procedures\RecipeDelete.sql" />
     <Build Include="dbo\Stored Procedures\RecipeGet.sql" />
     <Build Include="dbo\Stored Procedures\RecipeUpdate.sql" />
-    <Build Include="dbo\Tables\ProductionManagerPrinter.sql" />
+    <Build Include="dbo\Tables\ProductionManagerHardwarePrinter.sql" />
+    <Build Include="dbo\Stored Procedures\ProductionManagerHardwareGet.sql" />
+    <Build Include="dbo\Stored Procedures\ProductionManagerHardwareSetBarcodeScanner.sql" />
+    <Build Include="dbo\Stored Procedures\ProductionManagerHardwareSetSerialDevice.sql" />
+    <Build Include="dbo\Stored Procedures\ProductionManagerHardwareSetScale.sql" />
+    <Build Include="dbo\Stored Procedures\ProductionManagerHardwareSetLabelPrinter.sql" />
+    <Build Include="dbo\Stored Procedures\ProductionManagerHardwareRemoveLabelPrinter.sql" />
+    <Build Include="dbo\Stored Procedures\ProductionManagerHardwareRemoveSerialDevice.sql" />
+    <Build Include="dbo\Stored Procedures\ProductionManagerHardwareRemoveScale.sql" />
+    <Build Include="dbo\Stored Procedures\ProductionManagerHardwareRemoveBarcodeScanner.sql" />
   </ItemGroup>
 </Project>

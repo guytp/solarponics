@@ -1,9 +1,8 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
 using Refit;
-using Solarponics.Models;
 using Solarponics.Models.WebApi;
-using Solarponics.ProductionManager.Abstractions;
+using Solarponics.ProductionManager.Abstractions.ApiClients;
 using Solarponics.ProductionManager.Data;
 
 namespace Solarponics.ProductionManager.ApiClient

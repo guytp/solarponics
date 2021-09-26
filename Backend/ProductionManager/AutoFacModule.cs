@@ -1,5 +1,8 @@
 ﻿using Autofac;
 using Solarponics.ProductionManager.Abstractions;
+using Solarponics.ProductionManager.Abstractions.ApiClients;
+using Solarponics.ProductionManager.Abstractions.Factories;
+using Solarponics.ProductionManager.Abstractions.Hardware;
 using Solarponics.ProductionManager.Abstractions.Modules;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Abstractions.Views;
@@ -7,6 +10,7 @@ using Solarponics.ProductionManager.ApiClient;
 using Solarponics.ProductionManager.Data;
 using Solarponics.ProductionManager.Domain;
 using Solarponics.ProductionManager.Factories;
+using Solarponics.ProductionManager.Hardware;
 using Solarponics.ProductionManager.Modules;
 using Solarponics.ProductionManager.ViewModels;
 using Solarponics.ProductionManager.Views;
@@ -43,13 +47,17 @@ namespace Solarponics.ProductionManager
 
             builder.RegisterType<AuthenticationSession>().As<IAuthenticationSession>().SingleInstance();
 
-            builder.RegisterType<DialogBoxWindowViewModelFactory>().As<IDialogBoxWindowViewModelFactory>();
-            builder.RegisterType<DialogBoxWindowFactory>().As<IDialogBoxWindowFactory>();
+            builder.RegisterType<DialogBoxWindowViewModelFactory>().As<IDialogBoxWindowViewModelFactory>().SingleInstance();
+            builder.RegisterType<PrinterSettingsViewModelFactory>().As<IPrinterSettingsViewModelFactory>().SingleInstance();
+            builder.RegisterType<DialogBoxWindowFactory>().As<IDialogBoxWindowFactory>().SingleInstance();
+            builder.RegisterType<SerialDeviceSettingsViewModelFactory>().As<ISerialDeviceSettingsViewModelFactory>().SingleInstance();
+
             builder.RegisterType<DialogBox>().As<IDialogBox>();
 
             builder.RegisterType<AuthenticationApiClient>().As<IAuthenticationApiClient>();
             builder.RegisterType<SupplierApiClient>().As<ISupplierApiClient>();
             builder.RegisterType<RecipeApiClient>().As<IRecipeApiClient>();
+            builder.RegisterType<HardwareApiClient>().As<IHardwareApiClient>();
 
             builder.RegisterType<CultureBookInView>().As<ICultureBookInView>().SingleInstance();
             builder.RegisterType<CultureBookInViewModel>().As<ICultureBookInViewModel>().SingleInstance();
@@ -62,6 +70,9 @@ namespace Solarponics.ProductionManager
             builder.RegisterType<SetupHardwareView>().As<ISetupHardwareView>().SingleInstance();
             builder.RegisterType<SetupHardwareViewModel>().As<ISetupHardwareViewModel>().SingleInstance();
             builder.RegisterType<SetupModule>().As<ISetupModule>().SingleInstance();
+            
+            builder.RegisterType<DriverProvider>().As<IDriverProvider>().SingleInstance();
+            builder.RegisterType<HardwareProvider>().As<IHardwareProvider>().SingleInstance();
 
             builder.RegisterType<ModuleProvider>().As<IModuleProvider>().SingleInstance();
             builder.RegisterType<ModuleContainer>().As<IModuleContainer>().SingleInstance();

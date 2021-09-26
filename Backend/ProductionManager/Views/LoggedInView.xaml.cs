@@ -1,5 +1,6 @@
 ﻿using Solarponics.ProductionManager.Abstractions;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
+using Solarponics.ProductionManager.Abstractions.Views;
 
 namespace Solarponics.ProductionManager.Views
 {

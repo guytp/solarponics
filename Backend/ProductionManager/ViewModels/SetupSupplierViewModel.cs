@@ -1,5 +1,6 @@
 ﻿using Solarponics.Models;
 using Solarponics.ProductionManager.Abstractions;
+using Solarponics.ProductionManager.Abstractions.ApiClients;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Commands;
 using Solarponics.ProductionManager.Core;
@@ -113,12 +114,16 @@ namespace Solarponics.ProductionManager.ViewModels
             }
         }
 
+#pragma warning disable IDE0051 // Remove unused private members -- Fody
         private void OnSelectedSupplierChanged()
+#pragma warning restore IDE0051 // Remove unused private members
         {
             this.IsDeleteEnabled = this.SelectedSupplier != null;
         }
 
+#pragma warning disable IDE0051 // Remove unused private members -- Fody
         private void OnNewNameChanged()
+#pragma warning restore IDE0051 // Remove unused private members
         {
             this.IsAddEnabled = !string.IsNullOrWhiteSpace(this.NewName);
         }
