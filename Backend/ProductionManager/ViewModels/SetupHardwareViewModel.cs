@@ -193,7 +193,9 @@ namespace Solarponics.ProductionManager.ViewModels
                 return;
             }
 
-            this.hardwareProvider.LabelPrinter.Print(new Data.LabelDefinition("Testing", "ABC12345"));
+            this.hardwareProvider.LabelPrinter.Print(new Data.LabelDefinition("Testing", "ABC12345", Data.BarcodeSize.Medium));
+            this.hardwareProvider.LabelPrinter.Print(new Data.LabelDefinition(null, "ABC12345", Data.BarcodeSize.Small));
+            this.hardwareProvider.LabelPrinter.Print(new Data.LabelDefinition("This is a test label with lots\r\nof text on it that should wrap\r\non to multiple lines within the\r\nlabel."));
         }
     }
 }

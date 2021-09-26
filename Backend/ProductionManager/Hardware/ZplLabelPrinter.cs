@@ -45,29 +45,29 @@ namespace Solarponics.ProductionManager.Hardware
             var top = StartTop;
 
 
-            buffer.AddRange(System.Text.Encoding.ASCII.GetBytes("^XA"));
-
             if (!string.IsNullOrEmpty(label.Barcode))
             {
                 buffer.AddRange(ZPLCommands.BarCodeWrite(Left, top, BarcodeHeight, ElementDrawRotation.NO_ROTATION, new Barcode
                 {
-                    Type = BarcodeType.CODE39_STD_EXT
+                    Type = BarcodeType.CODE128_AUTO,
+                    BarWidthNarrow = label.BarcodeSize == BarcodeSize.Small ? 1 : 2
                 }, true, label.Barcode));
                 top += BarcodeHeight;
             }
 
             if (!string.IsNullOrEmpty(label.Text))
             {
+                var lines = label.Text.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
                 if (buffer.Count > 0)
                 {
                     top += VerticalSeparation;
                 }
 
-                buffer.AddRange(ZPLCommands.TextWrite(Left, top, ElementDrawRotation.NO_ROTATION, TextHeight, label.Text));
-
-#pragma warning disable IDE0059 // Unnecessary assignment of a value  -- Here intentionally incase we add more blocks later for consistency
-                top += TextHeight;
-#pragma warning restore IDE0059 // Unnecessary assignment of a value
+                foreach (var line in lines)
+                {
+                    buffer.AddRange(ZPLCommands.TextWrite(Left, top, ElementDrawRotation.NO_ROTATION, TextHeight, line));
+                    top += TextHeight;
+                }
             }
 
             buffer.AddRange(ZPLCommands.PrintBuffer());
@@ -80,6 +80,7 @@ namespace Solarponics.ProductionManager.Hardware
 
             try
             {
+                buffer.InsertRange(0, System.Text.Encoding.ASCII.GetBytes("^XA"));
                 this.printer.Print(buffer.ToArray());
             }
             catch (Exception ex)
