@@ -1,13 +1,17 @@
 ﻿CREATE TABLE [dbo].[Culture]
 (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
-	[SupplierId] INT NOT NULL,
-	[BookedInUserId] INT NOT NULL,
+	[SupplierId] INT,
+	[ParentCultureId] INT,
+	[RecipeId] INT,
+	[UserId] INT NOT NULL,
 	[MediumType] INT NOT NULL,
-	[OrderDate] DATETIME NOT NULL,
-	[ReceivedDate] DATETIME NOT NULL,
-	[Strain] NVARCHAR(500) NOT NULL,
+	[OrderDate] DATETIME,
+	[CreateDate] DATETIME NOT NULL,
+	[Strain] NVARCHAR(500),
 	[Notes] NVARCHAR(MAX),
 	FOREIGN KEY (SupplierId) REFERENCES Supplier(Id),
-	FOREIGN KEY (BookedInUserId) REFERENCES [User](Id)
+	FOREIGN KEY (UserId) REFERENCES [User](Id),
+	FOREIGN KEY (ParentCultureId) REFERENCES [Culture](Id),
+	FOREIGN KEY (RecipeId) REFERENCES [Recipe](Id)
 )

@@ -56,9 +56,9 @@ BEGIN
 			WHERE Id = @hardwareId
 
 		IF @existingDriverName != @driverName
-			EXEC AuditAdd @table = 'ProductionManagerHardwareSerialDevice', @action = 'Update', @userId = @userId, @key = @hardwareId,  @column = 'DriverName',  @newValue = @driverName
+			EXEC AuditAdd @table = 'ProductionManagerHardwareSerialDevice', @action = 'Update', @userId = @userId, @key = @hardwareId,  @column = 'DriverName',  @newValue = @driverName, @oldValue = @existingDriverName
 		IF @existingQueueName != @queueName
-			EXEC AuditAdd @table = 'ProductionManagerHardwareSerialDevice', @action = 'Update', @userId = @userId, @key = @hardwareId,  @column = 'QueueName',  @newValue = @queueName
+			EXEC AuditAdd @table = 'ProductionManagerHardwareSerialDevice', @action = 'Update', @userId = @userId, @key = @hardwareId,  @column = 'QueueName',  @newValue = @queueName, @oldValue = @existingQueueName
 	END
 
 	COMMIT TRAN

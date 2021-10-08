@@ -2,16 +2,24 @@
 {
     public class LabelDefinition
     {
-        public string Barcode { get; }
+        public string Barcode { get; protected set; }
 
-        public string Text { get; }
-        public BarcodeSize BarcodeSize { get; }
+        public string Text { get; protected set; }
+        public BarcodeSize BarcodeSize { get; protected set; }
+        public TextSize TextSize { get; protected set; }
+        public int? MaxTextWidth { get; protected set; }
 
-        public LabelDefinition(string text, string barcode = null, BarcodeSize barcodeSize = BarcodeSize.Medium)
+        public LabelDefinition(string text, string barcode = null, BarcodeSize barcodeSize = BarcodeSize.Medium, TextSize textSize = TextSize.Large, int? maxTextWidth = null)
         {
             Text = text;
             Barcode = barcode;
             BarcodeSize = barcodeSize;
+            TextSize = textSize;
+            MaxTextWidth = maxTextWidth;
+        }
+
+        protected LabelDefinition()
+        {
         }
     }
 }

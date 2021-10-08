@@ -165,6 +165,7 @@ namespace Solarponics.WebApi
             services.AddTransient<IHardwareRepository, HardwareRepository>();
             services.AddTransient<ISensorModuleRepository, SensorModuleRepository>();
             services.AddTransient<ISensorReadingRepository, SensorReadingRepository>();
+            services.AddTransient<ICultureRepository, CultureRepository>();
         }
     }
 }

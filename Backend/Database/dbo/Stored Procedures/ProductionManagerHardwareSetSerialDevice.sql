@@ -77,17 +77,17 @@ BEGIN
 			WHERE Id = @hardwareId
 
 		IF @existingDriverName != @driverName
-			EXEC AuditAdd @table = 'ProductionManagerHardwareSerialDevice', @action = 'Update', @userId = @userId, @key = @hardwareId,  @column = 'DriverName',  @newValue = @driverName
+			EXEC AuditAdd @table = 'ProductionManagerHardwareSerialDevice', @action = 'Update', @userId = @userId, @key = @hardwareId,  @column = 'DriverName',  @newValue = @driverName, @oldValue = @existingDriverName
 		IF @existingSerialPort != @serialPort
-			EXEC AuditAdd @table = 'ProductionManagerHardwareSerialDevice', @action = 'Update', @userId = @userId, @key = @hardwareId,  @column = 'SerialPort',  @newValue = @serialPort
+			EXEC AuditAdd @table = 'ProductionManagerHardwareSerialDevice', @action = 'Update', @userId = @userId, @key = @hardwareId,  @column = 'SerialPort',  @newValue = @serialPort, @oldValue = @existingSerialPort
 		IF @existingBaudRate != @baudRate
-			EXEC AuditAdd @table = 'ProductionManagerHardwareSerialDevice', @action = 'Update', @userId = @userId, @key = @hardwareId,  @column = 'BaudRate',  @newValue = @baudRate
+			EXEC AuditAdd @table = 'ProductionManagerHardwareSerialDevice', @action = 'Update', @userId = @userId, @key = @hardwareId,  @column = 'BaudRate',  @newValue = @baudRate, @oldValue = @existingBaudRate
 		IF @existingParity != @parity
-			EXEC AuditAdd @table = 'ProductionManagerHardwareSerialDevice', @action = 'Update', @userId = @userId, @key = @hardwareId,  @column = 'Parity',  @newValue = @parity
+			EXEC AuditAdd @table = 'ProductionManagerHardwareSerialDevice', @action = 'Update', @userId = @userId, @key = @hardwareId,  @column = 'Parity',  @newValue = @parity, @oldValue = @existingParity
 		IF @existingDataBits != @dataBits
-			EXEC AuditAdd @table = 'ProductionManagerHardwareSerialDevice', @action = 'Update', @userId = @userId, @key = @hardwareId,  @column = 'DataBits',  @newValue = @dataBits
+			EXEC AuditAdd @table = 'ProductionManagerHardwareSerialDevice', @action = 'Update', @userId = @userId, @key = @hardwareId,  @column = 'DataBits',  @newValue = @dataBits, @oldValue = @existingDataBits
 		IF @existingStopBits != @stopBits
-			EXEC AuditAdd @table = 'ProductionManagerHardwareSerialDevice', @action = 'Update', @userId = @userId, @key = @hardwareId,  @column = 'StopBits',  @newValue = @stopBits
+			EXEC AuditAdd @table = 'ProductionManagerHardwareSerialDevice', @action = 'Update', @userId = @userId, @key = @hardwareId,  @column = 'StopBits',  @newValue = @stopBits, @oldValue = @existingStopBits
 	END
 
 	COMMIT TRAN

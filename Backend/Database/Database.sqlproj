@@ -116,5 +116,8 @@
     <Build Include="dbo\Stored Procedures\ProductionManagerHardwareRemoveSerialDevice.sql" />
     <Build Include="dbo\Stored Procedures\ProductionManagerHardwareRemoveScale.sql" />
     <Build Include="dbo\Stored Procedures\ProductionManagerHardwareRemoveBarcodeScanner.sql" />
+    <Build Include="dbo\Stored Procedures\CultureAdd.sql" />
+    <Build Include="dbo\Stored Procedures\CultureGet.sql" />
+    <Build Include="dbo\Stored Procedures\CultureInnoculate.sql" />
   </ItemGroup>
 </Project>

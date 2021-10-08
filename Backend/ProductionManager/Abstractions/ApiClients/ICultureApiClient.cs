@@ -1,0 +1,22 @@
+﻿using Refit;
+using Solarponics.Models;
+using Solarponics.Models.WebApi;
+using System.Threading.Tasks;
+
+namespace Solarponics.ProductionManager.Abstractions.ApiClients
+{
+    public interface ICultureApiClient
+    {
+        [Headers("Authorization: Bearer")]
+        [Put("/cultures/book-in")]
+        Task<Culture> BookIn([Body] CultureBookInRequest request);
+
+        [Headers("Authorization: Bearer")]
+        [Put("/cultures/from-recipe")]
+        Task<Culture> CreateFromRecipe([Body] CultureCreateFromReciptRequest request);
+        
+        [Headers("Authorization: Bearer")]
+        [Post("/cultures/innoculate")]
+        Task<Culture> Innoculate([Body] CultureInnoculateRequest request);
+    }
+}

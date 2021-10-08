@@ -58,6 +58,7 @@ namespace Solarponics.ProductionManager
             builder.RegisterType<SupplierApiClient>().As<ISupplierApiClient>();
             builder.RegisterType<RecipeApiClient>().As<IRecipeApiClient>();
             builder.RegisterType<HardwareApiClient>().As<IHardwareApiClient>();
+            builder.RegisterType<CultureApiClient>().As<ICultureApiClient>();
 
             builder.RegisterType<CultureBookInView>().As<ICultureBookInView>().SingleInstance();
             builder.RegisterType<CultureBookInViewModel>().As<ICultureBookInViewModel>().SingleInstance();

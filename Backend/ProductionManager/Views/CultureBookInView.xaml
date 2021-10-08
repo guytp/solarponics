@@ -5,17 +5,46 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:core="clr-namespace:Solarponics.ProductionManager.Core"
              xmlns:views="clr-namespace:Solarponics.ProductionManager.Views"
+             xmlns:viewModels="clr-namespace:Solarponics.ProductionManager.Abstractions.ViewModels"
              mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type={x:Type viewModels:ICultureBookInViewModel}}"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <Grid IsEnabled="{Binding Path=IsUiEnabled}">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-        <views:ViewHeader Category="Culture" Title="Book-In" Grid.Row="0" />
+        <views:ViewHeader Category="Culture" Title="Book-In" Grid.Row="0" Grid.ColumnSpan="4" />
 
-        <views:LoggedInButtonsView Grid.Row="2" DataContext="{Binding LoggedInButtonsViewModel}" />
+        <TextBlock Text="Supplier" Grid.Row="1" Grid.Column="0" Foreground="White" FontSize="24" Margin="10" />
+        <ComboBox ItemsSource="{Binding Path=Suppliers}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedSupplier}" Grid.Row="1" Grid.Column="1" MinWidth="200" Margin="10" FontSize="24" VerticalAlignment="Top" />
+
+        <TextBlock Text="Medium" Grid.Row="1" Grid.Column="2" Foreground="White" FontSize="24" Margin="10" />
+        <ComboBox ItemsSource="{Binding Path=MediumTypes}" SelectedItem="{Binding Path=MediumType}" Grid.Row="1" Grid.Column="3" MinWidth="200" Margin="10" FontSize="24" VerticalAlignment="Top" />
+
+        <TextBlock Text="Order Date" Grid.Row="2" Grid.Column="0" Foreground="White" FontSize="24" Margin="10" />
+        <DatePicker SelectedDate="{Binding Path=OrderDate}" Grid.Row="2" Grid.Column="1" MinWidth="200" Margin="10" FontSize="24" VerticalAlignment="Top" />
+
+        <TextBlock Text="Strain" Grid.Row="2" Grid.Column="2" Foreground="White" FontSize="24" Margin="10" />
+        <TextBox Text="{Binding Path=Strain, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="3" MinWidth="200" Margin="10" FontSize="24" VerticalAlignment="Top" />
+        
+        <TextBlock Text="Notes" Grid.Row="3" Grid.Column="0" Foreground="White" FontSize="24" Margin="10" />
+        <TextBox Text="{Binding Path=Notes, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" Margin="10" FontSize="24" VerticalAlignment="Top" Grid.ColumnSpan="3" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Height="120" />
+
+        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Content="Add" IsEnabled="{Binding Path=IsBookInEnabled}" Command="{Binding Path=BookInCommand}" Margin="10" MinWidth="200" FontSize="24" />
+
+        <views:LoggedInButtonsView Grid.Row="6" Grid.ColumnSpan="4" DataContext="{Binding LoggedInButtonsViewModel}" />
     </Grid>
 </core:ViewBase>
