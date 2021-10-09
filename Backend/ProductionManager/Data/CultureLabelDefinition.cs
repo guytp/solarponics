@@ -18,16 +18,15 @@ namespace Solarponics.ProductionManager.Data
         {
             var label = string.Empty;
             if (supplier != null)
-            {
-                label += $"Supplier: {supplier.Name}";
-            }
+                label += $"Supplier: {supplier.Name}{Environment.NewLine}";
 
             if (recipe != null)
-            {
-                label += $"Recipe:   {recipe.Name}";
-            }
-            
-            label += $"{Environment.NewLine}Strain:   {culture.Strain}{Environment.NewLine}Date:     {culture.CreateDate.ToShortDateString()}";
+                label += $"Recipe:   {recipe.Name}{Environment.NewLine}";
+
+            if (culture.Strain != null)
+                label += $"Strain:   {culture.Strain}{Environment.NewLine}";
+
+            label += $"Date:     {culture.CreateDate.ToShortDateString()}";
             if (!string.IsNullOrEmpty(culture.Notes))
             {
                 label += $"{Environment.NewLine}{Environment.NewLine}{culture.Notes}";
@@ -37,6 +36,7 @@ namespace Solarponics.ProductionManager.Data
             BarcodeSize = BarcodeSize.Small;
             TextSize = TextSize.Small;
             MaxTextWidth = 30;
+            MaxLinesToPrint = 8;
         }
     }
 }

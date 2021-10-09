@@ -6,9 +6,9 @@ namespace Solarponics.ProductionManager.Modules
 {
     public class CultureModule : ICultureModule
     {
-        public CultureModule(ICultureBookInView bookInView)
+        public CultureModule(ICultureBookInView bookInView, ICultureAgarLiquidPrepView liquidAgarPrepView)
         {
-            this.MenuItems = new [] { new MenuItem("Book-In", bookInView) } ;
+            this.MenuItems = new [] { new MenuItem("Book-In", bookInView), new MenuItem("Agar / Liquid Prep", liquidAgarPrepView) } ;
         }
         public string Category => "Culture";
 

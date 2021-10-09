@@ -59,9 +59,10 @@ namespace Solarponics.ProductionManager.Hardware
 
             if (!string.IsNullOrEmpty(label.Text))
             {
-                var lines = label.Text.Replace('\t', ' ').Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                var lines = label.Text.Replace('\t', ' ').Split(new string[] { "\r", "\r\n" }, StringSplitOptions.None );
                 if (buffer.Count > 0)
                 {
+                    top += VerticalSeparation;
                     top += VerticalSeparation;
                 }
 
@@ -73,6 +74,7 @@ namespace Solarponics.ProductionManager.Hardware
                     _ => throw new NotImplementedException(),
                 };
 
+                var linesPrinted = 0;
                 foreach (var line in lines)
                 {
                     var partsToPrint = SplitLineToParts(line, label.MaxTextWidth);
@@ -80,6 +82,16 @@ namespace Solarponics.ProductionManager.Hardware
                     {
                         buffer.AddRange(ZPLCommands.TextWrite(Left, top, ElementDrawRotation.NO_ROTATION, textHeight, part));
                         top += (int)(textHeight * 2.2);
+                        linesPrinted++;
+                        if (label.MaxLinesToPrint.HasValue && linesPrinted >= label.MaxLinesToPrint)
+                        {
+                            break;
+                        }
+                    }
+
+                    if (label.MaxLinesToPrint.HasValue && linesPrinted >= label.MaxLinesToPrint)
+                    {
+                        break;
                     }
                 }
             }

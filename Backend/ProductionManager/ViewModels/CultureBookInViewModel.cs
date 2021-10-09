@@ -44,7 +44,7 @@ namespace Solarponics.ProductionManager.ViewModels
 
         public CultureMediumType? MediumType { get; set; }
 
-        public CultureMediumType[] MediumTypes { get; set; }
+        public CultureMediumType[] MediumTypes { get; }
 
         public DateTime? OrderDate { get; set; }
 

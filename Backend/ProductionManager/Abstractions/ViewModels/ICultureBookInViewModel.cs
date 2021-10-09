@@ -17,7 +17,7 @@ namespace Solarponics.ProductionManager.Abstractions.ViewModels
         Supplier[] Suppliers { get; }
 
         CultureMediumType? MediumType { get; set; }
-        CultureMediumType[] MediumTypes { get; set; }
+        CultureMediumType[] MediumTypes { get; }
 
         DateTime? OrderDate { get; set; }
 

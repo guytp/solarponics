@@ -62,6 +62,8 @@ namespace Solarponics.ProductionManager
 
             builder.RegisterType<CultureBookInView>().As<ICultureBookInView>().SingleInstance();
             builder.RegisterType<CultureBookInViewModel>().As<ICultureBookInViewModel>().SingleInstance();
+            builder.RegisterType<CultureAgarLiquidPrepView>().As<ICultureAgarLiquidPrepView>().SingleInstance();
+            builder.RegisterType<CultureAgarLiquidPrepViewModel>().As<ICultureAgarLiquidPrepViewModel>().SingleInstance();
             builder.RegisterType<CultureModule>().As<ICultureModule>().SingleInstance();
 
             builder.RegisterType<SetupSupplierView>().As<ISetupSupplierView>().SingleInstance();
