@@ -12,7 +12,7 @@ using System.Timers;
 
 namespace Solarponics.ProductionManager.ViewModels
 {
-    public class EnvironmentSensorReadingsCurrentViewModel : ViewModelBase, IEnvironmentSensorReadingsCurrentViewModel
+    public class EnvironmentSensorReadingsAggregateViewModel : ViewModelBase, IEnvironmentSensorReadingsAggregateViewModel
     {
         private readonly IDialogBox dialogBox;
         private readonly ISensorModuleApiClient sensorModuleApiClient;
@@ -23,13 +23,24 @@ namespace Solarponics.ProductionManager.ViewModels
         private readonly Timer timerUpdate;
         private readonly Timer timerCounter;
 
-        public EnvironmentSensorReadingsCurrentViewModel(IDialogBox dialogBox, ISensorModuleApiClient sensorModuleApiClient, ISensorReadingApiClient sensorReadingApiClient, ILoggedInButtonsViewModel loggedInButtonsViewModel)
+        public EnvironmentSensorReadingsAggregateViewModel(IDialogBox dialogBox, ISensorModuleApiClient sensorModuleApiClient, ISensorReadingApiClient sensorReadingApiClient, ILoggedInButtonsViewModel loggedInButtonsViewModel)
         {
             this.dialogBox = dialogBox;
             this.sensorModuleApiClient = sensorModuleApiClient;
             this.sensorReadingApiClient = sensorReadingApiClient;
             this.LoggedInButtonsViewModel = loggedInButtonsViewModel;
-            this.timerUpdate = new Timer(5000)
+            Timeframes = new[]
+            {
+                AggregateTimeframe.OneMinute,
+                AggregateTimeframe.FiveMinutes,
+                AggregateTimeframe.FifteenMinutes,
+                AggregateTimeframe.ThirtyMinutes,
+                AggregateTimeframe.OneHour,
+                AggregateTimeframe.FourHours,
+                AggregateTimeframe.TwelveHours,
+                AggregateTimeframe.OneDay
+            };
+            this.timerUpdate = new Timer(30000)
             {
                 AutoReset = false,
                 Enabled = false
@@ -41,6 +52,7 @@ namespace Solarponics.ProductionManager.ViewModels
                 Enabled = false
             };
             timerCounter.Elapsed += OnTimerCounterElapsed;
+            this.SelectedTimeframe = AggregateTimeframe.ThirtyMinutes;
         }
 
         public ILoggedInButtonsViewModel LoggedInButtonsViewModel { get; }
@@ -49,7 +61,11 @@ namespace Solarponics.ProductionManager.ViewModels
 
         public string SelectedLocation { get; set; }
 
-        public SensorRoomGroupCurrent[] SensorsGroupedByRoom { get; private set; }
+        public SensorRoomGroupAggregate[] SensorsGroupedByRoom { get; private set; }
+
+        public AggregateTimeframe SelectedTimeframe { get; set; }
+
+        public AggregateTimeframe[] Timeframes { get; }
 
         public bool IsUiEnabled { get; private set; }
 
@@ -66,7 +82,7 @@ namespace Solarponics.ProductionManager.ViewModels
                 if (interval.Minutes < 1)
                 {
                     unit = interval.Seconds;
-                    if (unit < 10)
+                    if (unit < 40)
                     {
                         return "Recently updated";
                     }
@@ -98,8 +114,8 @@ namespace Solarponics.ProductionManager.ViewModels
             {
                 if (!lastUpdated.HasValue)
                     return "#F8A725";
-                var interval = DateTime.UtcNow.Subtract(lastUpdated.Value);
-                return interval.Seconds > 20 ? "#FF3939" : "White";
+                var interval = DateTime.UtcNow.Subtract(lastUpdated.Value).Minutes;
+                return interval > 0 ? "#FF3939" : "White";
             }
         }
 
@@ -159,38 +175,57 @@ namespace Solarponics.ProductionManager.ViewModels
             await this.RefreshSensorData(true);
         }
 
+#pragma warning disable IDE0051 // Remove unused private members
+        private async void OnSelectedTimeframeChanged()
+#pragma warning restore IDE0051 // Remove unused private members
+        {
+            if (!this.isShown)
+                return;
+
+            this.SensorsGroupedByRoom = null;
+            this.timerUpdate.Enabled = false;
+            await this.RefreshSensorData(true);
+        }
+
         private async Task RefreshSensorData(bool showError)
         {
+            if (!System.Windows.Application.Current.Dispatcher.CheckAccess())
+            {
+                var act = new Action(async () => await RefreshSensorData(showError));
+                await System.Windows.Application.Current.Dispatcher.InvokeAsync(act);
+                return;
+            }
+
             try
             {
                 if (showError)
                     this.IsUiEnabled = false;
                 var sensorModulesToCheck = this.sensorModules.Where(sm => sm.Location == this.SelectedLocation).OrderBy(sm => sm.Name).ToArray();
                 var rooms = sensorModulesToCheck.Select(sm => sm.Room).Distinct().OrderBy(s => s).ToArray();
-                var groups = new List<SensorRoomGroupCurrent>();
+                var groups = new List<SensorRoomGroupAggregate>();
                 foreach (var room in rooms)
                 {
-                    var groupedSensors = new List<SensorReadingCurrent>();
+                    var groupedSensors = new List<SensorReadingAggregate>();
 
                     foreach (var sensorModule in sensorModulesToCheck)
                     {
                         foreach (var sensor in sensorModule.Sensors)
                         {
-                            var reading = await this.sensorReadingApiClient.GetCurrent(sensor.Id);
-                            if (reading == null)
+                            var readings = await this.sensorReadingApiClient.GetAggregate(sensor.Id, SelectedTimeframe);
+                            if (readings == null)
                                 continue;
 
-                            groupedSensors.Add(new SensorReadingCurrent(sensorModule.Name, sensor.Type, reading.Reading, reading.Time, sensor.CriticalLowBelow, sensor.WarningLowBelow, sensor.WarningHighAbove, sensor.CriticalHighAbove));
+                            groupedSensors.Add(new SensorReadingAggregate(sensorModule.Name, sensor.Type, readings, sensor.CriticalLowBelow, sensor.WarningLowBelow, sensor.WarningHighAbove, sensor.CriticalHighAbove));
                         }
                     }
 
                     if (groupedSensors.Count > 0)
-                        groups.Add(new SensorRoomGroupCurrent(room, groupedSensors.ToArray()));
+                        groups.Add(new SensorRoomGroupAggregate(room, groupedSensors.ToArray()));
                 }
 
                 this.SensorsGroupedByRoom = groups.ToArray();
                 if (this.SensorsGroupedByRoom.Length < 1 && showError && SelectedLocation != null)
-                    this.dialogBox.Show("There are no sensors in this location");
+                        this.dialogBox.Show("There are no sensors in this location");
                 
                 this.lastUpdated = DateTime.UtcNow;
             }

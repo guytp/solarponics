@@ -72,6 +72,8 @@ namespace Solarponics.ProductionManager
 
             builder.RegisterType<EnvironmentSensorReadingsCurrentView>().As<IEnvironmentSensorReadingsCurrentView>().SingleInstance();
             builder.RegisterType<EnvironmentSensorReadingsCurrentViewModel>().As<IEnvironmentSensorReadingsCurrentViewModel>().SingleInstance();
+            builder.RegisterType<EnvironmentSensorReadingsAggregateView>().As<IEnvironmentSensorReadingsAggregateView>().SingleInstance();
+            builder.RegisterType<EnvironmentSensorReadingsAggregateViewModel>().As<IEnvironmentSensorReadingsAggregateViewModel>().SingleInstance();
             builder.RegisterType<EnvironmentModule>().As<IEnvironmentModule>().SingleInstance();
 
             builder.RegisterType<SetupSupplierView>().As<ISetupSupplierView>().SingleInstance();

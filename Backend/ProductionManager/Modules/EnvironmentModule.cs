@@ -6,9 +6,9 @@ namespace Solarponics.ProductionManager.Modules
 {
     public class EnvironmentModule : IEnvironmentModule
     {
-        public EnvironmentModule(IEnvironmentSensorReadingsCurrentView environmentModuleSensorReadingsCurrentView)
+        public EnvironmentModule(IEnvironmentSensorReadingsCurrentView environmentModuleSensorReadingsCurrentView, IEnvironmentSensorReadingsAggregateView environmentModuleSensorReadingsAggregateView)
         {
-            this.MenuItems = new [] { new MenuItem("Current Readings", environmentModuleSensorReadingsCurrentView) } ;
+            this.MenuItems = new [] { new MenuItem("Current Readings", environmentModuleSensorReadingsCurrentView), new MenuItem("Historic Readings", environmentModuleSensorReadingsAggregateView) } ;
         }
         public string Category => "Environment";
 

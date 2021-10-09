@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.2.0" />
-    <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
+    <PackageReference Include="LiveCharts.Wpf.NetCore3" Version="0.9.7" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.14" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="3.1.14" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.14" />
@@ -45,6 +45,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Views\EnvironmentSensorReadingsAggregateView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\EnvironmentSensorReadingsCurrentView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>

@@ -1,0 +1,100 @@
+﻿<core:ViewBase x:Class="Solarponics.ProductionManager.Views.EnvironmentSensorReadingsAggregateView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:core="clr-namespace:Solarponics.ProductionManager.Core"
+             xmlns:views="clr-namespace:Solarponics.ProductionManager.Views"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:viewModels="clr-namespace:Solarponics.ProductionManager.Abstractions.ViewModels"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type={x:Type viewModels:IEnvironmentSensorReadingsAggregateViewModel}}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid IsEnabled="{Binding Path=IsUiEnabled}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <views:ViewHeader Category="Environment" Title="Historic Readings" Grid.Row="0" Grid.ColumnSpan="4" />
+
+        <TextBlock Text="Location" Grid.Row="1" Grid.Column="0" Foreground="White" FontSize="24" Margin="10" />
+        <ComboBox ItemsSource="{Binding Path=Locations}" SelectedItem="{Binding Path=SelectedLocation}" Grid.Row="1" Grid.Column="1" MinWidth="200" Margin="10" FontSize="24" VerticalAlignment="Top" />
+
+        <TextBlock Text="Timeframe" Grid.Row="1" Grid.Column="2" Foreground="White" FontSize="24" Margin="10" />
+        <ComboBox ItemsSource="{Binding Path=Timeframes}" SelectedItem="{Binding Path=SelectedTimeframe}" Grid.Row="1" Grid.Column="3" MinWidth="200" Margin="10" FontSize="24" VerticalAlignment="Top" />
+
+
+        <TextBlock Text="{Binding Path=LastUpdatedAgo}" Grid.Row="2" Grid.Column="4" Foreground="{Binding Path=LastUpdatedColour}" FontSize="24" Margin="10" />
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Stretch" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4">
+            <ItemsControl ItemsSource="{Binding Path=SensorsGroupedByRoom}" HorizontalAlignment="Stretch">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical" Margin="20" HorizontalAlignment="Stretch">
+                            <TextBlock Text="{Binding Path=RoomName}" Foreground="White" FontSize="42" Margin="10" />
+
+                            <ItemsControl ItemsSource="{Binding Path=Sensors}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="50">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Text="{Binding Path=Name}" Grid.Row="0" Grid.Column="0" Foreground="White" FontSize="24" Margin="10" TextAlignment="Left" HorizontalAlignment="Left" />
+                                            <TextBlock Text="{Binding Path=Type}" Grid.Row="0" Grid.Column="1" Foreground="White" FontSize="24" Margin="10" TextAlignment="Right" HorizontalAlignment="Right" />
+
+                                                <lvc:CartesianChart
+                                                    Grid.Column="0" Grid.ColumnSpan="2"
+                                                    Grid.Row="1"
+                                                    Series="{Binding Series}"
+                                                    LegendLocation="Right"
+                                                    Width="700"
+                                                    Foreground="White"
+                                                    DisableAnimations="True"
+                                                    Height="400">
+                                                    <lvc:CartesianChart.AxisY>
+                                                        <lvc:Axis Title="Reading" />
+                                                    </lvc:CartesianChart.AxisY>
+                                                    <lvc:CartesianChart.AxisX>
+                                                        <lvc:Axis Title="Time" Labels="{Binding Labels}" />
+                                                    </lvc:CartesianChart.AxisX>
+                                                </lvc:CartesianChart>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <views:LoggedInButtonsView Grid.Row="5" Grid.ColumnSpan="4" DataContext="{Binding LoggedInButtonsViewModel}" />
+    </Grid>
+</core:ViewBase>
