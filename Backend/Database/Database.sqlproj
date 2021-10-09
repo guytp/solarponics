@@ -78,14 +78,8 @@
     <Build Include="dbo\Stored Procedures\SensorModuleGetById.sql" />
     <Build Include="dbo\Stored Procedures\SensorModuleGetAll.sql" />
     <Build Include="dbo\Stored Procedures\ReadingAggregateGet.sql" />
-    <Build Include="dbo\Tables\SensorModuleProvisioningQueue.sql" />
     <Build Include="Security\ProvisioningServer.sql" />
     <Build Include="Security\IngestionServer.sql" />
-    <Build Include="dbo\Stored Procedures\SensorModuleProvisioningQueueGetBySerialNumber.sql" />
-    <Build Include="dbo\Stored Procedures\SensorModuleProvisioningQueueGetAll.sql" />
-    <Build Include="dbo\Stored Procedures\SensorModuleProvisioningQueueDelete.sql" />
-    <Build Include="dbo\Stored Procedures\SensorModuleProvisioningQueueAdd.sql" />
-    <Build Include="dbo\Stored Procedures\SensorModuleProvisionFromQueue.sql" />
     <Build Include="dbo\Tables\User.sql" />
     <Build Include="dbo\Stored Procedures\UserAuthenticate.sql" />
     <Build Include="dbo\Tables\Audit.sql" />

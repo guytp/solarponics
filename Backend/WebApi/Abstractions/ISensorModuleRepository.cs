@@ -8,9 +8,5 @@ namespace Solarponics.WebApi.Abstractions
     public interface ISensorModuleRepository
     {
         Task<SensorModule[]> GetAll();
-        Task<SensorModuleConfig[]> ProvisionQueueGetAll();
-        Task ProvisioningQueueAdd(SensorModuleConfig config);
-        Task<SensorModuleConfig> ProvisionQueueGetBySerialNumber(string serialNumber);
-        Task ProvisioningQueueDelete(string serialNumber);
     }
 }

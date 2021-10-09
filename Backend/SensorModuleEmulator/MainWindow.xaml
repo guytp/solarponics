@@ -10,8 +10,5 @@
        <TabItem Header="Sensor">
            <sensorModuleEmulator:SensorModuleEmulatorView />
        </TabItem>
-        <TabItem Header="Provisioning">
-            <sensorModuleEmulator:ProvisioningView />
-        </TabItem>
     </TabControl>
 </Window>
