@@ -47,19 +47,6 @@
                 A NoContent response if successful or NotFound if the serial number was not found.
             </returns>
         </member>
-        <member name="T:Solarponics.WebApi.Controllers.SensorReadingController">
-            <summary>
-                Get data to display on charts and reports.
-            </summary>
-        </member>
-        <member name="M:Solarponics.WebApi.Controllers.SensorReadingController.GetAggregate(System.Int32,Solarponics.Models.AggregateTimeframe)">
-            <summary>
-                Gets aggregate sensor data to use for charting.
-            </summary>
-            <param name="id">The sensor to get the data for.</param>
-            <param name="timeframe">The timeframe to aggregate data by.</param>
-            <returns>An array of SensorReading objects to use for charting.</returns>
-        </member>
         <member name="T:Solarponics.WebApi.Swagger.SwaggerBasePathFilter">
             <summary>
                 This filter allows the root path of the URL to be rewritten to cope with being behind a load balancer - i.e. if we

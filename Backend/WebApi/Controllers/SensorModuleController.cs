@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Solarponics.Models;
 using Solarponics.WebApi.Abstractions;
@@ -30,6 +31,7 @@ namespace Solarponics.WebApi.Controllers
         [HttpGet]
         [ProducesResponseType((int) HttpStatusCode.OK, Type = typeof(SensorModule[]))]
         [ProducesResponseType((int) HttpStatusCode.NotFound)]
+        [Authorize(Roles = "User,Admin")]
         public async Task<IActionResult> Get()
         {
             var results = await _sensorModuleRepository.GetAll();
@@ -44,6 +46,7 @@ namespace Solarponics.WebApi.Controllers
         /// </returns>
         [HttpGet("provisioning-queue")]
         [ProducesResponseType((int) HttpStatusCode.OK, Type = typeof(SensorModuleConfig[]))]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ProvisioningQueueGet()
         {
             var results = await _sensorModuleRepository.ProvisionQueueGetAll();
@@ -61,6 +64,7 @@ namespace Solarponics.WebApi.Controllers
         /// </returns>
         [HttpPost("provisioning-queue")]
         [ProducesResponseType((int) HttpStatusCode.NoContent)]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ProvisioningQueueAdd([FromBody] SensorModuleConfig config)
         {
             await _sensorModuleRepository.ProvisioningQueueAdd(config);
@@ -79,6 +83,7 @@ namespace Solarponics.WebApi.Controllers
         [HttpDelete("provisioning-queue/{serialNumber}")]
         [ProducesResponseType((int) HttpStatusCode.NoContent)]
         [ProducesResponseType((int) HttpStatusCode.NotFound)]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ProvisioningQueueDelete([FromRoute] string serialNumber)
         {
             var result = await _sensorModuleRepository.ProvisionQueueGetBySerialNumber(serialNumber);

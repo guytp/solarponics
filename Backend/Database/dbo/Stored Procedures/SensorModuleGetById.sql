@@ -16,7 +16,7 @@ BEGIN
 		ORDER BY l.[Name], r.[Name], sm.[Name]
 
 	SELECT
-		s.Id, s.SensorModuleId, s.[Type], s.Number
+		s.Id, s.SensorModuleId, s.[Type], s.Number, s.CriticalLowBelow, s.WarningLowBelow, s.WarningHighAbove, s.CriticalHighAbove
 		FROM Sensor s
 		WHERE
 			(@id IS NULL AND @allowNullId = 1) OR s.SensorModuleId = @id

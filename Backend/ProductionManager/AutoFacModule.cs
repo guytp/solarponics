@@ -59,6 +59,8 @@ namespace Solarponics.ProductionManager
             builder.RegisterType<RecipeApiClient>().As<IRecipeApiClient>();
             builder.RegisterType<HardwareApiClient>().As<IHardwareApiClient>();
             builder.RegisterType<CultureApiClient>().As<ICultureApiClient>();
+            builder.RegisterType<SensorReadingApiClient>().As<ISensorReadingApiClient>();
+            builder.RegisterType<SensorModuleApiClient>().As<ISensorModuleApiClient>();
 
             builder.RegisterType<CultureBookInView>().As<ICultureBookInView>().SingleInstance();
             builder.RegisterType<CultureBookInViewModel>().As<ICultureBookInViewModel>().SingleInstance();
@@ -67,6 +69,10 @@ namespace Solarponics.ProductionManager
             builder.RegisterType<CultureInnoculateView>().As<ICultureInnoculateView>().SingleInstance();
             builder.RegisterType<CultureInnoculateViewModel>().As<ICultureInnoculateViewModel>().SingleInstance();
             builder.RegisterType<CultureModule>().As<ICultureModule>().SingleInstance();
+
+            builder.RegisterType<EnvironmentSensorReadingsCurrentView>().As<IEnvironmentSensorReadingsCurrentView>().SingleInstance();
+            builder.RegisterType<EnvironmentSensorReadingsCurrentViewModel>().As<IEnvironmentSensorReadingsCurrentViewModel>().SingleInstance();
+            builder.RegisterType<EnvironmentModule>().As<IEnvironmentModule>().SingleInstance();
 
             builder.RegisterType<SetupSupplierView>().As<ISetupSupplierView>().SingleInstance();
             builder.RegisterType<SetupSupplierViewModel>().As<ISetupSupplierViewModel>().SingleInstance();

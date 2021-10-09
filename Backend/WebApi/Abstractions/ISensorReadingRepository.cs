@@ -7,6 +7,7 @@ namespace Solarponics.WebApi.Abstractions
 {
     public interface ISensorReadingRepository
     {
-        Task<SensorReading[]> GetReadings(int id, AggregateTimeframe timeframe);
+        Task<AggregateSensorReading[]> GetReadings(int id, AggregateTimeframe timeframe);
+        Task<SensorReading> GetCurrentReading(int id);
     }
 }

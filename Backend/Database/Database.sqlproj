@@ -119,5 +119,6 @@
     <Build Include="dbo\Stored Procedures\CultureAdd.sql" />
     <Build Include="dbo\Stored Procedures\CultureGet.sql" />
     <Build Include="dbo\Stored Procedures\CultureInnoculate.sql" />
+    <Build Include="dbo\Stored Procedures\ReadingCurrentGet.sql" />
   </ItemGroup>
 </Project>

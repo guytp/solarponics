@@ -5,12 +5,13 @@ namespace Solarponics.ProductionManager.Domain
 {
     public class ModuleProvider : IModuleProvider
     {
-        public ModuleProvider(ISetupModule setupModule, ICultureModule cultureModule)
+        public ModuleProvider(ISetupModule setupModule, ICultureModule cultureModule, IEnvironmentModule environmentModule)
         {
             this.Modules = new IModule[]
             {
                 setupModule,
-                cultureModule
+                cultureModule,
+                environmentModule
             };
         }
 

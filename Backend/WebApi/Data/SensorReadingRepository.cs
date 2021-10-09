@@ -9,8 +9,8 @@ namespace Solarponics.WebApi.Data
 {
     internal class SensorReadingRepository : ISensorReadingRepository
     {
-        private const string ProcedureNameReadingAggregateGet =
-            "[dbo].[ReadingAggregateGet]";
+        private const string ProcedureNameReadingAggregateGet = "[dbo].[ReadingAggregateGet]";
+        private const string ProcedureNameReadingGetCurrent = "[dbo].[ReadingCurrentGet]";
 
         public SensorReadingRepository(IDatabaseConnection connection)
         {
@@ -19,7 +19,7 @@ namespace Solarponics.WebApi.Data
 
         private IDatabaseConnection Connection { get; }
 
-        public async Task<SensorReading[]> GetReadings(int id, AggregateTimeframe timeframe)
+        public async Task<AggregateSensorReading[]> GetReadings(int id, AggregateTimeframe timeframe)
         {
             var databaseTimeframe = timeframe switch
             {
@@ -41,7 +41,18 @@ namespace Solarponics.WebApi.Data
             });
 
             await storedProcedure.ExecuteReaderAsync();
-            return (await storedProcedure.GetDataSetAsync<SensorReading>())?.ToArray();
+            return (await storedProcedure.GetDataSetAsync<AggregateSensorReading>())?.ToArray();
+        }
+
+        public async Task<SensorReading> GetCurrentReading(int id)
+        {
+            using var storedProcedure = Connection.CreateStoredProcedure(ProcedureNameReadingGetCurrent, new[]
+            {
+                new StoredProcedureParameter("id", id)
+            });
+
+            await storedProcedure.ExecuteReaderAsync();
+            return await storedProcedure.GetFirstOrDefaultRowAsync<SensorReading>();
         }
     }
 }
