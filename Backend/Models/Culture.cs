@@ -14,6 +14,7 @@ namespace Solarponics.Models
         public int UserId { get; set; }
         public string Strain { get; set; }
         public string Notes { get; set; }
-        public bool IsInnoculatable => !SupplierId.HasValue && !ParentCultureId.HasValue && RecipeId.HasValue && Strain == null;
+
+        public int? Generation { get; set; }
     }
 }

@@ -15,6 +15,7 @@ BEGIN
 
 	DECLARE @strain NVARCHAR(500)
 	DECLARE @existingNotes NVARCHAR(MAX)
+	DECLARE @supplierId INT
 	DECLARE @oldCreateDate DATETIME
 	SELECT TOP 1 @existingNotes = Notes, @oldCreateDate = CreateDate FROM [Culture] WHERE Id = @id
 	DECLARE @notes NVARCHAR(MAX)
@@ -30,7 +31,8 @@ BEGIN
 
 	SET XACT_ABORT ON
 	BEGIN TRAN
-	SELECT TOP 1 @strain = [Strain] FROM Culture WHERE Id = @parentCultureId
+	DECLARE @generation INT
+	SELECT TOP 1 @strain = [Strain], @supplierId = SupplierId, @generation = Generation + 1 FROM Culture WHERE Id = @parentCultureId
 
 	DECLARE @createDate DATETIME = GETUTCDATE()
 
@@ -38,12 +40,16 @@ BEGIN
 		SET
 			ParentCultureId = @parentCultureId,
 			[Strain] = @strain,
-			@notes = @notes,
-			CreateDate = @createDate
+			Notes = @notes,
+			CreateDate = @createDate,
+			SupplierId = @supplierId,
+			Generation = @generation
 		WHERE Id = @id
 		
 	EXEC AuditAdd @table = 'Culture', @column = 'ParentCultureId', @action = 'Update', @userId = @userId, @key = @id, @newValue = @parentCultureId, @oldValue = NULL
 	EXEC AuditAdd @table = 'Culture', @column = 'Strain', @action = 'Update', @userId = @userId, @key = @id, @newValue = @strain, @oldValue = NULL
+	EXEC AuditAdd @table = 'Culture', @column = 'SupplierId', @action = 'Update', @userId = @userId, @key = @id, @newValue = @supplierId, @oldValue = NULL
+	EXEC AuditAdd @table = 'Culture', @column = 'Generation', @action = 'Update', @userId = @userId, @key = @id, @newValue = @generation, @oldValue = NULL
 	EXEC AuditAdd @table = 'Culture', @column = 'CreateDate', @action = 'Update', @userId = @userId, @key = @id, @newValue = @createDate, @oldValue = @oldCreateDate
 	IF @notes <> @existingNotes
 		EXEC AuditAdd @table = 'Culture', @column = 'Notes', @action = 'Update', @userId = @userId, @key = @id, @newValue = @notes, @oldValue = @existingNotes

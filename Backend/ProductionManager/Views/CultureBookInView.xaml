@@ -43,7 +43,7 @@
         <TextBlock Text="Notes" Grid.Row="3" Grid.Column="0" Foreground="White" FontSize="24" Margin="10" />
         <TextBox Text="{Binding Path=Notes, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" Margin="10" FontSize="24" VerticalAlignment="Top" Grid.ColumnSpan="3" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Height="120" />
 
-        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Content="Add" IsEnabled="{Binding Path=IsBookInEnabled}" Command="{Binding Path=BookInCommand}" Margin="10" MinWidth="200" FontSize="24" />
+        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Content="Add" IsEnabled="{Binding Path=IsBookInEnabled}" Command="{Binding Path=BookInCommand}" Margin="10" MinWidth="200" FontSize="24" Padding="50,15,50,15" />
 
         <views:LoggedInButtonsView Grid.Row="6" Grid.ColumnSpan="4" DataContext="{Binding LoggedInButtonsViewModel}" />
     </Grid>

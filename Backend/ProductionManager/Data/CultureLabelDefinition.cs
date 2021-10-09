@@ -24,7 +24,9 @@ namespace Solarponics.ProductionManager.Data
                 label += $"Recipe:   {recipe.Name}{Environment.NewLine}";
 
             if (culture.Strain != null)
-                label += $"Strain:   {culture.Strain}{Environment.NewLine}";
+                label += $"Strain:   {culture.Strain} (G {culture.Generation}){Environment.NewLine}";
+            else
+                label += $"Strain:   NOT INNOCULATED{Environment.NewLine}";
 
             label += $"Date:     {culture.CreateDate.ToShortDateString()}";
             if (!string.IsNullOrEmpty(culture.Notes))

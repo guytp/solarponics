@@ -7,6 +7,7 @@
 	@mediumType INT,
 	@orderDate DATETIME,
 	@strain NVARCHAR(500),
+	@generation INT,
 	@notes NVARCHAR(MAX)
 )
 AS
@@ -19,8 +20,8 @@ BEGIN
 	DECLARE @createDate DATETIME = GETUTCDATE()
 
 	INSERT INTO Culture
-		(SupplierId, ParentCultureId, RecipeId, UserId, MediumType, OrderDate, CreateDate, Strain, Notes)
-		VALUES(@supplierId, @parentCultureId, @recipeId, @userId, @mediumType, @orderDate, @createDate, @strain, @notes)
+		(SupplierId, ParentCultureId, RecipeId, UserId, MediumType, OrderDate, CreateDate, Strain, Notes, Generation)
+		VALUES(@supplierId, @parentCultureId, @recipeId, @userId, @mediumType, @orderDate, @createDate, @strain, @notes, @generation)
 
 	DECLARE @id INT
 	SELECT @id = SCOPE_IDENTITY()
@@ -34,6 +35,7 @@ BEGIN
 	EXEC AuditAdd @table = 'Culture', @column = 'CreateDate', @action = 'Add', @userId = @userId, @key = @id, @newValue = @createDate
 	EXEC AuditAdd @table = 'Culture', @column = 'Strain', @action = 'Add', @userId = @userId, @key = @id, @newValue = @strain
 	EXEC AuditAdd @table = 'Culture', @column = 'Notes', @action = 'Add', @userId = @userId, @key = @id, @newValue = @notes
+	EXEC AuditAdd @table = 'Culture', @column = 'Generation', @action = 'Add', @userId = @userId, @key = @id, @newValue = @generation
 	
 	SELECT @id [Id]
 

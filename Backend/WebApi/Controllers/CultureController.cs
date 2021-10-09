@@ -39,7 +39,7 @@ namespace Solarponics.WebApi.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> BookIn([FromBody] CultureBookInRequest request)
         {
-            var id = await repo.Add(request.SupplierId, null, this.UserId!.Value, null, request.MediumType, request.OrderDate, request.Strain, request.Notes);
+            var id = await repo.Add(request.SupplierId, null, this.UserId!.Value, null, request.MediumType, request.OrderDate, request.Strain, request.Notes, 1);
             var culture = await repo.Get(id);
             return this.Ok(culture);
         }
@@ -49,7 +49,7 @@ namespace Solarponics.WebApi.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> FromRecipe([FromBody] CultureCreateFromReciptRequest request)
         {
-            var id = await repo.Add(null, null, this.UserId!.Value, null, request.MediumType, null, null, request.Notes);
+            var id = await repo.Add(null, null, this.UserId!.Value, request.RecipeId, request.MediumType, null, null, request.Notes, null);
             var culture = await repo.Get(id);
             return this.Ok(culture);
         }

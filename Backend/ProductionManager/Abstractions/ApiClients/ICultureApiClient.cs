@@ -14,9 +14,13 @@ namespace Solarponics.ProductionManager.Abstractions.ApiClients
         [Headers("Authorization: Bearer")]
         [Put("/cultures/from-recipe")]
         Task<Culture> CreateFromRecipe([Body] CultureCreateFromReciptRequest request);
-        
+
         [Headers("Authorization: Bearer")]
         [Post("/cultures/innoculate")]
         Task<Culture> Innoculate([Body] CultureInnoculateRequest request);
+
+        [Headers("Authorization: Bearer")]
+        [Get("/cultures/by-id/{id}")]
+        Task<Culture> Get(int id);
     }
 }

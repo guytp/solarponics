@@ -7,7 +7,7 @@ BEGIN
 	SET NOCOUNT ON
 	SET XACT_ABORT ON
 
-	SELECT Id, SupplierId, ParentCultureId, RecipeId, UserId, MediumType, OrderDate, CreateDate, Strain, Notes FROM [Culture] WHERE Id = @id
+	SELECT Id, SupplierId, ParentCultureId, RecipeId, UserId, MediumType, OrderDate, CreateDate, Strain, Notes, Generation FROM [Culture] WHERE Id = @id
 
 	RETURN 0 
 END

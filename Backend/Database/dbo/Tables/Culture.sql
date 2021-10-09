@@ -6,6 +6,7 @@
 	[RecipeId] INT,
 	[UserId] INT NOT NULL,
 	[MediumType] INT NOT NULL,
+	[Generation] INT NULL,
 	[OrderDate] DATETIME,
 	[CreateDate] DATETIME NOT NULL,
 	[Strain] NVARCHAR(500),

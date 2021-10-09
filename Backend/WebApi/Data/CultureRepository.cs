@@ -9,7 +9,7 @@ namespace Solarponics.WebApi.Data
     internal class CultureRepository : ICultureRepository
     {
         private const string ProcedureNameGet = "[dbo].[CultureGet]";
-        private const string ProcedureNameInnoculate = "[dbo].[CultureGet]";
+        private const string ProcedureNameInnoculate = "[dbo].[CultureInnoculate]";
         private const string ProcedureNameAdd = "[dbo].[CultureAdd]";
 
         public CultureRepository(IDatabaseConnection connection)
@@ -41,7 +41,7 @@ namespace Solarponics.WebApi.Data
             await storedProcedure.ExecuteNonQueryAsync();
         }
 
-        public async Task<int> Add(int? supplierId, int? parentCultureId, int userId, int? recipeId, CultureMediumType mediumType, DateTime? orderDate, string strain, string notes)
+        public async Task<int> Add(int? supplierId, int? parentCultureId, int userId, int? recipeId, CultureMediumType mediumType, DateTime? orderDate, string strain, string notes, int? generation)
         {
             using var storedProcedure = Connection.CreateStoredProcedure(ProcedureNameAdd, new StoredProcedureParameter[]
                 {
@@ -52,7 +52,8 @@ namespace Solarponics.WebApi.Data
                     new StoredProcedureParameter("@mediumType", (int)mediumType),
                     new StoredProcedureParameter("@orderDate", orderDate),
                     new StoredProcedureParameter("@strain", strain),
-                    new StoredProcedureParameter("@notes", notes)
+                    new StoredProcedureParameter("@notes", notes),
+                    new StoredProcedureParameter("@generation", generation)
                 });
             var id = await storedProcedure.ExecuteScalarAsync<int>();
             return id;

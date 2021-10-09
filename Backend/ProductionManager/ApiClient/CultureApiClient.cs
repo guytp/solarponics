@@ -36,5 +36,10 @@ namespace Solarponics.ProductionManager.ApiClient
         {
             return await this.refitClient.Innoculate(request);
         }
+
+        public async Task<Culture> Get(int id)
+        {
+            return await this.refitClient.Get(id);
+        }
     }
 }
