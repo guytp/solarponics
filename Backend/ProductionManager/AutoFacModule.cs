@@ -61,6 +61,7 @@ namespace Solarponics.ProductionManager
             builder.RegisterType<CultureApiClient>().As<ICultureApiClient>();
             builder.RegisterType<SensorReadingApiClient>().As<ISensorReadingApiClient>();
             builder.RegisterType<SensorModuleApiClient>().As<ISensorModuleApiClient>();
+            builder.RegisterType<LocationApiClient>().As<ILocationApiClient>();
 
             builder.RegisterType<CultureBookInView>().As<ICultureBookInView>().SingleInstance();
             builder.RegisterType<CultureBookInViewModel>().As<ICultureBookInViewModel>().SingleInstance();
@@ -82,6 +83,8 @@ namespace Solarponics.ProductionManager
             builder.RegisterType<SetupRecipeViewModel>().As<ISetupRecipeViewModel>().SingleInstance();
             builder.RegisterType<SetupHardwareView>().As<ISetupHardwareView>().SingleInstance();
             builder.RegisterType<SetupHardwareViewModel>().As<ISetupHardwareViewModel>().SingleInstance();
+            builder.RegisterType<SetupRoomsAndLocationsViewModel>().As<ISetupRoomsAndLocationsViewModel>().SingleInstance();
+            builder.RegisterType<SetupRoomsAndLocationsView>().As<ISetupRoomsAndLocationsView>().SingleInstance();
             builder.RegisterType<SetupModule>().As<ISetupModule>().SingleInstance();
             
             builder.RegisterType<DriverProvider>().As<IDriverProvider>().SingleInstance();

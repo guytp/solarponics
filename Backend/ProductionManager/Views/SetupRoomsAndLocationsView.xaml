@@ -1,0 +1,63 @@
+﻿<core:ViewBase x:Class="Solarponics.ProductionManager.Views.SetupRoomsAndLocationsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:core="clr-namespace:Solarponics.ProductionManager.Core"
+             xmlns:views="clr-namespace:Solarponics.ProductionManager.Views"
+             xmlns:abstractions="clr-namespace:Solarponics.ProductionManager.Abstractions.ViewModels"
+             d:DataContext="{d:DesignInstance Type={x:Type abstractions:ISetupRoomsAndLocationsViewModel}}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <core:ViewBase.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </core:ViewBase.Resources>
+    <Grid IsEnabled="{Binding Path=IsUiEnabled}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <views:ViewHeader Category="Setup" Title="Rooms" Grid.Row="0" Grid.ColumnSpan="4" />
+
+        <TextBlock Text="Locations" Grid.Row="1" Grid.Column="0" Foreground="White" FontSize="24" Margin="10" />
+        <ComboBox ItemsSource="{Binding Path=Locations}" SelectedItem="{Binding Path=SelectedLocation}" Grid.Row="1" Grid.Column="1" MinWidth="200" Margin="10" FontSize="24">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Path=Name}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <TextBlock Text="Rooms" Grid.Row="2" Grid.Column="0" Foreground="White" FontSize="24" Margin="10" Visibility="{Binding Path=IsLocationSelected, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        <ComboBox ItemsSource="{Binding Path=SelectedLocation.Rooms}" SelectedItem="{Binding Path=SelectedRoom}" Grid.Row="2" Grid.Column="1" MinWidth="200" Margin="10" FontSize="24" Visibility="{Binding Path=IsLocationSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Path=Name}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <Button Grid.Row="2" Grid.Column="2" Content="Print Label" IsEnabled="{Binding Path=IsPrintRoomLabelEnabled}" Command="{Binding Path=PrintRoomLabelCommand}" Margin="10" MinWidth="200" FontSize="24" Visibility="{Binding Path=IsRoomSelected, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+        <TextBlock Text="Name" Grid.Row="3" Grid.Column="0" Foreground="White" FontSize="24" Margin="10" Visibility="{Binding Path=IsLocationSelected, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        <TextBox Text="{Binding Path=NewRoomName, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" FontSize="24" Margin="10" Visibility="{Binding Path=IsLocationSelected, Converter={StaticResource BooleanToVisibilityConverter}}" Width="300" />
+        <Button Grid.Row="3" Grid.Column="2" Content="Add Room" IsEnabled="{Binding Path=IsNewRoomEnabled}" Command="{Binding Path=NewRoomCommand}" Margin="10" MinWidth="200" FontSize="24" Visibility="{Binding Path=IsLocationSelected, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+        <TextBlock Text="Name" Grid.Row="4" Grid.Column="0" Foreground="White" FontSize="24" Margin="10" />
+        <TextBox Text="{Binding Path=NewLocationName, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1" FontSize="24" Margin="10" Width="300" />
+        <Button Grid.Row="4" Grid.Column="2" Content="Add Location" IsEnabled="{Binding Path=IsNewLocationEnabled}" Command="{Binding Path=NewLocationCommand}" Margin="10" MinWidth="200" FontSize="24" />
+
+        <views:LoggedInButtonsView Grid.Row="6" DataContext="{Binding LoggedInButtonsViewModel}" Grid.ColumnSpan="4" />
+    </Grid>
+</core:ViewBase>

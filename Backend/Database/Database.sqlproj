@@ -114,5 +114,11 @@
     <Build Include="dbo\Stored Procedures\CultureGet.sql" />
     <Build Include="dbo\Stored Procedures\CultureInnoculate.sql" />
     <Build Include="dbo\Stored Procedures\ReadingCurrentGet.sql" />
+    <Build Include="dbo\Stored Procedures\RoomGet.sql" />
+    <Build Include="dbo\Stored Procedures\RoomAdd.sql" />
+    <Build Include="dbo\Stored Procedures\RoomUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\LocationAdd.sql" />
+    <Build Include="dbo\Stored Procedures\LocationGet.sql" />
+    <Build Include="dbo\Stored Procedures\LocationUpdate.sql" />
   </ItemGroup>
 </Project>

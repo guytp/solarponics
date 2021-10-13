@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Solarponics.Models;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
 
@@ -31,6 +34,35 @@ namespace Solarponics.WebApi.Controllers
 
                 return userId;
             }
+        }
+
+        protected (bool, ValidationResult[]) TryGetValidationErrors(object objectToValidate)
+        {
+            var context = new ValidationContext(objectToValidate);
+            var resultsList = new List<ValidationResult>();
+            var returnResult = Validator.TryValidateObject(objectToValidate, context, resultsList, true);
+            return (returnResult, resultsList.ToArray());
+        }
+
+        protected IActionResult ValidationFailure(string message, string memberName)
+        {
+            var validationResult = new ValidationResult(
+                message,
+                new[]
+                {
+                    memberName
+                });
+
+            return this.ValidationFailure(
+                new[]
+                {
+                    validationResult
+                });
+        }
+
+        protected IActionResult ValidationFailure(ValidationResult[] validationFailures)
+        {
+            return this.BadRequest(new ValidationResponse(validationFailures));
         }
     }
 }
