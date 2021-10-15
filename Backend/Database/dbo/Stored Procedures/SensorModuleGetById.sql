@@ -12,13 +12,16 @@ BEGIN
 		JOIN Room r ON sm.RoomId = r.Id
 		JOIN [Location] l ON l.Id = r.LocationId
 		WHERE
-			(@id IS NULL AND @allowNullId = 1) OR sm.Id = @id
+			((@id IS NULL AND @allowNullId = 1) OR sm.Id = @id) AND
+			IsDeleted =0
 		ORDER BY l.[Name], r.[Name], sm.[Name]
 
 	SELECT
 		s.Id, s.SensorModuleId, s.[Type], s.Number, s.CriticalLowBelow, s.WarningLowBelow, s.WarningHighAbove, s.CriticalHighAbove
 		FROM Sensor s
+		JOIN SensorModule sm ON sm.Id = s.SensorModuleId
 		WHERE
-			(@id IS NULL AND @allowNullId = 1) OR s.SensorModuleId = @id
+			((@id IS NULL AND @allowNullId = 1) OR s.SensorModuleId = @id) AND
+			sm.IsDeleted = 0
 		ORDER BY [Type], [Number]
 END

@@ -120,5 +120,9 @@
     <Build Include="dbo\Stored Procedures\LocationAdd.sql" />
     <Build Include="dbo\Stored Procedures\LocationGet.sql" />
     <Build Include="dbo\Stored Procedures\LocationUpdate.sql" />
+    <Build Include="dbo\Tables\SensorModuleModbusTcp.sql" />
+    <Build Include="dbo\Stored Procedures\SensorModuleAddModbus.sql" />
+    <Build Include="dbo\Stored Procedures\SensorModuleGetModbusTcp.sql" />
+    <Build Include="Security\ModbusIngestionProxy.sql" />
   </ItemGroup>
 </Project>

@@ -87,6 +87,7 @@ namespace Solarponics.SensorModuleEmulator
             Array.Copy(raw, 0, output, 1, raw.Length);
             output[0] = message.OpCode;
             _client.SendAsync(output);
+
             AddLog("Sent " + output.Length + " bytes for OpCode " + message.OpCode);
             this._client.ReceiveAsync();
         }
