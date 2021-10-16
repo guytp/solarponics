@@ -17,13 +17,13 @@ namespace Solarponics.ModbusIngestionProxy
 
         private IDatabaseConnection Connection { get; }
 
-        public async Task<SensorModuleWithModbusFields[]> GetSensorModules()
+        public async Task<SensorModuleModbusTcp[]> GetSensorModules()
         {
             using var storedProcedure = Connection.CreateStoredProcedure(ProcedureNameGet, null);
             await storedProcedure.ExecuteReaderAsync();
-            var modules = (await storedProcedure.GetDataSetAsync<SensorModuleWithModbusFields>())?.ToArray();
+            var modules = (await storedProcedure.GetDataSetAsync<SensorModuleModbusTcp>())?.ToArray();
             if (modules == null)
-                return new SensorModuleWithModbusFields[0];
+                return new SensorModuleModbusTcp[0];
 
             var sensors = await storedProcedure.GetDataSetAsync<Sensor>();
             foreach (var module in modules)

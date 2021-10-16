@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using Solarponics.Models;
+using System.Threading.Tasks;
 
 namespace Solarponics.ModbusIngestionProxy
 {
     public interface ISensorRepository
     {
-        Task<SensorModuleWithModbusFields[]> GetSensorModules();
+        Task<SensorModuleModbusTcp[]> GetSensorModules();
     }
 }

@@ -124,5 +124,6 @@
     <Build Include="dbo\Stored Procedures\SensorModuleAddModbus.sql" />
     <Build Include="dbo\Stored Procedures\SensorModuleGetModbusTcp.sql" />
     <Build Include="Security\ModbusIngestionProxy.sql" />
+    <Build Include="dbo\Stored Procedures\SensorModuleDelete.sql" />
   </ItemGroup>
 </Project>

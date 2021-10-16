@@ -4,6 +4,6 @@ namespace Solarponics.ModbusIngestionProxy
 {
     public interface IModbusSensorCommunicatorFactory
     {
-        IModbusSensorCommunicator Create(SensorModuleWithModbusFields sensorModule);
+        IModbusSensorCommunicator Create(SensorModuleModbusTcp sensorModule);
     }
 }

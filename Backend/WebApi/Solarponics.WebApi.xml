@@ -4,19 +4,6 @@
         <name>Solarponics.WebApi</name>
     </assembly>
     <members>
-        <member name="T:Solarponics.WebApi.Controllers.SensorModuleController">
-            <summary>
-                Provides access to information about sensor modules.
-            </summary>
-        </member>
-        <member name="M:Solarponics.WebApi.Controllers.SensorModuleController.Get">
-            <summary>
-                Gets a list of all sensor modules.
-            </summary>
-            <returns>
-                An OK result containing all sensor modules.
-            </returns>
-        </member>
         <member name="T:Solarponics.WebApi.Swagger.SwaggerBasePathFilter">
             <summary>
                 This filter allows the root path of the URL to be rewritten to cope with being behind a load balancer - i.e. if we

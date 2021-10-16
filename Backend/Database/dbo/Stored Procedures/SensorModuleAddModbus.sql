@@ -2,7 +2,6 @@
 (
     @roomId INT,
     @serialNumber NVARCHAR(50),
-    @driver NVARCHAR(50),
     @name NVARCHAR(50),
     @ipAddress NVARCHAR(39),
     @port SMALLINT,
@@ -29,6 +28,8 @@ BEGIN
     DECLARE @id INT
     SET XACT_ABORT ON
     BEGIN TRAN
+    
+    DECLARE @driver NVARCHAR(50) = 'ModbusTcp'
 
     INSERT INTO SensorModule (RoomId, SerialNumber, Driver, [Name]) VALUES(@roomId, @serialNumber, @driver, @name)
     SELECT @id = SCOPE_IDENTITY()

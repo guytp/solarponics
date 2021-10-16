@@ -15,9 +15,9 @@ namespace Solarponics.ModbusIngestionProxy
         public short Port { get; }
 
         public DateTime? LastReadingsSubmitted { get; private set; }
-        public SensorModuleWithModbusFields SensorModule { get; }
+        public SensorModuleModbusTcp SensorModule { get; }
 
-        public ModbusSensorCommunicator(SensorModuleWithModbusFields sensorModule, IIngestionClient ingestionClient)
+        public ModbusSensorCommunicator(SensorModuleModbusTcp sensorModule, IIngestionClient ingestionClient)
         {
             this.SensorModule = sensorModule;
             this.modbusClient = new ModbusClient();

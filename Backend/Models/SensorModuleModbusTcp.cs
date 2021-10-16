@@ -1,15 +1,12 @@
-﻿using Solarponics.Models;
-using System;
-
-namespace Solarponics.ModbusIngestionProxy
+﻿namespace Solarponics.Models
 {
-    public class SensorModuleWithModbusFields : SensorModule
+    public class SensorModuleModbusTcp : SensorModule
     {
         public string IpAddress { get; set; }
-        public short Port { get; set; }
+        public ushort Port { get; set; }
 
-        public override bool Equals(object obj) => this.EqualsModbus(obj as SensorModuleWithModbusFields);
-        private bool EqualsModbus(SensorModuleWithModbusFields p)
+        public override bool Equals(object obj) => this.EqualsModbus(obj as SensorModuleModbusTcp);
+        private bool EqualsModbus(SensorModuleModbusTcp p)
         {
             if (p is null)
             {
@@ -36,7 +33,7 @@ namespace Solarponics.ModbusIngestionProxy
 
         public override int GetHashCode() => (IpAddress, Port, base.GetHashCode()).GetHashCode();
 
-        public static bool operator ==(SensorModuleWithModbusFields obj1, SensorModuleWithModbusFields obj2)
+        public static bool operator ==(SensorModuleModbusTcp obj1, SensorModuleModbusTcp obj2)
         {
             if (obj1 is null)
             {
@@ -52,6 +49,6 @@ namespace Solarponics.ModbusIngestionProxy
             return obj1.Equals(obj2);
         }
 
-        public static bool operator !=(SensorModuleWithModbusFields obj1, SensorModuleWithModbusFields obj2) => !(obj1 == obj2);
+        public static bool operator !=(SensorModuleModbusTcp obj1, SensorModuleModbusTcp obj2) => !(obj1 == obj2);
     }
 }

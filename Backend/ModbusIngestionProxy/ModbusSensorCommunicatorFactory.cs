@@ -1,4 +1,6 @@
-﻿namespace Solarponics.ModbusIngestionProxy
+﻿using Solarponics.Models;
+
+namespace Solarponics.ModbusIngestionProxy
 {
     public class ModbusSensorCommunicatorFactory : IModbusSensorCommunicatorFactory
     {
@@ -8,7 +10,7 @@
             this.ingestionClientFactory = ingestionClientFactory;
         }
 
-        public IModbusSensorCommunicator Create(SensorModuleWithModbusFields sensorModule)
+        public IModbusSensorCommunicator Create(SensorModuleModbusTcp sensorModule)
         {
             return new ModbusSensorCommunicator(sensorModule, ingestionClientFactory.Create());
         }
