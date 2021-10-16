@@ -14,34 +14,35 @@ namespace Solarponics.WebApi.Controllers
     {
         private readonly ISensorModuleRepository _sensorModuleRepository;
         private readonly ILocationRepository locationRepository;
+        private readonly IRoomRepository roomRepository;
 
-        public SensorModuleController(ISensorModuleRepository sensorModuleRepository, ILocationRepository locationRepository)
+        public SensorModuleController(ISensorModuleRepository sensorModuleRepository, ILocationRepository locationRepository, IRoomRepository roomRepository)
         {
             _sensorModuleRepository = sensorModuleRepository;
             this.locationRepository = locationRepository;
+            this.roomRepository = roomRepository;
         }
 
         [HttpGet]
         [ProducesResponseType((int) HttpStatusCode.OK, Type = typeof(SensorModule[]))]
-        [ProducesResponseType((int) HttpStatusCode.NotFound)]
         [Authorize(Roles = "User,Admin")]
         public async Task<IActionResult> Get()
         {
             var results = await _sensorModuleRepository.GetAll();
-            return results == null ? NotFound() : (IActionResult) Ok(results);
+            return Ok(results ?? new SensorModule[0]);
         }
 
-        [HttpGet("/by-type/modbus-tcp")]
+        [HttpGet("by-type/modbus-tcp")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(SensorModuleModbusTcp[]))]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [Authorize(Roles = "User,Admin")]
         public async Task<IActionResult> GetModbusTcp()
         {
             var results = await _sensorModuleRepository.GetModbusTcp();
-            return results == null ? NotFound() : (IActionResult)Ok(results);
+            return Ok(results ?? new SensorModuleModbusTcp[0]);
         }
 
-        [HttpDelete("/by-id/{id}")]
+        [HttpDelete("by-id/{id}")]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
@@ -50,10 +51,10 @@ namespace Solarponics.WebApi.Controllers
             return NoContent();
         }
 
-        [HttpPut("/by-type/modbus-tcp")]
+        [HttpPut("by-type/modbus-tcp")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(int))]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Add(SensorModuleModbusTcp sensorModule)
+        public async Task<IActionResult> Add([FromBody]SensorModuleModbusTcp sensorModule)
         {
             if (sensorModule == null)
             {
@@ -72,32 +73,31 @@ namespace Solarponics.WebApi.Controllers
                 return this.ValidationFailure("Multiple locations with same name found", nameof(sensorModule.Location));
             }
 
-            var room = location.Rooms.FirstOrDefault(r => r.Name == sensorModule.Room);
+            var rooms = (await this.roomRepository.Get())?.Where(r => r.LocationId == location.Id)?.ToArray();
+            var room = rooms?.FirstOrDefault(r => r.Name == sensorModule.Room);
             if (room == null)
             {
                 return this.ValidationFailure("Room not found", nameof(sensorModule.Room));
             }
 
-            if (location.Rooms.Count(l => l.Name == sensorModule.Room) > 1)
+            if (rooms.Count(l => l.Name == sensorModule.Room) > 1)
             {
                 return this.ValidationFailure("Multiple rooms with same name found", nameof(sensorModule.Room));
             }
 
-            var allExisting = (await this._sensorModuleRepository.GetAll());
-            var existing = allExisting.Where(sm => sm.Name == sensorModule.Name);
-            if (existing != null)
+            var allExisting = await this._sensorModuleRepository.GetAll();
+            if (allExisting.Any(sm => sm.Name == sensorModule.Name))
             {
                 return this.ValidationFailure("Name already in use", nameof(sensorModule.Name));
             }
 
-            existing = allExisting.Where(sm => sm.SerialNumber == sensorModule.SerialNumber);
-            if (existing != null)
+            if (allExisting.Any(sm => sm.SerialNumber == sensorModule.SerialNumber))
             {
                 return this.ValidationFailure("SerialNumber already in use", nameof(sensorModule.SerialNumber));
             }
 
-            var existingModbusTcp = (await this._sensorModuleRepository.GetModbusTcp()).Where(sm => sm.IpAddress == sensorModule.IpAddress && sm.Port == sensorModule.Port);
-            if (existingModbusTcp != null)
+            var existingModbusTcp = (await this._sensorModuleRepository.GetModbusTcp()).Any(sm => sm.IpAddress == sensorModule.IpAddress && sm.Port == sensorModule.Port);
+            if (existingModbusTcp)
             {
                 return this.ValidationFailure("IpAddress/Port already in use", nameof(sensorModule.IpAddress));
             }
@@ -111,7 +111,7 @@ namespace Solarponics.WebApi.Controllers
                 return this.ValidationFailure("At least one supported sensor must be supplied", nameof(sensorModule.Sensors));
             }
 
-            await _sensorModuleRepository.AddModbusTcp(
+            var id = await _sensorModuleRepository.AddModbusTcp(
                 room.Id,
                 sensorModule.SerialNumber,
                 sensorModule.Name,
@@ -134,7 +134,7 @@ namespace Solarponics.WebApi.Controllers
                 carbonDioxideSensor == null ? (decimal?)null : carbonDioxideSensor.WarningHighAbove,
                 carbonDioxideSensor == null ? (decimal?)null : carbonDioxideSensor.CriticalHighAbove
                 );
-            return NoContent();
+            return Ok(id);
         }
     }
 }

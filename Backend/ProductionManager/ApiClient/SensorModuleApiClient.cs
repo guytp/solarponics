@@ -24,5 +24,21 @@ namespace Solarponics.ProductionManager.ApiClient
         {
             return await this.refitClient.Get();
         }
+
+        public async Task<SensorModuleModbusTcp[]> GetModbusTcp()
+        {
+            return await this.refitClient.GetModbusTcp();
+        }
+
+
+        public async Task Delete(int id)
+        {
+            await this.refitClient.Delete(id);
+        }
+
+        public async Task<int> AddModbusTcp(SensorModuleModbusTcp sensorModule)
+        {
+            return await this.refitClient.AddModbusTcp(sensorModule);
+        }
     }
 }

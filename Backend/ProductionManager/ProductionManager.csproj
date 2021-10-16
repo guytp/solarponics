@@ -64,6 +64,9 @@
     <Page Update="Views\SetupRoomsAndLocationsView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
+    <Page Update="Views\SetupSensorModuleModbusTcpView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
   </ItemGroup>
 
 </Project>

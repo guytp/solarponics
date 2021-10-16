@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[SensorModuleAddModbus]
+﻿CREATE PROCEDURE [dbo].[SensorModuleAddModbusTcp]
 (
     @roomId INT,
     @serialNumber NVARCHAR(50),

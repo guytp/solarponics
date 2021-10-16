@@ -68,12 +68,12 @@ namespace Solarponics.WebApi.Data
 
         public async Task<int> AddModbusTcp(int roomId, string serialNumber, string name, string ipAddress, ushort port, int userId, int? temperatureSensorNumber, decimal? temperatureWarningLowBelow, decimal? temperatureCriticalLowBelow, decimal? temperatureWarningHighAbove, decimal? temperatureCriticalHighAbove, int? humiditySensorNumber, decimal? humidityWarningLowBelow, decimal? humidityCriticalLowBelow, decimal?  humidityWarningHighAbove, decimal? humidityCriticalHighAbove, int? carbonDioxideSensorNumber, decimal? carbonDioxideWarningLowBelow, decimal? carbonDioxideCriticalLowBelow, decimal? carbonDioxideWarningHighAbove, decimal? carbonDioxideCriticalHighAbove)
         {
-            using var storedProcedure = Connection.CreateStoredProcedure(ProcedureNameDelete, new[] {
+            using var storedProcedure = Connection.CreateStoredProcedure(ProcedureNameAddModbusTcp, new[] {
                 new StoredProcedureParameter("@roomId", roomId),
                 new StoredProcedureParameter("@serialNumber", serialNumber),
                 new StoredProcedureParameter("@name", name),
                 new StoredProcedureParameter("@ipAddress", ipAddress),
-                new StoredProcedureParameter("@port", port),
+                new StoredProcedureParameter("@port", (short)port),
                 new StoredProcedureParameter("@userId", userId),
                 new StoredProcedureParameter("@temperatureSensorNumber", temperatureSensorNumber),
                 new StoredProcedureParameter("@temperatureWarningLowBelow", temperatureWarningLowBelow),

@@ -85,6 +85,8 @@ namespace Solarponics.ProductionManager
             builder.RegisterType<SetupHardwareViewModel>().As<ISetupHardwareViewModel>().SingleInstance();
             builder.RegisterType<SetupRoomsAndLocationsViewModel>().As<ISetupRoomsAndLocationsViewModel>().SingleInstance();
             builder.RegisterType<SetupRoomsAndLocationsView>().As<ISetupRoomsAndLocationsView>().SingleInstance();
+            builder.RegisterType<SetupSensorModuleModbusTcpViewModel>().As<ISetupSensorModuleModbusTcpViewModel>().SingleInstance();
+            builder.RegisterType<SetupSensorModuleModbusTcpView>().As<ISetupSensorModuleModbusTcpView>().SingleInstance();
             builder.RegisterType<SetupModule>().As<ISetupModule>().SingleInstance();
             
             builder.RegisterType<DriverProvider>().As<IDriverProvider>().SingleInstance();

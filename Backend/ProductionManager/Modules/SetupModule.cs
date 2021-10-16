@@ -6,14 +6,15 @@ namespace Solarponics.ProductionManager.Modules
 {
     public class SetupModule : ISetupModule
     {
-        public SetupModule(ISetupSupplierView supplierView, ISetupRecipeView recipeView, ISetupHardwareView hardwareView, ISetupRoomsAndLocationsView roomsAndLocationsView)
+        public SetupModule(ISetupSupplierView supplierView, ISetupRecipeView recipeView, ISetupHardwareView hardwareView, ISetupRoomsAndLocationsView roomsAndLocationsView, ISetupSensorModuleModbusTcpView sensorModuleModbusTcpView)
         {
             this.MenuItems = new MenuItem[]
             {
                 new MenuItem("Hardware", hardwareView),
                 new MenuItem("Suppliers", supplierView),
                 new MenuItem("Recipes", recipeView),
-                new MenuItem("Rooms", roomsAndLocationsView)
+                new MenuItem("Rooms", roomsAndLocationsView),
+                new MenuItem("Sensor Modules (Modbus TCP)", sensorModuleModbusTcpView)
             };
         }
         public string Category => "Setup";
