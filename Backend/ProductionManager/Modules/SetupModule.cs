@@ -6,7 +6,7 @@ namespace Solarponics.ProductionManager.Modules
 {
     public class SetupModule : ISetupModule
     {
-        public SetupModule(ISetupSupplierView supplierView, ISetupRecipeView recipeView, ISetupHardwareView hardwareView, ISetupRoomsAndLocationsView roomsAndLocationsView, ISetupSensorModuleModbusTcpView sensorModuleModbusTcpView)
+        public SetupModule(ISetupSupplierView supplierView, ISetupRecipeView recipeView, ISetupHardwareView hardwareView, ISetupRoomsAndLocationsView roomsAndLocationsView, ISetupSensorModuleModbusTcpView sensorModuleModbusTcpView, ISetupWasteReasonsView wasteReasonsView, ISetupAutoclavesView autoclavesView, ISetupShelvesView shelvesView)
         {
             this.MenuItems = new MenuItem[]
             {
@@ -14,6 +14,9 @@ namespace Solarponics.ProductionManager.Modules
                 new MenuItem("Suppliers", supplierView),
                 new MenuItem("Recipes", recipeView),
                 new MenuItem("Rooms", roomsAndLocationsView),
+                new MenuItem("Waste Reasons", wasteReasonsView),
+                new MenuItem("Autoclaves", autoclavesView),
+                new MenuItem("Shelves", shelvesView),
                 new MenuItem("Sensor Modules (Modbus TCP)", sensorModuleModbusTcpView)
             };
         }

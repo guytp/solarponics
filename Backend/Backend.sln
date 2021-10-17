@@ -19,7 +19,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Networking", "Networking\Ne
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductionManager", "ProductionManager\ProductionManager.csproj", "{26F42C94-76C8-44EA-BC85-C83F2B064F11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModbusIngestionProxy", "ModbusIngestionProxy\ModbusIngestionProxy.csproj", "{0EF3B52D-2883-46F9-9812-793400754D7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModbusIngestionProxy", "ModbusIngestionProxy\ModbusIngestionProxy.csproj", "{0EF3B52D-2883-46F9-9812-793400754D7F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EA893DEB-AF5C-4AD7-A074-0F1ED806EE8C}"
+	ProjectSection(SolutionItems) = preProject
+		ProjectToLocal-SqlSchemaCompare.scmp = ProjectToLocal-SqlSchemaCompare.scmp
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

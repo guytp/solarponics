@@ -1,6 +1,6 @@
 ﻿using Solarponics.Models;
 
-namespace Solarponics.ProductionManager.Data
+namespace Solarponics.ProductionManager.LabelDefinitions
 {
     public class RoomLabelDefinition : LabelDefinition
     {

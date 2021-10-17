@@ -3,7 +3,7 @@ using SharpZebra.Commands;
 using Solarponics.Models;
 using Solarponics.ProductionManager.Abstractions;
 using Solarponics.ProductionManager.Abstractions.Hardware;
-using Solarponics.ProductionManager.Data;
+using Solarponics.ProductionManager.LabelDefinitions;
 using System;
 using System.Collections.Generic;
 
@@ -81,7 +81,7 @@ namespace Solarponics.ProductionManager.Hardware
                     foreach (var part in partsToPrint)
                     {
                         buffer.AddRange(ZPLCommands.TextWrite(Left, top, ElementDrawRotation.NO_ROTATION, textHeight, part));
-                        top += (int)(textHeight * 2.2);
+                        top += (int)(textHeight * (textHeight == TextHeightSmall ? 2.2 : 1.1));
                         linesPrinted++;
                         if (label.MaxLinesToPrint.HasValue && linesPrinted >= label.MaxLinesToPrint)
                         {

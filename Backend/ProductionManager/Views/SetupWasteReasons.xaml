@@ -1,0 +1,48 @@
+﻿<core:ViewBase x:Class="Solarponics.ProductionManager.Views.SetupWasteReasonsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:core="clr-namespace:Solarponics.ProductionManager.Core"
+             xmlns:abstractions="clr-namespace:Solarponics.ProductionManager.Abstractions.ViewModels"
+             xmlns:views="clr-namespace:Solarponics.ProductionManager.Views"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type={x:Type abstractions:ISetupWasteReasonsViewModel}}">
+    <core:ViewBase.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </core:ViewBase.Resources>
+    <Grid IsEnabled="{Binding Path=IsUiEnabled}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <views:ViewHeader Category="Setup" Title="Waste Reasons" Grid.Row="0" Grid.ColumnSpan="4" />
+
+        <ComboBox ItemsSource="{Binding Path=WasteReasons}" SelectedItem="{Binding Path=SelectedWasteReason}" Grid.Row="1" Grid.Column="0" MinWidth="200" Margin="10" FontSize="24">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Path=Reason}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <Button Grid.Row="1" Content="Delete" IsEnabled="{Binding Path=IsWasteReasonSelected}" Command="{Binding Path=DeleteCommand}" Grid.Column="1" MinWidth="200" Margin="10" FontSize="24" />
+
+        <TextBlock Text="Reason" Grid.Row="2" Grid.Column="0" Foreground="White" FontSize="24" Margin="10" />
+        <TextBox Text="{Binding Path=Reason, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" FontSize="24" Margin="10" />
+
+        <Button Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" Content="Add" IsEnabled="{Binding Path=IsAddEnabled}" Command="{Binding Path=AddCommand}" Margin="10" MinWidth="200" FontSize="24" />
+
+        <views:LoggedInButtonsView Grid.Row="4" DataContext="{Binding LoggedInButtonsViewModel}" Grid.ColumnSpan="4" />
+    </Grid>
+</core:ViewBase>

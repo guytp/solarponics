@@ -1,4 +1,4 @@
-﻿namespace Solarponics.ProductionManager.Data
+﻿namespace Solarponics.ProductionManager.LabelDefinitions
 {
     public enum BarcodeSize
     {

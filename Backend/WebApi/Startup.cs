@@ -168,6 +168,9 @@ namespace Solarponics.WebApi
             services.AddTransient<ICultureRepository, CultureRepository>();
             services.AddTransient<ILocationRepository, LocationRepository>();
             services.AddTransient<IRoomRepository, RoomRepository>();
+            services.AddTransient<IAutoclaveRepository, AutoclaveRepository>();
+            services.AddTransient<IShelfRepository, ShelfRepository>();
+            services.AddTransient<IWasteReasonRepository, WasteReasonRepository>();
         }
     }
 }

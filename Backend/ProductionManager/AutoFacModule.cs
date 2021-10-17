@@ -62,6 +62,9 @@ namespace Solarponics.ProductionManager
             builder.RegisterType<SensorReadingApiClient>().As<ISensorReadingApiClient>();
             builder.RegisterType<SensorModuleApiClient>().As<ISensorModuleApiClient>();
             builder.RegisterType<LocationApiClient>().As<ILocationApiClient>();
+            builder.RegisterType<AutoclaveApiClient>().As<IAutoclaveApiClient>();
+            builder.RegisterType<ShelfApiClient>().As<IShelfApiClient>();
+            builder.RegisterType<WasteReasonApiClient>().As<IWasteReasonApiClient>();
 
             builder.RegisterType<CultureBookInView>().As<ICultureBookInView>().SingleInstance();
             builder.RegisterType<CultureBookInViewModel>().As<ICultureBookInViewModel>().SingleInstance();
@@ -87,6 +90,12 @@ namespace Solarponics.ProductionManager
             builder.RegisterType<SetupRoomsAndLocationsView>().As<ISetupRoomsAndLocationsView>().SingleInstance();
             builder.RegisterType<SetupSensorModuleModbusTcpViewModel>().As<ISetupSensorModuleModbusTcpViewModel>().SingleInstance();
             builder.RegisterType<SetupSensorModuleModbusTcpView>().As<ISetupSensorModuleModbusTcpView>().SingleInstance();
+            builder.RegisterType<SetupAutoclavesView>().As<ISetupAutoclavesView>().SingleInstance();
+            builder.RegisterType<SetupAutoclavesViewModel>().As<ISetupAutoclavesViewModel>().SingleInstance();
+            builder.RegisterType<SetupShelvesView>().As<ISetupShelvesView>().SingleInstance();
+            builder.RegisterType<SetupShelvesViewModel>().As<ISetupShelvesViewModel>().SingleInstance();
+            builder.RegisterType<SetupWasteReasonsView>().As<ISetupWasteReasonsView>().SingleInstance();
+            builder.RegisterType<SetupWasteReasonsViewModel>().As<ISetupWasteReasonsViewModel>().SingleInstance();
             builder.RegisterType<SetupModule>().As<ISetupModule>().SingleInstance();
             
             builder.RegisterType<DriverProvider>().As<IDriverProvider>().SingleInstance();

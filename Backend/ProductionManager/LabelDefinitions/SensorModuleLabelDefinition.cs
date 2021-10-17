@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-namespace Solarponics.ProductionManager.Data
+namespace Solarponics.ProductionManager.LabelDefinitions
 {
     public class SensorModuleLabelDefinition : LabelDefinition
     {

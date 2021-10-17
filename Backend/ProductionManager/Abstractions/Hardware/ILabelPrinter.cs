@@ -1,4 +1,4 @@
-﻿using Solarponics.ProductionManager.Data;
+﻿using Solarponics.ProductionManager.LabelDefinitions;
 
 namespace Solarponics.ProductionManager.Abstractions.Hardware
 {

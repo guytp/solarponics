@@ -6,4 +6,12 @@
     <AssemblyName>Solarponics.Models</AssemblyName>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Autoclave.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Autoclave.sql" />
+  </ItemGroup>
+
 </Project>

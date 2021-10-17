@@ -55,20 +55,15 @@ namespace EasyModbus
         private byte[] startingAddress = new byte[2];
         private byte[] quantity = new byte[2];
 
-        private bool dataReceived = false;
-        private int bytesToRead = 0;
         public byte[] sendData;
         public byte[] receiveData;
         private byte[] readBuffer = new byte[256];
         private int portOut;
 
         public int NumberOfRetries { get; set; } = 3;
-        private int countRetries = 0;
 
         private uint transactionIdentifierInternal = 0;
         private byte[] transactionIdentifier = new byte[2];
-
-        private bool receiveActive = false;
 
         public delegate void ConnectedChangedHandler(object sender);
         public event ConnectedChangedHandler ConnectedChanged;

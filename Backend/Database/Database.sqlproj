@@ -125,5 +125,14 @@
     <Build Include="dbo\Stored Procedures\SensorModuleGetModbusTcp.sql" />
     <Build Include="Security\ModbusIngestionProxy.sql" />
     <Build Include="dbo\Stored Procedures\SensorModuleDelete.sql" />
+    <Build Include="dbo\Stored Procedures\WasteReasonGet.sql" />
+    <Build Include="dbo\Stored Procedures\WasteReasonAdd.sql" />
+    <Build Include="dbo\Stored Procedures\WasteReasonDelete.sql" />
+    <Build Include="dbo\Stored Procedures\AutoclaveGet.sql" />
+    <Build Include="dbo\Stored Procedures\AutoclaveAdd.sql" />
+    <Build Include="dbo\Stored Procedures\AutoclaveDelete.sql" />
+    <Build Include="dbo\Stored Procedures\ShelfAdd.sql" />
+    <Build Include="dbo\Stored Procedures\ShelfDelete.sql" />
+    <Build Include="dbo\Stored Procedures\ShelfGet.sql" />
   </ItemGroup>
 </Project>

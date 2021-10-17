@@ -1,7 +1,7 @@
 ﻿using Solarponics.Models;
 using System;
 
-namespace Solarponics.ProductionManager.Data
+namespace Solarponics.ProductionManager.LabelDefinitions
 {
     public class CultureLabelDefinition : LabelDefinition
     {

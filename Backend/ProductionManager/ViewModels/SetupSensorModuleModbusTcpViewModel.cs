@@ -5,7 +5,7 @@ using Solarponics.ProductionManager.Abstractions.Hardware;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Commands;
 using Solarponics.ProductionManager.Core;
-using Solarponics.ProductionManager.Data;
+using Solarponics.ProductionManager.LabelDefinitions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -387,34 +387,34 @@ namespace Solarponics.ProductionManager.ViewModels
 
         private void ResetAddUi()
         {
-        this.IpAddress = null;
-        this.Port = null;
-        this.SelectedRoom = null;
-        this.SelectedLocation = null;
-        this.SerialNumber = null;
-        this.Name = null;
+            this.IpAddress = null;
+            this.Port = null;
+            this.SelectedRoom = null;
+            this.SelectedLocation = null;
+            this.SerialNumber = null;
+            this.Name = null;
 
-        this.IsTemperatureSensorEnabled = false;
-        this.TemperatureSensorNumber = null;
-        this.TemperatureSensorCriticalLowBelow = null;
-        this.TemperatureSensorWarningLowBelow = null;
-        this.TemperatureSensorWarningHighAbove = null;
-        this.TemperatureSensorCriticalHighAbove = null;
+            this.IsTemperatureSensorEnabled = false;
+            this.TemperatureSensorNumber = null;
+            this.TemperatureSensorCriticalLowBelow = null;
+            this.TemperatureSensorWarningLowBelow = null;
+            this.TemperatureSensorWarningHighAbove = null;
+            this.TemperatureSensorCriticalHighAbove = null;
 
-        this.IsHumiditySensorEnabled = false;
-        this.HumiditySensorNumber = null;
-        this.HumiditySensorCriticalLowBelow = null;
-        this.HumiditySensorWarningLowBelow = null;
-        this.HumiditySensorWarningHighAbove = null;
-        this.HumiditySensorCriticalHighAbove = null;
+            this.IsHumiditySensorEnabled = false;
+            this.HumiditySensorNumber = null;
+            this.HumiditySensorCriticalLowBelow = null;
+            this.HumiditySensorWarningLowBelow = null;
+            this.HumiditySensorWarningHighAbove = null;
+            this.HumiditySensorCriticalHighAbove = null;
 
-        this.IsCarbonDioxideSensorEnabled = false;
-        this.CarbonDioxideSensorNumber = null;
-        this.CarbonDioxideSensorCriticalLowBelow = null;
-        this.CarbonDioxideSensorWarningLowBelow = null;
-        this.CarbonDioxideSensorWarningHighAbove = null;
-        this.CarbonDioxideSensorCriticalHighAbove = null;
-    }
+            this.IsCarbonDioxideSensorEnabled = false;
+            this.CarbonDioxideSensorNumber = null;
+            this.CarbonDioxideSensorCriticalLowBelow = null;
+            this.CarbonDioxideSensorWarningLowBelow = null;
+            this.CarbonDioxideSensorWarningHighAbove = null;
+            this.CarbonDioxideSensorCriticalHighAbove = null;
+        }
 
         private void OnSelectedLocationChanged()
         {

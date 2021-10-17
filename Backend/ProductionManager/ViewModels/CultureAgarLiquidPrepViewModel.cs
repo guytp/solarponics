@@ -5,7 +5,7 @@ using Solarponics.ProductionManager.Abstractions.Hardware;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Commands;
 using Solarponics.ProductionManager.Core;
-using Solarponics.ProductionManager.Data;
+using Solarponics.ProductionManager.LabelDefinitions;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
