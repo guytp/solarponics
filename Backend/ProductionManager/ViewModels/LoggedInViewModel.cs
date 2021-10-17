@@ -9,7 +9,7 @@ namespace Solarponics.ProductionManager.ViewModels
     {
         public LoggedInViewModel(IAuthenticationSession authenticationSession, IMainMenuItemCategoryViewModel mainMenuItemCategoryViewModel, ILoggedInButtonsViewModel loggedInButtonsViewModel)
         {
-            authenticationSession.Logout += OnLogout;
+            authenticationSession.LoggedOut += OnLogout;
             this.MainMenuItemCategoryViewModel = mainMenuItemCategoryViewModel;
             this.LoggedInButtonsViewModel = loggedInButtonsViewModel;
         }

@@ -7,9 +7,10 @@ namespace Solarponics.ProductionManager.Abstractions
     {
         User User { get; }
         AuthenticationToken Token { get; }
-        event EventHandler Login;
-        event EventHandler Logout;
+        event EventHandler LoggedIn;
+        event EventHandler LoggedOut;
 
-        void SetUser(User user, AuthenticationToken token);
+        void Login(User user, AuthenticationToken token, short userId, short pin);
+        void Logout();
     }
 }

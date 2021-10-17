@@ -44,11 +44,12 @@ namespace Solarponics.ProductionManager.ViewModels
 
             try
             {
-                var authenticateResponse = await apiClient.Authenticate(new AuthenticateRequest
+                var request = new AuthenticateRequest
                 {
                     UserId = short.Parse(UserId),
                     Pin = short.Parse(Pin)
-                });
+                };
+                var authenticateResponse = await apiClient.Authenticate(request);
 
                 UserId = null;
                 Pin = null;
@@ -60,7 +61,7 @@ namespace Solarponics.ProductionManager.ViewModels
                 }
 
                 this.loggedInView.LoggedInViewModel.User = authenticateResponse.User;
-                this.authenticationSession.SetUser(authenticateResponse.User, authenticateResponse.AuthenticationToken);
+                this.authenticationSession.Login(authenticateResponse.User, authenticateResponse.AuthenticationToken, request.UserId, request.Pin);
                 this.navigator.NavigateTo(this.loggedInView);
             }
             catch (Exception ex)

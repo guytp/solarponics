@@ -11,8 +11,8 @@ namespace Solarponics.ProductionManager.ViewModels
         private Timer timer;
         public StatusBarViewModel(IAuthenticationSession authenticationSession)
         {
-            authenticationSession.Login += (sender, args) => UserName = authenticationSession.User.Name;
-            authenticationSession.Logout += (sender, args) => UserName = null;
+            authenticationSession.LoggedIn += (sender, args) => UserName = authenticationSession.User.Name;
+            authenticationSession.LoggedOut += (sender, args) => UserName = null;
             UpdateTime();
             this.timer = new Timer(1000);
             this.timer.Elapsed += (sender, args) => this.UpdateTime();

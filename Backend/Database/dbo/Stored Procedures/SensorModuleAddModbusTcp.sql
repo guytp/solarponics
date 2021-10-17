@@ -88,4 +88,4 @@ BEGIN
 END
 GO
 
-GRANT EXECUTE ON [dbo].[SensorModuleAddModbus] TO [WebApi]
+GRANT EXECUTE ON [dbo].[SensorModuleAddModbusTcp] TO [WebApi]
