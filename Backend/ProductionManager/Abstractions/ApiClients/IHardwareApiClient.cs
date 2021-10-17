@@ -25,12 +25,20 @@ namespace Solarponics.ProductionManager.Abstractions.ApiClients
         [Headers("Authorization: Bearer")]
         Task RemoveBarcodeScanner(string machineName);
 
-        [Put("/hardware/by-machine-name/{machineName}/label-printer")]
+        [Put("/hardware/by-machine-name/{machineName}/label-printer/large")]
         [Headers("Authorization: Bearer")]
-        Task SetLabelPrinter(string machineName, LabelPrinterSettings settings);
+        Task SetLabelPrinterLarge(string machineName, LabelPrinterSettings settings);
 
-        [Delete("/hardware/by-machine-name/{machineName}/label-printer")]
+        [Delete("/hardware/by-machine-name/{machineName}/label-printer/large")]
         [Headers("Authorization: Bearer")]
-        Task RemoveLabelPrinter(string machineName);
+        Task RemoveLabelPrinterLarge(string machineName);
+
+        [Put("/hardware/by-machine-name/{machineName}/label-printer/small")]
+        [Headers("Authorization: Bearer")]
+        Task SetLabelPrinterSmall(string machineName, LabelPrinterSettings settings);
+
+        [Delete("/hardware/by-machine-name/{machineName}/label-printer/small")]
+        [Headers("Authorization: Bearer")]
+        Task RemoveLabelPrinterSmall(string machineName);
     }
 }

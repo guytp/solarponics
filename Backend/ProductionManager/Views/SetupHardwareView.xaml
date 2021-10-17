@@ -15,6 +15,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
@@ -22,19 +23,23 @@
         <views:ViewHeader Category="Setup" Title="Hardware" Grid.Row="0" />
 
         <views:SerialDeviceSettingsView DataContext="{Binding Path=BarcodeScanner}" Header="Barcode Scanner" Grid.Row="1" Margin="20" />
-        <views:PrinterSettingsView DataContext="{Binding Path=LabelPrinter}" Grid.Row="2" Margin="20" />
-        <views:SerialDeviceSettingsView DataContext="{Binding Path=Scale}" Header="Scale" Grid.Row="3" Margin="20" />
+        <views:PrinterSettingsView DataContext="{Binding Path=LabelPrinterSmall}" Grid.Row="2" Margin="20" PrinterType="Small" />
+        <views:PrinterSettingsView DataContext="{Binding Path=LabelPrinterLarge}" Grid.Row="3" Margin="20" PrinterType="Large" />
+        <views:SerialDeviceSettingsView DataContext="{Binding Path=Scale}" Header="Scale" Grid.Row="4" Margin="20" />
 
-        <Grid Margin="0,0,0,20" Grid.Row="4">
+        <Grid Margin="0,0,0,20" Grid.Row="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Command="{Binding Path=SaveCommand}" IsEnabled="{Binding Path=IsSaveEnabled}" Content="Save" HorizontalAlignment="Center" VerticalAlignment="Top" Padding="50,15,50,15" FontSize="24" Width="250" />
+            <Button Grid.Column="0" Command="{Binding Path=SaveCommand}" IsEnabled="{Binding Path=IsSaveEnabled}" Content="Save" HorizontalAlignment="Center" VerticalAlignment="Top" Padding="50,15,50,15" FontSize="24" Width="350" />
 
-            <Button Grid.Column="1" Command="{Binding Path=LabelPrintCommand}" IsEnabled="{Binding Path=IsLabelTestEnabled}" Content="Label Test" HorizontalAlignment="Center" VerticalAlignment="Top" Padding="50,15,50,15" FontSize="24" Width="250" />
+            <Button Grid.Column="1" Command="{Binding Path=LabelPrintSmallCommand}" IsEnabled="{Binding Path=IsLabelTestSmallEnabled}" Content="Label Test (Small)" HorizontalAlignment="Center" VerticalAlignment="Top" Padding="50,15,50,15" FontSize="24" Width="350" />
+
+            <Button Grid.Column="2" Command="{Binding Path=LabelPrintLargeCommand}" IsEnabled="{Binding Path=IsLabelTestLargeEnabled}" Content="Label Test (Large)" HorizontalAlignment="Center" VerticalAlignment="Top" Padding="50,15,50,15" FontSize="24" Width="350" />
         </Grid>
 
-        <views:LoggedInButtonsView Grid.Row="4" DataContext="{Binding LoggedInButtonsViewModel}" Margin="0,80,0,4" Grid.RowSpan="2" />
+        <views:LoggedInButtonsView Grid.Row="6" DataContext="{Binding LoggedInButtonsViewModel}" Margin="0,80,0,4" Grid.RowSpan="2" />
     </Grid>
 </core:ViewBase>

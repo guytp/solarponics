@@ -77,10 +77,10 @@ namespace Solarponics.ProductionManager.ViewModels
                 };
                 this.SelectedLocation.Rooms = newRooms.OrderBy(o => o.Name).ToArray();
                 this.NewRoomName = null;
-                if (this.hardwareProvider.LabelPrinter != null)
+                if (this.hardwareProvider.LabelPrinterLarge != null)
                     try
                     {
-                        this.hardwareProvider.LabelPrinter.Print(new RoomLabelDefinition(room));
+                        this.hardwareProvider.LabelPrinterLarge.Print(new RoomLabelDefinition(room));
                     }
                     catch (Exception ex2)
                     {
@@ -136,7 +136,7 @@ namespace Solarponics.ProductionManager.ViewModels
             if (!IsUiEnabled || !IsPrintRoomLabelEnabled)
                 return;
 
-            if (this.hardwareProvider?.LabelPrinter == null)
+            if (this.hardwareProvider?.LabelPrinterLarge == null)
             {
                 this.dialogBox.Show("There is no label printer configured.");
                 return;
@@ -145,7 +145,7 @@ namespace Solarponics.ProductionManager.ViewModels
             try
             {
                 this.IsUiEnabled = false;
-                this.hardwareProvider.LabelPrinter.Print(new RoomLabelDefinition(this.SelectedRoom));
+                this.hardwareProvider.LabelPrinterLarge.Print(new RoomLabelDefinition(this.SelectedRoom));
                 this.dialogBox.Show("Room label printed.");
             }
             catch (Exception ex)

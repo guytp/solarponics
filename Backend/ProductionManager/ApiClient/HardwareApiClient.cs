@@ -45,14 +45,24 @@ namespace Solarponics.ProductionManager.ApiClient
             await this.refitClient.RemoveBarcodeScanner(machineName);
         }
 
-        public async Task SetLabelPrinter(string machineName, LabelPrinterSettings settings)
+        public async Task SetLabelPrinterSmall(string machineName, LabelPrinterSettings settings)
         {
-            await this.refitClient.SetLabelPrinter(machineName, settings);
+            await this.refitClient.SetLabelPrinterSmall(machineName, settings);
         }
 
-        public async Task RemoveLabelPrinter(string machineName)
+        public async Task SetLabelPrinterLarge(string machineName, LabelPrinterSettings settings)
         {
-            await this.refitClient.RemoveLabelPrinter(machineName);
+            await this.refitClient.SetLabelPrinterLarge(machineName, settings);
+        }
+
+        public async Task RemoveLabelPrinterLarge(string machineName)
+        {
+            await this.refitClient.RemoveLabelPrinterLarge(machineName);
+        }
+
+        public async Task RemoveLabelPrinterSmall(string machineName)
+        {
+            await this.refitClient.RemoveLabelPrinterSmall(machineName);
         }
     }
 }

@@ -92,7 +92,7 @@ namespace Solarponics.ProductionManager.ViewModels
             if (!IsBookInEnabled || !this.IsUiEnabled)
                 return;
 
-            if (hardwareProvider?.LabelPrinter == null)
+            if (hardwareProvider?.LabelPrinterSmall == null)
             {
                 this.dialogBox.Show("Unable to book in culture without label printer");
                 return;
@@ -110,7 +110,7 @@ namespace Solarponics.ProductionManager.ViewModels
                     SupplierId = this.SelectedSupplier.Id
                 });
 
-                this.hardwareProvider.LabelPrinter.Print(new CultureLabelDefinition(culture, this.SelectedSupplier));
+                this.hardwareProvider.LabelPrinterSmall.Print(new CultureLabelDefinition(culture, this.SelectedSupplier));
 
                 this.ResetUi();
 

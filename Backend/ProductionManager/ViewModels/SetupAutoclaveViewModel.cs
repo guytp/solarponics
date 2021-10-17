@@ -94,11 +94,11 @@ namespace Solarponics.ProductionManager.ViewModels
                 });
                 this.ResetUi();
                 this.Autoclaves = await this.apiClient.Get();
-                if (this.hardwareProvider?.LabelPrinter != null)
+                if (this.hardwareProvider?.LabelPrinterLarge != null)
                 {
                     try
                     {
-                        this.hardwareProvider.LabelPrinter.Print(new AutoclaveLabelDefinition(this.Autoclaves.First(ac => ac.Id == id)));
+                        this.hardwareProvider.LabelPrinterLarge.Print(new AutoclaveLabelDefinition(this.Autoclaves.First(ac => ac.Id == id)));
                     }
                     catch (Exception ex)
                     {
@@ -122,7 +122,7 @@ namespace Solarponics.ProductionManager.ViewModels
             if (!IsUiEnabled || !IsAutoclaveSelected)
                 return;
 
-            if (hardwareProvider?.LabelPrinter == null)
+            if (hardwareProvider?.LabelPrinterLarge == null)
             {
                 this.dialogBox.Show("No printer is attached to the system.");
                 return;
@@ -130,7 +130,7 @@ namespace Solarponics.ProductionManager.ViewModels
 
             try
             {
-                hardwareProvider.LabelPrinter.Print(new AutoclaveLabelDefinition(this.SelectedAutoclave));
+                hardwareProvider.LabelPrinterLarge.Print(new AutoclaveLabelDefinition(this.SelectedAutoclave));
                 this.dialogBox.Show("Label printed.");
             }
             catch (Exception ex)

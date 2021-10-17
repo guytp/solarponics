@@ -4,7 +4,8 @@
     {
         public BarcodeScannerSettings BarcodeScanner { get; set; }
 
-        public LabelPrinterSettings LabelPrinter { get; set; }
+        public LabelPrinterSettings LabelPrinterSmall { get; set; }
+        public LabelPrinterSettings LabelPrinterLarge { get; set; }
 
         public ScaleSettings Scale { get; set; }
     }

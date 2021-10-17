@@ -44,21 +44,39 @@ namespace Solarponics.WebApi.Controllers
             return this.NoContent();
         }
 
-        [HttpDelete("by-machine-name/{machineName}/label-printer")]
-        [ProducesResponseType((int) HttpStatusCode.NoContent)]
+        [HttpDelete("by-machine-name/{machineName}/label-printer/large")]
+        [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [Authorize(Roles = "User,Admin")]
-        public async Task<IActionResult> RemoveLabelPrinter(string machineName)
+        public async Task<IActionResult> RemoveLabelPrinterLarge(string machineName)
         {
-            await hardwareRepository.RemoveLabelPrinter(machineName, UserId!.Value);
+            await hardwareRepository.RemoveLabelPrinter(machineName, UserId!.Value, "Large");
             return this.NoContent();
         }
 
-        [HttpPut("by-machine-name/{machineName}/label-printer")]
-        [ProducesResponseType((int) HttpStatusCode.NoContent)]
+        [HttpDelete("by-machine-name/{machineName}/label-printer/small")]
+        [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [Authorize(Roles = "User,Admin")]
-        public async Task<IActionResult> SetLabelPrinter(string machineName, [FromBody]LabelPrinterSettings settings)
+        public async Task<IActionResult> RemoveLabelPrinterSmall(string machineName)
         {
-            await hardwareRepository.SetLabelPrinter(machineName, settings, UserId!.Value);
+            await hardwareRepository.RemoveLabelPrinter(machineName, UserId!.Value, "Small");
+            return this.NoContent();
+        }
+
+        [HttpPut("by-machine-name/{machineName}/label-printer/small")]
+        [ProducesResponseType((int)HttpStatusCode.NoContent)]
+        [Authorize(Roles = "User,Admin")]
+        public async Task<IActionResult> SetLabelPrinterSmall(string machineName, [FromBody] LabelPrinterSettings settings)
+        {
+            await hardwareRepository.SetLabelPrinter(machineName, settings, UserId!.Value, "Small");
+            return this.NoContent();
+        }
+
+        [HttpPut("by-machine-name/{machineName}/label-printer/large")]
+        [ProducesResponseType((int)HttpStatusCode.NoContent)]
+        [Authorize(Roles = "User,Admin")]
+        public async Task<IActionResult> SetLabelPrinterLarge(string machineName, [FromBody] LabelPrinterSettings settings)
+        {
+            await hardwareRepository.SetLabelPrinter(machineName, settings, UserId!.Value, "Large");
             return this.NoContent();
         }
 

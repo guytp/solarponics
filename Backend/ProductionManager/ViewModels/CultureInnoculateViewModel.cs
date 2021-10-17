@@ -94,7 +94,7 @@ namespace Solarponics.ProductionManager.ViewModels
             if (!this.IsUiEnabled || !this.IsConfirmEnabled)
                 return;
 
-            if (hardwareProvider?.LabelPrinter == null)
+            if (hardwareProvider?.LabelPrinterSmall == null)
             {
                 this.dialogBox.Show("Unable to book in culture without label printer");
                 return;
@@ -111,7 +111,7 @@ namespace Solarponics.ProductionManager.ViewModels
                 });
 
                 var recipe = this.recipes.First(r => r.Id == culture.RecipeId);
-                this.hardwareProvider.LabelPrinter.Print(new CultureLabelDefinition(culture, recipe));
+                this.hardwareProvider.LabelPrinterSmall.Print(new CultureLabelDefinition(culture, recipe));
                 this.ResetUi();
                 this.dialogBox.Show("Confirmed innoculation and new label printed");
             }

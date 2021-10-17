@@ -11,7 +11,7 @@ namespace Solarponics.WebApi.Abstractions
         Task RemoveBarcodeScanner(string machineName, int userId);
         Task SetScale(string machineName, ScaleSettings settings, int userId);
         Task RemoveScale(string machineName, int userId);
-        Task SetLabelPrinter(string machineName, LabelPrinterSettings settings, int userId);
-        Task RemoveLabelPrinter(string machineName, int userId);
+        Task SetLabelPrinter(string machineName, LabelPrinterSettings settings, int userId, string printerType);
+        Task RemoveLabelPrinter(string machineName, int userId, string printerType);
     }
 }

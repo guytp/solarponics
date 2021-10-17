@@ -1,5 +1,4 @@
-﻿using Solarponics.Models;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
 namespace Solarponics.ProductionManager.Abstractions.ViewModels
 {
@@ -8,11 +7,14 @@ namespace Solarponics.ProductionManager.Abstractions.ViewModels
         ILoggedInButtonsViewModel LoggedInButtonsViewModel { get; }
         bool IsSaveEnabled { get; }
         ICommand SaveCommand { get; }
-        ICommand LabelPrintCommand { get; }
+        ICommand LabelPrintSmallCommand { get; }
+        ICommand LabelPrintLargeCommand { get; }
         bool IsUiEnabled { get; }
-        bool IsLabelTestEnabled { get; }
+        bool IsLabelTestSmallEnabled { get; }
+        bool IsLabelTestLargeEnabled { get; }
         ISerialDeviceSettingsViewModel BarcodeScanner { get; }
-        IPrinterSettingsViewModel LabelPrinter { get; }
+        IPrinterSettingsViewModel LabelPrinterSmall { get; }
+        IPrinterSettingsViewModel LabelPrinterLarge { get; }
         public ISerialDeviceSettingsViewModel Scale { get; }
     }
 }

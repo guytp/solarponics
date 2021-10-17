@@ -28,27 +28,33 @@ namespace Solarponics.ProductionManager.ViewModels
             this.hardwareProvider = hardwareProvider;
             this.apiClient = apiClient;
             this.SaveCommand = new RelayCommand(_ => Save());
-            this.LabelPrintCommand = new RelayCommand(_ => LabelTest());
+            this.LabelPrintSmallCommand = new RelayCommand(_ => LabelTestSmall());
+            this.LabelPrintLargeCommand = new RelayCommand(_ => LabelTestLarge());
             this.serialDeviceSettingsViewModelFactory = serialDeviceSettingsViewModelFactory;
             this.printerSettingsViewModelFactory = printerSettingsViewModelFactory;
             this.dialogBox = dialogBox;
         }
 
         public ILoggedInButtonsViewModel LoggedInButtonsViewModel { get; }
-        public ICommand LabelPrintCommand { get; }
-        public bool IsLabelTestEnabled { get; private set;}
+        public ICommand LabelPrintSmallCommand { get; }
+        public ICommand LabelPrintLargeCommand { get; }
+        public bool IsLabelTestSmallEnabled { get; private set;}
+        public bool IsLabelTestLargeEnabled { get; private set; }
 
-        public bool IsSaveEnabled => (this.IsBarcodeScannerUpdated || this.IsLabelPrinterUpdated || this.IsScaleUpdated) && (this.BarcodeScanner.IsValid && this.LabelPrinter.IsValid && this.Scale.IsValid);
+        public bool IsSaveEnabled => (this.IsBarcodeScannerUpdated || this.IsLabelPrinterSmallUpdated || this.IsLabelPrinterLargeUpdated || this.IsScaleUpdated) && (this.BarcodeScanner.IsValid && this.LabelPrinterLarge.IsValid && this.LabelPrinterSmall.IsValid && this.Scale.IsValid);
 
         private bool IsBarcodeScannerUpdated => (this.BarcodeScanner != null) && ((this.hardwareSettings?.BarcodeScanner == null && !this.BarcodeScanner.IsReset) || (this.hardwareSettings?.BarcodeScanner != null && this.BarcodeScanner.IsReset));
 
-        private bool IsLabelPrinterUpdated => (this.LabelPrinter != null) && ((this.hardwareSettings?.LabelPrinter == null && !this.LabelPrinter.IsReset) || (this.hardwareSettings?.LabelPrinter != null && this.LabelPrinter.IsReset));
+        private bool IsLabelPrinterLargeUpdated => (this.LabelPrinterLarge != null) && ((this.hardwareSettings?.LabelPrinterLarge == null && !this.LabelPrinterLarge.IsReset) || (this.hardwareSettings?.LabelPrinterLarge != null && this.LabelPrinterLarge.IsReset));
+
+        private bool IsLabelPrinterSmallUpdated => (this.LabelPrinterSmall != null) && ((this.hardwareSettings?.LabelPrinterSmall == null && !this.LabelPrinterSmall.IsReset) || (this.hardwareSettings?.LabelPrinterSmall != null && this.LabelPrinterSmall.IsReset));
 
         private bool IsScaleUpdated => (this.Scale != null) && ((this.hardwareSettings?.Scale == null && !this.Scale.IsReset) || (this.hardwareSettings?.Scale != null && this.Scale.IsReset));
 
         public ICommand SaveCommand { get; }
         public ISerialDeviceSettingsViewModel BarcodeScanner { get; private set; }
-        public IPrinterSettingsViewModel LabelPrinter { get; private set; }
+        public IPrinterSettingsViewModel LabelPrinterSmall { get; private set; }
+        public IPrinterSettingsViewModel LabelPrinterLarge { get; private set; }
         public ISerialDeviceSettingsViewModel Scale { get; private set; }
         public bool IsUiEnabled { get; private set; }
 
@@ -58,17 +64,21 @@ namespace Solarponics.ProductionManager.ViewModels
 
             this.hardwareSettings = await this.apiClient.GetSettings(Environment.MachineName);
             this.BarcodeScanner = serialDeviceSettingsViewModelFactory.Create(hardwareSettings.BarcodeScanner, SerialDeviceType.BarcodeScanner);
-            this.LabelPrinter = printerSettingsViewModelFactory.Create(hardwareSettings.LabelPrinter);
+            this.LabelPrinterSmall = printerSettingsViewModelFactory.Create(hardwareSettings.LabelPrinterSmall);
+            this.LabelPrinterLarge = printerSettingsViewModelFactory.Create(hardwareSettings.LabelPrinterLarge);
             this.Scale = serialDeviceSettingsViewModelFactory.Create(hardwareSettings.Scale, SerialDeviceType.Scale);
 
             this.BarcodeScanner.PropertyChanged += OnSettingPropertyChanged;
-            this.LabelPrinter.PropertyChanged += OnSettingPropertyChanged;
+            this.LabelPrinterSmall.PropertyChanged += OnSettingPropertyChanged;
+            this.LabelPrinterLarge.PropertyChanged += OnSettingPropertyChanged;
             this.Scale.PropertyChanged += OnSettingPropertyChanged;
             await this.BarcodeScanner.OnShow();
-            await this.LabelPrinter.OnShow();
+            await this.LabelPrinterSmall.OnShow();
+            await this.LabelPrinterLarge.OnShow();
             await this.Scale.OnShow();
-            
-            this.IsLabelTestEnabled = this.hardwareProvider.LabelPrinter != null;
+
+            this.IsLabelTestSmallEnabled = this.hardwareProvider.LabelPrinterSmall != null;
+            this.IsLabelTestLargeEnabled = this.hardwareProvider.LabelPrinterLarge != null;
 
             if (this.hardwareProvider.BarcodeScanner != null)
                 this.hardwareProvider.BarcodeScanner.BarcodeRead += OnBarcodeRead;
@@ -81,7 +91,8 @@ namespace Solarponics.ProductionManager.ViewModels
         public async override Task OnHide()
         {
             this.BarcodeScanner.PropertyChanged -= OnSettingPropertyChanged;
-            this.LabelPrinter.PropertyChanged -= OnSettingPropertyChanged;
+            this.LabelPrinterSmall.PropertyChanged -= OnSettingPropertyChanged;
+            this.LabelPrinterLarge.PropertyChanged -= OnSettingPropertyChanged;
             this.Scale.PropertyChanged -= OnSettingPropertyChanged;
             if (this.hardwareProvider.BarcodeScanner != null)
                 this.hardwareProvider.BarcodeScanner.BarcodeRead -= OnBarcodeRead;
@@ -89,7 +100,8 @@ namespace Solarponics.ProductionManager.ViewModels
                 this.hardwareProvider.Scale.WeightRead -= OnWeightRead;
             
             await this.BarcodeScanner.OnHide();
-            await this.LabelPrinter.OnHide();
+            await this.LabelPrinterSmall.OnHide();
+            await this.LabelPrinterLarge.OnHide();
             await this.Scale.OnHide();
         }
 
@@ -119,17 +131,30 @@ namespace Solarponics.ProductionManager.ViewModels
                     await this.apiClient.RemoveBarcodeScanner(Environment.MachineName);
                 }
 
-                if (!this.LabelPrinter.IsReset)
+                if (!this.LabelPrinterSmall.IsReset)
                 {
-                    await this.apiClient.SetLabelPrinter(Environment.MachineName, new LabelPrinterSettings
+                    await this.apiClient.SetLabelPrinterSmall(Environment.MachineName, new LabelPrinterSettings
                     {
-                        DriverName = this.LabelPrinter.DriverName,
-                        QueueName = this.LabelPrinter.QueueName
+                        DriverName = this.LabelPrinterSmall.DriverName,
+                        QueueName = this.LabelPrinterSmall.QueueName
                     });
                 }
-                else if (this.LabelPrinter.IsReset && this.hardwareSettings.LabelPrinter != null)
+                else if (this.LabelPrinterSmall.IsReset && this.hardwareSettings.LabelPrinterSmall != null)
                 {
-                    await this.apiClient.RemoveLabelPrinter(Environment.MachineName);
+                    await this.apiClient.RemoveLabelPrinterSmall(Environment.MachineName);
+                }
+
+                if (!this.LabelPrinterLarge.IsReset)
+                {
+                    await this.apiClient.SetLabelPrinterLarge(Environment.MachineName, new LabelPrinterSettings
+                    {
+                        DriverName = this.LabelPrinterLarge.DriverName,
+                        QueueName = this.LabelPrinterLarge.QueueName
+                    });
+                }
+                else if (this.LabelPrinterLarge.IsReset && this.hardwareSettings.LabelPrinterLarge != null)
+                {
+                    await this.apiClient.RemoveLabelPrinterLarge(Environment.MachineName);
                 }
 
                 if (!this.Scale.IsReset)
@@ -185,17 +210,30 @@ namespace Solarponics.ProductionManager.ViewModels
             this.dialogBox.Show("Barcode scanned: " + e.Barcode);
         }
 
-        private void LabelTest()
+        private void LabelTestSmall()
         {
-            if (this.hardwareProvider.LabelPrinter == null)
+            if (this.hardwareProvider.LabelPrinterSmall == null)
             {
-                this.dialogBox.Show("No label printer configured.  If you've changed settings you must hit save first.");
+                this.dialogBox.Show("No small label printer configured.  If you've changed settings you must hit save first.");
                 return;
             }
 
-            this.hardwareProvider.LabelPrinter.Print(new LabelDefinitions.LabelDefinition("Testing", "ABC12345", LabelDefinitions.BarcodeSize.Medium));
-            this.hardwareProvider.LabelPrinter.Print(new LabelDefinitions.LabelDefinition(null, "ABC12345", LabelDefinitions.BarcodeSize.Small));
-            this.hardwareProvider.LabelPrinter.Print(new LabelDefinitions.LabelDefinition("This is a test label with lots\r\nof text on it that should wrap\r\non to multiple lines within the\r\nlabel."));
+            this.hardwareProvider.LabelPrinterSmall.Print(new LabelDefinitions.LabelDefinition("Testing small labels", "SM123", LabelDefinitions.BarcodeSize.Small, textSize: LabelDefinitions.TextSize.Small));
+            this.hardwareProvider.LabelPrinterSmall.Print(new LabelDefinitions.LabelDefinition(null, "SM123", LabelDefinitions.BarcodeSize.Small));
+            this.hardwareProvider.LabelPrinterSmall.Print(new LabelDefinitions.LabelDefinition("This is a test small label with lots\r\nof text on it that should wrap\r\non to multiple lines within the\r\nlabel.", textSize: LabelDefinitions.TextSize.Small));
+        }
+
+        private void LabelTestLarge()
+        {
+            if (this.hardwareProvider.LabelPrinterLarge == null)
+            {
+                this.dialogBox.Show("No large label printer configured.  If you've changed settings you must hit save first.");
+                return;
+            }
+
+            this.hardwareProvider.LabelPrinterLarge.Print(new LabelDefinitions.LabelDefinition("Testing large labels", "LG123", LabelDefinitions.BarcodeSize.Medium));
+            this.hardwareProvider.LabelPrinterLarge.Print(new LabelDefinitions.LabelDefinition(null, "LG123", LabelDefinitions.BarcodeSize.Small));
+            this.hardwareProvider.LabelPrinterLarge.Print(new LabelDefinitions.LabelDefinition("This is a test large label with lots\r\nof text on it that should wrap\r\non to multiple lines within the\r\nlabel."));
         }
     }
 }

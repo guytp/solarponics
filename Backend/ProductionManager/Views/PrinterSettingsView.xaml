@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              xmlns:abstractions="clr-namespace:Solarponics.ProductionManager.Abstractions.ViewModels"
+             xmlns:views="clr-namespace:Solarponics.ProductionManager.Views"
              d:DataContext="{d:DesignInstance Type=abstractions:IPrinterSettingsViewModel}"
              d:DesignWidth="800">
     <Grid>
@@ -20,7 +21,9 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Text="Label Printer" FontSize="24" FontWeight="Bold" Grid.ColumnSpan="4" Margin="10" Foreground="White" />
+        <TextBlock Grid.Row="0" FontSize="24" FontWeight="Bold" Grid.ColumnSpan="4" Margin="10" Foreground="White">
+            <Run Text="Label Printer (" /><Run Text="{Binding Path=PrinterType, RelativeSource={RelativeSource AncestorType=views:PrinterSettingsView}, FallbackValue=Unknown}" /><Run Text=")" />
+        </TextBlock>
 
         <TextBlock Text="Driver" Grid.Row="1" Grid.Column="0" Foreground="White" FontSize="24" Margin="10" />
         <ComboBox SelectedItem="{Binding Path=DriverName}" ItemsSource="{Binding Path=DriverNames}" Grid.Row="1" HorizontalAlignment="Stretch" Grid.Column="1" FontSize="24" Margin="10" MinWidth="200" />

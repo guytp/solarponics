@@ -292,7 +292,7 @@ namespace Solarponics.ProductionManager.ViewModels
 
                 try
                 {
-                    hardwareProvider.LabelPrinter.Print(new SensorModuleLabelDefinition(this.SelectedSensorModule));
+                    hardwareProvider.LabelPrinterSmall.Print(new SensorModuleLabelDefinition(this.SelectedSensorModule));
                 }
                 catch (Exception ex)
                 {
@@ -345,7 +345,7 @@ namespace Solarponics.ProductionManager.ViewModels
             if (!IsUiEnabled || !IsSensorSelected)
                 return;
 
-            if (hardwareProvider?.LabelPrinter == null)
+            if (hardwareProvider?.LabelPrinterSmall == null)
             {
                 this.dialogBox.Show("No printer is attached to the system.");
                 return;
@@ -353,7 +353,7 @@ namespace Solarponics.ProductionManager.ViewModels
 
             try
             {
-                hardwareProvider.LabelPrinter.Print(new SensorModuleLabelDefinition(this.SelectedSensorModule));
+                hardwareProvider.LabelPrinterSmall.Print(new SensorModuleLabelDefinition(this.SelectedSensorModule));
                 this.dialogBox.Show("Label printed.");
             }
             catch (Exception ex)

@@ -31,13 +31,15 @@ namespace Solarponics.WebApi.Data
             await storedProcedure.ExecuteReaderAsync();
 
             var barcodeScanner = await storedProcedure.GetFirstOrDefaultRowAsync<BarcodeScannerSettings>();
-            var labelPrinter = await storedProcedure.GetFirstOrDefaultRowAsync<LabelPrinterSettings>();
+            var labelPrinterSmall = await storedProcedure.GetFirstOrDefaultRowAsync<LabelPrinterSettings>();
+            var labelPrinterLarge = await storedProcedure.GetFirstOrDefaultRowAsync<LabelPrinterSettings>();
             var scale = await storedProcedure.GetFirstOrDefaultRowAsync<ScaleSettings>();
 
             return new HardwareSettings
             {
                 BarcodeScanner = barcodeScanner,
-                LabelPrinter = labelPrinter,
+                LabelPrinterSmall = labelPrinterSmall,
+                LabelPrinterLarge = labelPrinterLarge,
                 Scale = scale
             };
         }
@@ -94,23 +96,25 @@ namespace Solarponics.WebApi.Data
             await storedProcedure.ExecuteNonQueryAsync();
         }
 
-        public async Task SetLabelPrinter(string machineName, LabelPrinterSettings settings, int userId)
+        public async Task SetLabelPrinter(string machineName, LabelPrinterSettings settings, int userId, string printerType)
         {
             using var storedProcedure = Connection.CreateStoredProcedure(ProcedureNameSetLabelPrinter, new StoredProcedureParameter[]
                 {
                     new StoredProcedureParameter("@machineName", machineName),
                     new StoredProcedureParameter("@queueName", settings.QueueName),
                     new StoredProcedureParameter("@driverName", settings.DriverName),
+                    new StoredProcedureParameter("@printerType", printerType),
                     new StoredProcedureParameter("@userId", userId)
                 });
             await storedProcedure.ExecuteNonQueryAsync();
         }
 
-        public async Task RemoveLabelPrinter(string machineName, int userId)
+        public async Task RemoveLabelPrinter(string machineName, int userId, string printerType)
         {
             using var storedProcedure = Connection.CreateStoredProcedure(ProcedureNameRemoveLabelPrinter, new StoredProcedureParameter[]
                 {
                     new StoredProcedureParameter("@machineName", machineName),
+                    new StoredProcedureParameter("@printerType", printerType),
                     new StoredProcedureParameter("@userId", userId)
                 });
             await storedProcedure.ExecuteNonQueryAsync();

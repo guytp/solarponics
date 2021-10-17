@@ -16,7 +16,8 @@ namespace Solarponics.ProductionManager.Hardware
 
         public IScale Scale { get; private set; }
 
-        public ILabelPrinter LabelPrinter { get; private set; }
+        public ILabelPrinter LabelPrinterSmall { get; private set; }
+        public ILabelPrinter LabelPrinterLarge { get; private set; }
 
         public HardwareProvider(IHardwareApiClient apiClient, IDriverProvider driverProvider)
         {
@@ -39,10 +40,15 @@ namespace Solarponics.ProductionManager.Hardware
                 this.Scale = this.driverProvider.Get<IScale>(this.hardwareSettings.Scale);
                 this.Scale.Start();
             }
-            if (this.hardwareSettings.LabelPrinter != null)
+            if (this.hardwareSettings.LabelPrinterSmall != null)
             {
-                this.LabelPrinter = this.driverProvider.Get<ILabelPrinter>(this.hardwareSettings.LabelPrinter);
-                this.LabelPrinter.Start();
+                this.LabelPrinterSmall = this.driverProvider.Get<ILabelPrinter>(this.hardwareSettings.LabelPrinterSmall);
+                this.LabelPrinterSmall.Start();
+            }
+            if (this.hardwareSettings.LabelPrinterLarge != null)
+            {
+                this.LabelPrinterLarge = this.driverProvider.Get<ILabelPrinter>(this.hardwareSettings.LabelPrinterLarge);
+                this.LabelPrinterLarge.Start();
             }
         }
 
@@ -52,12 +58,15 @@ namespace Solarponics.ProductionManager.Hardware
                 d?.Dispose();
             if (this.Scale is IDisposable scales)
                 scales?.Dispose();
-            if (this.LabelPrinter is IDisposable labelPrinter)
-                labelPrinter?.Dispose();
-            
+            if (this.LabelPrinterSmall is IDisposable labelPrinterSmall)
+                labelPrinterSmall?.Dispose();
+            if (this.LabelPrinterLarge is IDisposable labelPrinterLarge)
+                labelPrinterLarge?.Dispose();
+
             this.BarcodeScanner = null;
             this.Scale = null;
-            this.LabelPrinter = null;
+            this.LabelPrinterSmall = null;
+            this.LabelPrinterLarge = null;
             this.hardwareSettings = null;
         }
     }

@@ -1,5 +1,4 @@
-﻿using Solarponics.Models;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Solarponics.ProductionManager.Abstractions.Hardware
 {
@@ -12,6 +11,8 @@ namespace Solarponics.ProductionManager.Abstractions.Hardware
 
         IScale Scale { get; }
 
-        ILabelPrinter LabelPrinter { get; }
+        ILabelPrinter LabelPrinterSmall { get; }
+
+        ILabelPrinter LabelPrinterLarge { get; }
     }
 }

@@ -104,7 +104,7 @@ namespace Solarponics.ProductionManager.ViewModels
             if (!IsUiEnabled || !IsGenerateEnabled)
                 return;
 
-            if (hardwareProvider?.LabelPrinter == null)
+            if (hardwareProvider?.LabelPrinterSmall == null)
             {
                 this.dialogBox.Show("Unable to book in culture without label printer");
                 return;
@@ -129,7 +129,7 @@ namespace Solarponics.ProductionManager.ViewModels
                         RecipeId = this.SelectedRecipe.Id
                     });
 
-                    this.hardwareProvider.LabelPrinter.Print(new CultureLabelDefinition(culture, this.SelectedRecipe));
+                    this.hardwareProvider.LabelPrinterSmall.Print(new CultureLabelDefinition(culture, this.SelectedRecipe));
                 }
                 this.ResetUi();
 

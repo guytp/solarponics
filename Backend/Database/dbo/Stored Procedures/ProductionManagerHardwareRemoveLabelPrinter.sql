@@ -1,6 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[ProductionManagerHardwareRemoveLabelPrinter]
 (
 	@machineName NVARCHAR(100),
+	@printerType NVARCHAR(100),
 	@userId INT
 )
 AS
@@ -8,7 +9,7 @@ BEGIN
 	SET NOCOUNT ON
 	
 	DECLARE @id INT
-	SELECT TOP 1 @id = dev.Id FROM ProductionManagerHardwarePrinter dev JOIN ProductionManager pm ON pm.Id = dev.ProductionManagerId WHERE pm.MachineName = @machineName AND dev.PrinterType = 'Label'
+	SELECT TOP 1 @id = dev.Id FROM ProductionManagerHardwarePrinter dev JOIN ProductionManager pm ON pm.Id = dev.ProductionManagerId WHERE pm.MachineName = @machineName AND dev.PrinterType = ('Label' + @printerType)
 
 	IF @id IS NULL
 		RETURN 0
