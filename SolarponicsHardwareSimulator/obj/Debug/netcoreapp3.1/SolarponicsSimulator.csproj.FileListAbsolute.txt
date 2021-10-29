@@ -54,3 +54,4 @@ C:\code\solarponics\SolarponicsHardwareSimulator\obj\Debug\netcoreapp3.1\Solarpo
 C:\code\solarponics\SolarponicsHardwareSimulator\obj\Debug\netcoreapp3.1\SolarponicsSimulator.dll
 C:\code\solarponics\SolarponicsHardwareSimulator\obj\Debug\netcoreapp3.1\SolarponicsSimulator.pdb
 C:\code\solarponics\SolarponicsHardwareSimulator\obj\Debug\netcoreapp3.1\SolarponicsSimulator.genruntimeconfig.cache
+C:\code\solarponics\SolarponicsHardwareSimulator\obj\Debug\netcoreapp3.1\SolarponicsSimulator.csprojAssemblyReference.cache

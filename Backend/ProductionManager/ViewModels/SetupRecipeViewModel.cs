@@ -37,7 +37,7 @@ namespace Solarponics.ProductionManager.ViewModels
 
         public ILoggedInButtonsViewModel LoggedInButtonsViewModel { get; }
 
-        public bool IsAddEnabled => !string.IsNullOrWhiteSpace(this.NewName) && !string.IsNullOrWhiteSpace(this.NewText) && NewType.HasValue;
+        public bool IsAddEnabled => !string.IsNullOrWhiteSpace(this.NewName) && !string.IsNullOrWhiteSpace(this.NewText) && NewType.HasValue && !string.IsNullOrWhiteSpace(NewUnitsCreated) && int.TryParse(NewUnitsCreated, out _);
         public bool IsDeleteEnabled => this.SelectedRecipe != null;
         public bool IsUiEnabled { get; private set; }
         public Recipe[] Recipes { get; private set; }
@@ -45,6 +45,7 @@ namespace Solarponics.ProductionManager.ViewModels
         public RecipeType?[] Types { get; }
         public ICommand AddCommand { get; }
         public ICommand DeleteCommand { get; }
+        public string NewUnitsCreated { get; set; }
         public string NewName { get; set; }
         public string NewText { get; set; }
         public RecipeType? NewType { get; set; }
@@ -63,6 +64,12 @@ namespace Solarponics.ProductionManager.ViewModels
             if (!this.IsUiEnabled || !this.IsAddEnabled)
                 return;
 
+            if (!int.TryParse(NewUnitsCreated, out int unitsCreated))
+            {
+                this.dialogBox.Show("Units created must be a number");
+                return;
+            }
+
             try
             {
                 this.IsUiEnabled = false;
@@ -70,7 +77,8 @@ namespace Solarponics.ProductionManager.ViewModels
                 {
                     Name = NewName,
                     Text = NewText,
-                    Type = NewType.Value
+                    Type = NewType.Value,
+                    UnitsCreated = unitsCreated
                 });
                 var recipes = new List<Recipe>();
                 if (this.Recipes != null && this.Recipes.Length > 0)

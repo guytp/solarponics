@@ -4,5 +4,6 @@
 	[Name] NVARCHAR(200) NOT NULL,
 	[Type] TINYINT NOT NULL,
 	[Text] NVARCHAR(MAX) NOT NULL,
+	[UnitsCreated] INT NOT NULL,
 	[IsDeleted] BIT NOT NULL DEFAULT(0)
 )

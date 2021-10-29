@@ -13,6 +13,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
@@ -46,10 +47,13 @@
         <TextBlock Text="Name" Grid.Row="2" Grid.Column="0" Foreground="White" FontSize="24" Margin="10" />
         <TextBox Text="{Binding Path=NewName, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" HorizontalAlignment="Stretch" Grid.Column="1" FontSize="24" Margin="10" MinWidth="200" />
         <TextBlock Text="Type" Grid.Row="2" Grid.Column="2" Foreground="White" FontSize="24" Margin="10" />
-        <TextBox Text="{Binding Path=NewText, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" HorizontalAlignment="Stretch" Grid.ColumnSpan="4" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" Margin="10" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Height="120" FontSize="24" />
         <ComboBox SelectedItem="{Binding Path=NewType}" ItemsSource="{Binding Path=Types}" Grid.Row="2" HorizontalAlignment="Stretch" Grid.Column="3" FontSize="24" Margin="10" MinWidth="200" />
-        <Button Grid.Row="4" Grid.Column="0" Content="Add" IsEnabled="{Binding Path=IsAddEnabled}" Command="{Binding Path=AddCommand}" Margin="10" MinWidth="200" FontSize="24" />
+        <TextBlock Text="Units Created" Grid.Row="3" Grid.Column="0" Foreground="White" FontSize="24" Margin="10" />
+        <TextBox Text="{Binding Path=NewUnitsCreated, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" HorizontalAlignment="Stretch" Grid.Column="1" FontSize="24" Margin="10" MinWidth="200" />
 
-        <views:LoggedInButtonsView Grid.Row="6" DataContext="{Binding LoggedInButtonsViewModel}" Grid.ColumnSpan="5" />
+        <TextBox Text="{Binding Path=NewText, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" HorizontalAlignment="Stretch" Grid.ColumnSpan="4" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" Margin="10" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Height="120" FontSize="24" />
+        <Button Grid.Row="5" Grid.Column="0" Content="Add" IsEnabled="{Binding Path=IsAddEnabled}" Command="{Binding Path=AddCommand}" Margin="10" MinWidth="200" FontSize="24" />
+
+        <views:LoggedInButtonsView Grid.Row="7" DataContext="{Binding LoggedInButtonsViewModel}" Grid.ColumnSpan="5" />
     </Grid>
 </core:ViewBase>

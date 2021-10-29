@@ -6,6 +6,7 @@
         Agar,
         LiquidSpawn,
         GrainSpawn,
-        FruitingBlock
+        FruitingBlock,
+        Milk
     }
 }

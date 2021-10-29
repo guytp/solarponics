@@ -2,7 +2,7 @@
 AS
 BEGIN
 	SET NOCOUNT ON
-	SELECT [Id], [Name], [Type], [Text] FROM Recipe WHERE IsDeleted = 0 ORDER BY [Name]
+	SELECT [Id], [Name], [Type], [Text], [UnitsCreated] FROM Recipe WHERE IsDeleted = 0 ORDER BY [Name]
 	RETURN 0
 END
 GO

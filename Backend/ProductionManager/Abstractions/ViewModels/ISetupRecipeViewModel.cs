@@ -15,6 +15,7 @@ namespace Solarponics.ProductionManager.Abstractions.ViewModels
         ICommand DeleteCommand { get; }
         string NewName { get; set; }
         string NewText { get; set; }
+        string NewUnitsCreated { get; set; }
         RecipeType? NewType { get; set; }
         RecipeType?[] Types { get; }
     }

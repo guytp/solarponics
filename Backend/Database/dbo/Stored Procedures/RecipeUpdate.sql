@@ -4,6 +4,7 @@
 	@name NVARCHAR(200),
 	@type TINYINT,
 	@text NVARCHAR(MAX),
+	@unitsCreated INT,
 	@userId INT
 )
 AS
@@ -15,7 +16,8 @@ BEGIN
 	DECLARE @existingName NVARCHAR(200)
 	DECLARE @existingType TINYINT
 	DECLARE @existingText NVARCHAR(MAX)
-	SELECT @existingName = [Name], @existingType = [Type], @existingText = [Text] FROM Recipe WHERE Id = @id
+	DECLARE @existingUnitsCreated INT
+	SELECT @existingName = [Name], @existingType = [Type], @existingText = [Text], @existingUnitsCreated = UnitsCreated FROM Recipe WHERE Id = @id
 	IF (@existingName IS NULL)
 		RETURN 0
 
@@ -24,13 +26,15 @@ BEGIN
 		SET
 			[Name] = @name,
 			[Type] = @type,
-			[Text] = @text
+			[Text] = @text,
+			[UnitsCreated] = @unitsCreated
 		WHERE
 			Id = @id
 			
 	EXEC AuditAdd @table = 'Recipe', @column = 'Name', @action = 'Update', @userId = @userId, @key = @id, @newValue = @name, @oldValue = @existingName
 	EXEC AuditAdd @table = 'Recipe', @column = 'Type', @action = 'Update', @userId = @userId, @key = @id, @newValue = @type, @oldValue = @existingType
 	EXEC AuditAdd @table = 'Recipe', @column = 'Text', @action = 'Update', @userId = @userId, @key = @id, @newValue = @text, @oldValue = @existingText
+	EXEC AuditAdd @table = 'Recipe', @column = 'UnitsCreated', @action = 'Update', @userId = @userId, @key = @id, @newValue = @unitsCreated, @oldValue = @existingUnitsCreated
 
 	COMMIT TRAN
 

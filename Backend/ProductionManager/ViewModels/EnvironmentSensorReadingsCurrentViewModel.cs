@@ -172,7 +172,7 @@ namespace Solarponics.ProductionManager.ViewModels
                 {
                     var groupedSensors = new List<SensorReadingCurrent>();
 
-                    foreach (var sensorModule in sensorModulesToCheck)
+                    foreach (var sensorModule in sensorModulesToCheck.Where(sm => sm.Room == room && sm.Location == this.SelectedLocation))
                     {
                         foreach (var sensor in sensorModule.Sensors)
                         {
