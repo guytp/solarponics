@@ -41,7 +41,15 @@ namespace Solarponics.ModbusIngestionProxy
             var task = Task.Run(() =>
             {
                 Console.WriteLine($"Reading {SensorModule.Sensors.Length} sensors on {SensorModule.Name}");
-                var readings = this.modbusClient.ReadInputRegisters(0, SensorModule.Sensors.Length);
+                int[] readings;
+                if (SensorModule.Sensors.Length == 1 && SensorModule.Sensors[0].Type == SensorType.CarbonDioxide)
+                {
+                    readings = this.modbusClient.ReadHoldingRegisters(SensorModule.Sensors[0].Number, 1);
+                }
+                else
+                {
+                    readings = this.modbusClient.ReadInputRegisters(0, SensorModule.Sensors.Length);
+                }
 
                 var temperatureSensor = SensorModule.Sensors.FirstOrDefault(s => s.Type == SensorType.Temperature);
                 var carbonDioxideSensor = SensorModule.Sensors.FirstOrDefault(s => s.Type == SensorType.CarbonDioxide);

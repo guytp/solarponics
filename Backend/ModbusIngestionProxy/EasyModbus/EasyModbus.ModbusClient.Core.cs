@@ -345,7 +345,127 @@ namespace EasyModbus
             return response.RegisterDataBool;
         }
 
- 
+        /// <summary>
+        /// Read Holding Registers from Master device (FC3).
+        /// </summary>
+        /// <param name="startingAddress">First holding register to be read</param>
+        /// <param name="quantity">Number of holding registers to be read</param>
+        /// <returns>Int Array which contains the holding registers</returns>
+        public int[] ReadHoldingRegisters(int startingAddress, int quantity)
+        {
+            if (debug) StoreLogData.Instance.Store("FC3 (Read Holding Registers from Master device), StartingAddress: " + startingAddress + ", Quantity: " + quantity, System.DateTime.Now);
+            transactionIdentifierInternal++;
+          
+            if (tcpClient == null & !udpFlag)
+            {
+                if (debug) StoreLogData.Instance.Store("ConnectionException Throwed", System.DateTime.Now);
+                throw new EasyModbus.Exceptions.ConnectionException("connection error");
+            }
+            if (startingAddress > 65535 | quantity > 125)
+            {
+                if (debug) StoreLogData.Instance.Store("ArgumentException Throwed", System.DateTime.Now);
+                throw new ArgumentException("Starting address must be 0 - 65535; quantity must be 0 - 125");
+            }
+            int[] response;
+            this.transactionIdentifier = BitConverter.GetBytes((uint)transactionIdentifierInternal);
+            this.protocolIdentifier = BitConverter.GetBytes((int)0x0000);
+            this.length = BitConverter.GetBytes((int)0x0006);
+            this.functionCode = 0x03;
+            this.startingAddress = BitConverter.GetBytes(startingAddress);
+            this.quantity = BitConverter.GetBytes(quantity);
+            Byte[] data = new byte[]{   this.transactionIdentifier[1],
+                            this.transactionIdentifier[0],
+                            this.protocolIdentifier[1],
+                            this.protocolIdentifier[0],
+                            this.length[1],
+                            this.length[0],
+                            this.unitIdentifier,
+                            this.functionCode,
+                            this.startingAddress[1],
+                            this.startingAddress[0],
+                            this.quantity[1],
+                            this.quantity[0],
+                            this.crc[0],
+                            this.crc[1]
+            };
+            crc = BitConverter.GetBytes(calculateCRC(data, 6, 6));
+            data[12] = crc[0];
+            data[13] = crc[1];
+            if (tcpClient.Client.Connected | udpFlag)
+            {
+                if (udpFlag)
+                {
+                    UdpClient udpClient = new UdpClient();
+                    IPEndPoint endPoint = new IPEndPoint(System.Net.IPAddress.Parse(ipAddress), port);
+                    udpClient.Send(data, data.Length - 2, endPoint);
+                    portOut = ((IPEndPoint)udpClient.Client.LocalEndPoint).Port;
+                    udpClient.Client.ReceiveTimeout = 5000;
+                    endPoint = new IPEndPoint(System.Net.IPAddress.Parse(ipAddress), portOut);
+                    data = udpClient.Receive(ref endPoint);
+                }
+                else
+                {
+                    stream.Write(data, 0, data.Length - 2);
+                    if (debug)
+                    {
+                        byte[] debugData = new byte[data.Length - 2];
+                        Array.Copy(data, 0, debugData, 0, data.Length - 2);
+                        if (debug) StoreLogData.Instance.Store("Send ModbusTCP-Data: " + BitConverter.ToString(debugData), System.DateTime.Now);
+                    }
+                    if (SendDataChanged != null)
+                    {
+                        sendData = new byte[data.Length - 2];
+                        Array.Copy(data, 0, sendData, 0, data.Length - 2);
+                        SendDataChanged(this);
+
+                    }
+                    data = new Byte[256];
+                    int NumberOfBytes = stream.Read(data, 0, data.Length);
+                    if (ReceiveDataChanged != null)
+                    {
+                        receiveData = new byte[NumberOfBytes];
+                        Array.Copy(data, 0, receiveData, 0, NumberOfBytes);
+                        if (debug) StoreLogData.Instance.Store("Receive ModbusTCP-Data: " + BitConverter.ToString(receiveData), System.DateTime.Now);
+                        ReceiveDataChanged(this);
+                    }
+                }
+            }
+            if (data[7] == 0x83 & data[8] == 0x01)
+            {
+                if (debug) StoreLogData.Instance.Store("FunctionCodeNotSupportedException Throwed", System.DateTime.Now);
+                throw new EasyModbus.Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
+            }
+            if (data[7] == 0x83 & data[8] == 0x02)
+            {
+                if (debug) StoreLogData.Instance.Store("StartingAddressInvalidException Throwed", System.DateTime.Now);
+                throw new EasyModbus.Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
+            }
+            if (data[7] == 0x83 & data[8] == 0x03)
+            {
+                if (debug) StoreLogData.Instance.Store("QuantityInvalidException Throwed", System.DateTime.Now);
+                throw new EasyModbus.Exceptions.QuantityInvalidException("quantity invalid");
+            }
+            if (data[7] == 0x83 & data[8] == 0x04)
+            {
+                if (debug) StoreLogData.Instance.Store("ModbusException Throwed", System.DateTime.Now);
+                throw new EasyModbus.Exceptions.ModbusException("error reading");
+            }
+            response = new int[quantity];
+            for (int i = 0; i < quantity; i++)
+            {
+                byte lowByte;
+                byte highByte;
+                highByte = data[9 + i * 2];
+                lowByte = data[9 + i * 2 + 1];
+
+                data[9 + i * 2] = lowByte;
+                data[9 + i * 2 + 1] = highByte;
+
+                response[i] = BitConverter.ToInt16(data, (9 + i * 2));
+            }
+            return (response);
+        }
+
 
 
     }
