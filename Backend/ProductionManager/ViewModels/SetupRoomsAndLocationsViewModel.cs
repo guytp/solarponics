@@ -79,6 +79,7 @@ namespace Solarponics.ProductionManager.ViewModels
                     room
                 };
                 this.SelectedLocation.Rooms = newRooms.OrderBy(o => o.Name).ToArray();
+                this.OnPropertyChanged(nameof(this.SelectedLocation));
                 this.NewRoomName = null;
                 if (this.hardwareProvider.LabelPrinterLarge != null)
                     try
