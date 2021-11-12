@@ -5,6 +5,8 @@ namespace Solarponics.ProductionManager.Abstractions.ViewModels
 {
     public interface ISetupRoomsAndLocationsViewModel : IViewModel
     {
+        ILoggedInButtonsViewModel LoggedInButtonsViewModel { get; }
+
         Location[] Locations { get; }
 
         Location SelectedLocation { get; set; }

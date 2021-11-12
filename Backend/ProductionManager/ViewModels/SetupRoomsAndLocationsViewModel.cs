@@ -21,8 +21,9 @@ namespace Solarponics.ProductionManager.ViewModels
         private readonly IDialogBox dialogBox;
         private readonly IHardwareProvider hardwareProvider;
 
-        public SetupRoomsAndLocationsViewModel(ILocationApiClient locationApiClient, IDialogBox dialogBox, IHardwareProvider hardwareProvider)
+        public SetupRoomsAndLocationsViewModel(ILoggedInButtonsViewModel loggedInButtonsViewModel, ILocationApiClient locationApiClient, IDialogBox dialogBox, IHardwareProvider hardwareProvider)
         {
+            this.LoggedInButtonsViewModel = loggedInButtonsViewModel;
             this.locationApiClient = locationApiClient;
             this.dialogBox = dialogBox;
             this.hardwareProvider = hardwareProvider;
@@ -31,6 +32,8 @@ namespace Solarponics.ProductionManager.ViewModels
             this.NewLocationCommand = new RelayCommand(_ => this.NewLocation());
             this.PrintRoomLabelCommand = new RelayCommand(_ => this.PrintRoomLabel());
         }
+
+        public ILoggedInButtonsViewModel LoggedInButtonsViewModel { get; }
 
         public Location[] Locations { get; private set; }
 
