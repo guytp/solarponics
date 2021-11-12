@@ -290,13 +290,16 @@ namespace Solarponics.ProductionManager.ViewModels
                 };
                 this.SensorModules = modules.OrderBy(sm => sm.Name).ToArray();
 
-                try
+                if (hardwareProvider?.LabelPrinterSmall != null)
                 {
-                    hardwareProvider.LabelPrinterSmall.Print(new SensorModuleLabelDefinition(this.SelectedSensorModule));
-                }
-                catch (Exception ex)
-                {
-                    this.dialogBox.Show("Failed to print label.", exception: ex);
+                    try
+                    {
+                        hardwareProvider.LabelPrinterSmall.Print(new SensorModuleLabelDefinition(this.SelectedSensorModule));
+                    }
+                    catch (Exception ex)
+                    {
+                        this.dialogBox.Show("Failed to print label.", exception: ex);
+                    }
                 }
                 this.ResetAddUi();
                 this.dialogBox.Show("Sensor module added.");
