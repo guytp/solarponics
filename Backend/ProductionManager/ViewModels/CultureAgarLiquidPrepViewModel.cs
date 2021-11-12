@@ -129,7 +129,7 @@ namespace Solarponics.ProductionManager.ViewModels
                         RecipeId = this.SelectedRecipe.Id
                     });
 
-                    this.hardwareProvider.LabelPrinterSmall.Print(new CultureLabelDefinition(culture, this.SelectedRecipe));
+                    this.hardwareProvider.LabelPrinterSmall.Print(new CultureLabelDefinition(culture, null, this.SelectedRecipe));
                 }
                 this.ResetUi();
 

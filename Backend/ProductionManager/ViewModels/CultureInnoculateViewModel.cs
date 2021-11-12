@@ -111,7 +111,7 @@ namespace Solarponics.ProductionManager.ViewModels
                 });
 
                 var recipe = this.recipes.First(r => r.Id == culture.RecipeId);
-                this.hardwareProvider.LabelPrinterSmall.Print(new CultureLabelDefinition(culture, recipe));
+                this.hardwareProvider.LabelPrinterSmall.Print(new CultureLabelDefinition(culture, this.OriginCulture, recipe));
                 this.ResetUi();
                 this.dialogBox.Show("Confirmed innoculation and new label printed");
             }

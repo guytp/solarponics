@@ -5,6 +5,8 @@
 	[ParentCultureId] INT,
 	[RecipeId] INT,
 	[UserId] INT NOT NULL,
+	[InnoculateUserId] INT NULL,
+	[InnoculateDate] DATETIME NULL,
 	[MediumType] INT NOT NULL,
 	[Generation] INT NULL,
 	[OrderDate] DATETIME,
@@ -13,6 +15,7 @@
 	[Notes] NVARCHAR(MAX),
 	FOREIGN KEY (SupplierId) REFERENCES Supplier(Id),
 	FOREIGN KEY (UserId) REFERENCES [User](Id),
+	FOREIGN KEY (InnoculateUserId) REFERENCES [User](Id),
 	FOREIGN KEY (ParentCultureId) REFERENCES [Culture](Id),
 	FOREIGN KEY (RecipeId) REFERENCES [Recipe](Id)
 )

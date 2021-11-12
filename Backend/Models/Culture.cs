@@ -16,5 +16,10 @@ namespace Solarponics.Models
         public string Notes { get; set; }
 
         public int? Generation { get; set; }
+        public string CreateUser { get; set; }
+
+        public int? InnoculateUserId { get; set; }
+        public string InnoculateUser { get; set; }
+        public DateTime? InnoculateDate { get; set; }
     }
 }
