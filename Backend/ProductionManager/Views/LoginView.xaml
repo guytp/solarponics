@@ -3,13 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:abstractions="clr-namespace:Solarponics.ProductionManager.Abstractions"
+             xmlns:abstractions="clr-namespace:Solarponics.ProductionManager.Abstractions.ViewModels"
              xmlns:converters="clr-namespace:Solarponics.ProductionManager.Converters"
              mc:Ignorable="d"
              Focusable="False"
-             d:DataContext="{d:DesignInstance d:Type=abstractions:ILoginViewModel}"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DataContext="{d:DesignInstance Type={x:Type abstractions:ILoginViewModel}}"
+             d:DesignHeight="1080" d:DesignWidth="1920">
     <UserControl.Resources>
+        <Style x:Key="NumberButton" TargetType="{x:Type Button}">
+            <Setter Property="Width" Value="125" />
+            <Setter Property="Height" Value="125" />
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="FontSize" Value="72" />
+            <Setter Property="Focusable" Value="False" />
+        </Style>
         <Style x:Key="LoginLabel" TargetType="{x:Type TextBlock}">
             <Setter Property="FontSize" Value="32" />
             <Setter Property="Foreground" Value="White" />
@@ -59,6 +66,36 @@
 
             <Button Grid.Row="1" IsEnabled="{Binding Path=IsLoginEnabled}" Grid.Column="2" Content="Login"
                     Style="{StaticResource MainActionButton}" Command="{Binding Path=LoginCommand}" />
+        </Grid>
+
+        <Grid Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="50">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Button Content="7" Style="{StaticResource NumberButton}" Click="OnNumberButtonClick" Name="NumberButton7" Grid.Row="0" Grid.Column="0" />
+            <Button Content="8" Style="{StaticResource NumberButton}" Click="OnNumberButtonClick" Name="NumberButton8" Grid.Row="0" Grid.Column="1" />
+            <Button Content="9" Style="{StaticResource NumberButton}" Click="OnNumberButtonClick" Name="NumberButton9" Grid.Row="0" Grid.Column="2" />
+
+            <Button Content="4" Style="{StaticResource NumberButton}" Click="OnNumberButtonClick" Name="NumberButton4" Grid.Row="1" Grid.Column="0" />
+            <Button Content="5" Style="{StaticResource NumberButton}" Click="OnNumberButtonClick" Name="NumberButton5" Grid.Row="1" Grid.Column="1" />
+            <Button Content="6" Style="{StaticResource NumberButton}" Click="OnNumberButtonClick" Name="NumberButton6" Grid.Row="1" Grid.Column="2" />
+
+            <Button Content="1" Style="{StaticResource NumberButton}" Click="OnNumberButtonClick" Name="NumberButton1" Grid.Row="2" Grid.Column="0" />
+            <Button Content="2" Style="{StaticResource NumberButton}" Click="OnNumberButtonClick" Name="NumberButton2" Grid.Row="2" Grid.Column="1" />
+            <Button Content="3" Style="{StaticResource NumberButton}" Click="OnNumberButtonClick" Name="NumberButton3" Grid.Row="2" Grid.Column="2" />
+
+
+            <Button Content="Esc" Style="{StaticResource NumberButton}" Click="OnNumberButtonClick" Name="NumberButtonX" Grid.Row="3" Grid.Column="0" Width="Auto" />
+            <Button Content="0" Style="{StaticResource NumberButton}" Click="OnNumberButtonClick" Name="NumberButton0" Grid.Row="3" Grid.Column="1" Width="Auto" />
+            <Button Content="↵" Style="{StaticResource NumberButton}" Click="OnNumberButtonClick" Name="NumberButtonE" Grid.Row="3" Grid.Column="2" Width="Auto" />
         </Grid>
 
     </Grid>

@@ -30,6 +30,7 @@ namespace Solarponics.ProductionManager.ViewModels
         }
 
         public bool IsEnabled { get; private set; }
+        public ICommand NumberButtonCommand { get; }
         public bool IsLoginEnabled => !string.IsNullOrEmpty(UserId) && !string.IsNullOrEmpty(Pin);
         public string UserId { get; set; }
         public string Pin { get; set; }

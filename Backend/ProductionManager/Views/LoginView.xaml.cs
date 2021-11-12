@@ -1,4 +1,6 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using Solarponics.ProductionManager.Abstractions;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Abstractions.Views;
@@ -22,9 +24,14 @@ namespace Solarponics.ProductionManager.Views
 
         protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
-            var vm = ((ILoginViewModel) ViewModel);
+            HandleKey(e.Key);
+        }
 
-            if (e.Key == Key.Enter || e.Key == Key.Return)
+        private void HandleKey(Key key)
+        {
+            var vm = ((ILoginViewModel)ViewModel);
+
+            if (key == Key.Enter || key == Key.Return)
             {
                 if (isUserIdSelected)
                 {
@@ -38,7 +45,7 @@ namespace Solarponics.ProductionManager.Views
                 return;
             }
 
-            if (e.Key == Key.Escape)
+            if (key == Key.Escape)
             {
                 isUserIdSelected = true;
                 vm.Pin = null;
@@ -46,7 +53,7 @@ namespace Solarponics.ProductionManager.Views
                 return;
             }
 
-            if (e.Key == Key.Back)
+            if (key == Key.Back)
             {
                 var existing = isUserIdSelected ? vm.UserId : vm.Pin;
                 if (!string.IsNullOrEmpty(existing))
@@ -64,7 +71,7 @@ namespace Solarponics.ProductionManager.Views
                 isUserIdSelected = true;
 
             char c;
-            switch (e.Key)
+            switch (key)
             {
                 case Key.D0:
                 case Key.NumPad0:
@@ -113,9 +120,45 @@ namespace Solarponics.ProductionManager.Views
             if (isUserIdSelected && (vm.UserId == null || vm.UserId.Length < 4))
                 vm.UserId = vm.UserId == null ? c.ToString() : vm.UserId + c;
             else if (!isUserIdSelected && (vm.Pin == null || vm.Pin.Length < 4))
-                vm.Pin = vm.Pin == null ?  c.ToString() : vm.Pin + c;
+                vm.Pin = vm.Pin == null ? c.ToString() : vm.Pin + c;
         }
 
         public IViewModel ViewModel => DataContext as ILoginViewModel;
+
+        private void OnNumberButtonClick(object sender, RoutedEventArgs e)
+        {
+            Key key;
+            var b = (sender as Button);
+            if (b == null)
+                return;
+            var buttonText = b.Name.Substring(b.Name.Length - 1, 1);
+            if (buttonText == "0")
+                key = Key.D0;
+            else if (buttonText == "1")
+                key = Key.D1;
+            else if (buttonText == "2")
+                key = Key.D2;
+            else if (buttonText == "3")
+                key = Key.D3;
+            else if (buttonText == "4")
+                key = Key.D4;
+            else if (buttonText == "5")
+                key = Key.D5;
+            else if (buttonText == "6")
+                key = Key.D6;
+            else if (buttonText == "7")
+                key = Key.D7;
+            else if (buttonText == "8")
+                key = Key.D8;
+            else if (buttonText == "9")
+                key = Key.D9;
+            else if (buttonText == "E")
+                key = Key.Enter;
+            else if (buttonText == "X")
+                key = Key.Escape;
+            else
+                return;
+            HandleKey(key);
+        }
     }
 }
