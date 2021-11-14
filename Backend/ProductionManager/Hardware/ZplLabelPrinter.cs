@@ -18,8 +18,8 @@ namespace Solarponics.ProductionManager.Hardware
         private const int StartTop = 20;
         private const int Left = 20;
         private const int VerticalSeparation = 20;
-        private const int TextHeightSmall = 5;
-        private const int TextHeightMedium = 10;
+        private const int TextHeightSmall = 10;
+        private const int TextHeightMedium = 15;
         private const int TextHeightLarge = 20;
 
         public ZplLabelPrinter(LabelPrinterSettings settings, IDialogBox dialogBox)

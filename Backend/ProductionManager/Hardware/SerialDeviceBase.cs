@@ -1,9 +1,11 @@
-﻿using Solarponics.Models;
+﻿using Serilog;
+using Solarponics.Models;
 using Solarponics.ProductionManager.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 
 namespace Solarponics.ProductionManager.Hardware
@@ -23,16 +25,33 @@ namespace Solarponics.ProductionManager.Hardware
 
         public void Start()
         {
-            // Always clean up first
-            this.Dispose();
-
-            var stopBits = (System.IO.Ports.StopBits)Enum.Parse(typeof(System.IO.Ports.StopBits), settings.StopBits.ToString());
-            var parity = (System.IO.Ports.Parity)Enum.Parse(typeof(System.IO.Ports.Parity), settings.Parity.ToString());
-            this.serialPort = new SerialPort(settings.SerialPort, settings.BaudRate, parity, settings.DataBits, stopBits)
+            // Give ourselves up to five tries to open the port
+            for (var i = 0; i < 5; i++)
             {
-                ReadTimeout = 500
-            };
-            this.serialPort.Open();
+                try
+                {
+                    // Always clean up first
+                    this.Dispose();
+
+                    var stopBits = (System.IO.Ports.StopBits)Enum.Parse(typeof(System.IO.Ports.StopBits), settings.StopBits.ToString());
+                    var parity = (System.IO.Ports.Parity)Enum.Parse(typeof(System.IO.Ports.Parity), settings.Parity.ToString());
+                    this.serialPort = new SerialPort(settings.SerialPort, settings.BaudRate, parity, settings.DataBits, stopBits)
+                    {
+                        ReadTimeout = 500
+                    };
+                    this.serialPort.Open();
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, $"Error opening serial port on attempt {i + 1}");
+                    if (i == 4)
+                        throw;
+
+                    Thread.Sleep(200);
+                }
+            }
+
             this.serialPort.DiscardInBuffer();
             this.serialPort.DiscardOutBuffer();
             while (this.serialPort.BytesToRead > 0)
@@ -103,6 +122,14 @@ namespace Solarponics.ProductionManager.Hardware
 
         private void ParseBuffer(byte[] buffer, int length)
         {
+            if (this.dataSuffix == null || this.dataSuffix.Length == 0)
+            {
+                var str = System.Text.Encoding.ASCII.GetString(buffer);
+                if (!string.IsNullOrWhiteSpace(str))
+                    StringRead(str);
+                return;
+            }
+
             var suffixCheckBuffer = new byte[this.dataSuffix.Length];
 
             var startFrom = 0;

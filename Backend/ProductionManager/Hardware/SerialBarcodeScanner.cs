@@ -9,7 +9,7 @@ namespace Solarponics.ProductionManager.Hardware
     public class SerialBarcodeScanner : SerialDeviceBase, IBarcodeScanner
     {
         public SerialBarcodeScanner(BarcodeScannerSettings settings)
-            : base(settings, new byte[] { (byte)'\r', (byte)'\n' })
+            : base(settings, new byte[] { (byte)'\r' })
         {
         }
 
