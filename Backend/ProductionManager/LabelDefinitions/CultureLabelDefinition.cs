@@ -53,7 +53,7 @@ namespace Solarponics.ProductionManager.LabelDefinitions
                     label += $"Gen:  {parentMediumTypePrefix}->{mediumTypePrefix}{culture.Generation}{Environment.NewLine}";
             }
             else
-                label += $"Strn: NONE{Environment.NewLine}";
+                label += $"Strn: NONE/{culture.MediumType.ToString()[0]}{Environment.NewLine}";
 
             if (supplier != null)
                 label += $"Sup:  {ShortenIfNeeded(supplier.Name)}{Environment.NewLine}";

@@ -22,5 +22,9 @@ namespace Solarponics.ProductionManager.Abstractions.ApiClients
         [Headers("Authorization: Bearer")]
         [Get("/cultures/by-id/{id}")]
         Task<Culture> Get(int id);
+
+        [Headers("Authorization: Bearer")]
+        [Get("/cultures")]
+        Task<Culture[]> GetAll();
     }
 }

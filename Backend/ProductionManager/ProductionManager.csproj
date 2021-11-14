@@ -45,6 +45,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Views\CultureListView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
     <Page Update="Views\EnvironmentSensorReadingsAggregateView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>

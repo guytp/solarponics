@@ -20,8 +20,17 @@ namespace Solarponics.WebApi.Controllers
             this.repo = recipeRepository;
         }
 
+        [HttpGet()]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(Culture[]))]
+        [Authorize(Roles = "User,Admin")]
+        public async Task<IActionResult> Get()
+        {
+            var returnValue = await repo.GetAll() ?? new Culture[0];
+            return this.Ok(returnValue);
+        }
+
         [HttpGet("by-id/{id}")]
-        [ProducesResponseType((int) HttpStatusCode.OK, Type = typeof(Culture))]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(Culture))]
         [Authorize(Roles = "User,Admin")]
         public async Task<IActionResult> Get(int id)
         {

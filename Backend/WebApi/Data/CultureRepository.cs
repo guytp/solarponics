@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Solarponics.Data;
 using Solarponics.Models;
@@ -27,6 +28,12 @@ namespace Solarponics.WebApi.Data
                 });
             await storedProcedure.ExecuteReaderAsync();
             return await storedProcedure.GetFirstOrDefaultRowAsync<Culture>();
+        }
+        public async Task<Culture[]> GetAll()
+        {
+            using var storedProcedure = Connection.CreateStoredProcedure(ProcedureNameGet, null);
+            await storedProcedure.ExecuteReaderAsync();
+            return (await storedProcedure.GetDataSetAsync<Culture>()).ToArray();
         }
 
         public async Task Innoculate(int id, int parentCultureId, string additionalNotes, int userId)
