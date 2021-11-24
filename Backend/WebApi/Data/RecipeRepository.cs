@@ -27,6 +27,7 @@ namespace Solarponics.WebApi.Data
                     new StoredProcedureParameter("@name", recipe.Name),
                     new StoredProcedureParameter("@type", recipe.Type),
                     new StoredProcedureParameter("@text", recipe.Text),
+                    new StoredProcedureParameter("@unitsCreated", recipe.UnitsCreated),
                     new StoredProcedureParameter("@userId", userId)
                 });
             return await storedProcedure.ExecuteScalarAsync<int>();

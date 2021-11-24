@@ -134,5 +134,10 @@
     <Build Include="dbo\Stored Procedures\ShelfAdd.sql" />
     <Build Include="dbo\Stored Procedures\ShelfDelete.sql" />
     <Build Include="dbo\Stored Procedures\ShelfGet.sql" />
+    <Build Include="dbo\Tables\GrainSpawn.sql" />
+    <Build Include="dbo\Stored Procedures\GrainSpawnGet.sql" />
+    <Build Include="dbo\Stored Procedures\GrainSpawnAdd.sql" />
+    <Build Include="dbo\Stored Procedures\GrainSpawnInnoculate.sql" />
+    <Build Include="dbo\Stored Procedures\GrainSpawnShelfPlace.sql" />
   </ItemGroup>
 </Project>

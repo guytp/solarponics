@@ -64,17 +64,30 @@ namespace Solarponics.ProductionManager
             builder.RegisterType<LocationApiClient>().As<ILocationApiClient>();
             builder.RegisterType<AutoclaveApiClient>().As<IAutoclaveApiClient>();
             builder.RegisterType<ShelfApiClient>().As<IShelfApiClient>();
+            builder.RegisterType<GrainSpawnApiClient>().As<IGrainSpawnApiClient>();
             builder.RegisterType<WasteReasonApiClient>().As<IWasteReasonApiClient>();
 
-            builder.RegisterType<CultureBookInView>().As<ICultureBookInView>().SingleInstance();
-            builder.RegisterType<CultureBookInViewModel>().As<ICultureBookInViewModel>().SingleInstance();
+            builder.RegisterType<GrainSpawnCreateView>().As<IGrainSpawnCreateView>().SingleInstance();
+            builder.RegisterType<GrainSpawnCreateViewModel>().As<IGrainSpawnCreateViewModel>().SingleInstance();
             builder.RegisterType<CultureAgarLiquidPrepView>().As<ICultureAgarLiquidPrepView>().SingleInstance();
             builder.RegisterType<CultureAgarLiquidPrepViewModel>().As<ICultureAgarLiquidPrepViewModel>().SingleInstance();
             builder.RegisterType<CultureInnoculateView>().As<ICultureInnoculateView>().SingleInstance();
             builder.RegisterType<CultureInnoculateViewModel>().As<ICultureInnoculateViewModel>().SingleInstance();
             builder.RegisterType<CultureListView>().As<ICultureListView>().SingleInstance();
             builder.RegisterType<CultureListViewModel>().As<ICultureListViewModel>().SingleInstance();
+            builder.RegisterType<CultureBookInViewModel>().As<ICultureBookInViewModel>().SingleInstance();
+            builder.RegisterType<CultureBookInView>().As<ICultureBookInView>().SingleInstance();
             builder.RegisterType<CultureModule>().As<ICultureModule>().SingleInstance();
+
+            builder.RegisterType<GrainSpawnCreateView>().As<IGrainSpawnCreateView>().SingleInstance();
+            builder.RegisterType<GrainSpawnCreateViewModel>().As<IGrainSpawnCreateViewModel>().SingleInstance();
+            builder.RegisterType<GrainSpawnListView>().As<IGrainSpawnListView>().SingleInstance();
+            builder.RegisterType<GrainSpawnListViewModel>().As<IGrainSpawnListViewModel>().SingleInstance();
+            builder.RegisterType<GrainSpawnInnoculateView>().As<IGrainSpawnInnoculateView>().SingleInstance();
+            builder.RegisterType<GrainSpawnInnoculateViewModel>().As<IGrainSpawnInnoculateViewModel>().SingleInstance();
+            builder.RegisterType<GrainSpawnShelfPlaceView>().As<IGrainSpawnShelfPlaceView>().SingleInstance();
+            builder.RegisterType<GrainSpawnShelfPlaceViewModel>().As<IGrainSpawnShelfPlaceViewModel>().SingleInstance();
+            builder.RegisterType<GrainSpawnModule>().As<IGrainSpawnModule>().SingleInstance();
 
             builder.RegisterType<EnvironmentSensorReadingsCurrentView>().As<IEnvironmentSensorReadingsCurrentView>().SingleInstance();
             builder.RegisterType<EnvironmentSensorReadingsCurrentViewModel>().As<IEnvironmentSensorReadingsCurrentViewModel>().SingleInstance();

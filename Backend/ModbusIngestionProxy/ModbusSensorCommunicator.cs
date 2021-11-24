@@ -42,25 +42,30 @@ namespace Solarponics.ModbusIngestionProxy
             {
                 Console.WriteLine($"Reading {SensorModule.Sensors.Length} sensors on {SensorModule.Name}");
                 int[] readings;
+                var temperatureSensor = SensorModule.Sensors.FirstOrDefault(s => s.Type == SensorType.Temperature);
+                var carbonDioxideSensor = SensorModule.Sensors.FirstOrDefault(s => s.Type == SensorType.CarbonDioxide);
+                var humiditySensor = SensorModule.Sensors.FirstOrDefault(s => s.Type == SensorType.Humidity);
+                var co2SensorNumber = 0;
                 if (SensorModule.Sensors.Length == 1 && SensorModule.Sensors[0].Type == SensorType.CarbonDioxide)
                 {
                     readings = this.modbusClient.ReadHoldingRegisters(SensorModule.Sensors[0].Number, 1);
                 }
                 else
                 {
-                    readings = this.modbusClient.ReadInputRegisters(0, SensorModule.Sensors.Length);
+                    var maxSensorNumber = SensorModule.Sensors.Select(s => s.Number).Max();
+
+                    readings = this.modbusClient.ReadInputRegisters(0, maxSensorNumber);
+                    if (carbonDioxideSensor != null)
+                        co2SensorNumber = carbonDioxideSensor.Number;
                 }
 
-                var temperatureSensor = SensorModule.Sensors.FirstOrDefault(s => s.Type == SensorType.Temperature);
-                var carbonDioxideSensor = SensorModule.Sensors.FirstOrDefault(s => s.Type == SensorType.CarbonDioxide);
-                var humiditySensor = SensorModule.Sensors.FirstOrDefault(s => s.Type == SensorType.Humidity);
 
                 var reading = new SensorModuleReading();
 
                 if (temperatureSensor != null)
                     reading.Temperature = readings[temperatureSensor.Number - 1] / 10m;
                 if (carbonDioxideSensor != null)
-                    reading.CarbonDioxide = readings[carbonDioxideSensor.Number - 1] / 10m;
+                    reading.CarbonDioxide = readings[co2SensorNumber];
                 if (humiditySensor != null)
                     reading.Humidity = readings[humiditySensor.Number - 1] / 10m;
 

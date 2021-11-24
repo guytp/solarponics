@@ -56,7 +56,10 @@ namespace Solarponics.ProductionManager.ViewModels
 
         public async override Task OnShow()
         {
-            hardwareProvider.BarcodeScanner.BarcodeRead += OnBarcodeRead;
+            if (hardwareProvider.BarcodeScanner != null)
+                hardwareProvider.BarcodeScanner.BarcodeRead += OnBarcodeRead;
+            else
+                this.dialogBox.Show("No barcode scanner attached, innoculation won't work");
             try
             {
                 this.ActionMessage = "Loading data...";
@@ -77,7 +80,8 @@ namespace Solarponics.ProductionManager.ViewModels
 
         public override Task OnHide()
         {
-            hardwareProvider.BarcodeScanner.BarcodeRead -= OnBarcodeRead;
+            if (hardwareProvider.BarcodeScanner != null)
+                hardwareProvider.BarcodeScanner.BarcodeRead -= OnBarcodeRead;
             return Task.CompletedTask;
         }
 

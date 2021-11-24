@@ -66,7 +66,6 @@ namespace PhotoscribeSerialSimulator
             var all = new List<byte>();
             all.AddRange(bytes);
             all.Add((byte)'\r');
-            all.Add((byte)'\n');
             var outBuf = all.ToArray();
             port.Write(outBuf, 0, outBuf.Length);
         }

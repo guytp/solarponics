@@ -81,7 +81,7 @@ namespace Solarponics.ProductionManager.Hardware
                     foreach (var part in partsToPrint)
                     {
                         buffer.AddRange(ZPLCommands.TextWrite(Left, top, ElementDrawRotation.NO_ROTATION, textHeight, part));
-                        top += (int)(textHeight * (textHeight == TextHeightSmall ? 2.2 : 1.1));
+                        top += (int)(textHeight * (textHeight == TextHeightSmall ? 2.2 : textHeight == TextHeightMedium ? 1.5 : 1.1));
                         linesPrinted++;
                         if (label.MaxLinesToPrint.HasValue && linesPrinted >= label.MaxLinesToPrint)
                         {
