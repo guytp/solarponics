@@ -98,5 +98,7 @@
             <Button Content="↵" Style="{StaticResource NumberButton}" Click="OnNumberButtonClick" Name="NumberButtonE" Grid.Row="3" Grid.Column="2" Width="Auto" />
         </Grid>
 
+        <Button Content="Exit" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="50" Padding="50,15,50,15" FontSize="24" Width="250" Command="{Binding Path=ExitCommand}" />
+
     </Grid>
 </UserControl>

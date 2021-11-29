@@ -16,10 +16,13 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         
         <Button Grid.Column="0" Command="{Binding Path=HomeCommand}" Content="Home" Visibility="{Binding Path=IsHomeVisible, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Top" Padding="50,15,50,15" FontSize="24" Width="250" />
 
         <Button Grid.Column="1" Command="{Binding Path=LogoutCommand}" Content="Logout" HorizontalAlignment="Center" VerticalAlignment="Top" Padding="50,15,50,15" FontSize="24" Width="250" />
+        
+        <Button Grid.Column="2" Command="{Binding Path=ExitCommand}" Content="Exit" HorizontalAlignment="Center" VerticalAlignment="Top" Padding="50,15,50,15" FontSize="24" Width="250" />
     </Grid>
 </core:ViewBase>

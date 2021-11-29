@@ -26,6 +26,7 @@ namespace Solarponics.ProductionManager.ViewModels
             this.apiClient = apiClient;
             this.authenticationSession = authenticationSession;
             LoginCommand = new RelayCommand(_ => Login());
+            ExitCommand = new RelayCommand(_ => Exit());
             IsEnabled = true;
         }
 
@@ -35,6 +36,11 @@ namespace Solarponics.ProductionManager.ViewModels
         public string UserId { get; set; }
         public string Pin { get; set; }
         public ICommand LoginCommand { get; }
+        public ICommand ExitCommand { get; }
+        private void Exit()
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
 
         private async void Login()
         {

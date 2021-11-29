@@ -11,5 +11,7 @@ namespace Solarponics.ProductionManager.Abstractions.ViewModels
         bool IsHomeVisible { get; }
 
         ICommand LogoutCommand { get; }
+
+        ICommand ExitCommand { get; }
     }
 }

@@ -7,6 +7,7 @@ namespace Solarponics.ProductionManager.Abstractions.ViewModels
         bool IsEnabled { get; }
         bool IsLoginEnabled { get; }
         ICommand LoginCommand { get; }
+        ICommand ExitCommand { get; }
         string UserId { get; set; }
 
         string Pin { get; set; }

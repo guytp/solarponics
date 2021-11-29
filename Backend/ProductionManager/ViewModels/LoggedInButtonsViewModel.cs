@@ -19,6 +19,7 @@ namespace Solarponics.ProductionManager.ViewModels
             this.authenticationSession = authenticationSession;
             LogoutCommand = new RelayCommand(_ => Logout());
             HomeCommand = new RelayCommand(_ => Home());
+            ExitCommand = new RelayCommand(_ => Exit());
         }
 
         public ICommand HomeCommand { get; }
@@ -28,7 +29,13 @@ namespace Solarponics.ProductionManager.ViewModels
         public bool IsHomeVisible { get; private set; }
 
         public ICommand LogoutCommand { get; }
-        
+        public ICommand ExitCommand { get; }
+
+        private void Exit()
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
+
         private void Home()
         {
             navigator.NavigateTo(HomeView);
