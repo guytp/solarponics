@@ -94,9 +94,9 @@ namespace Solarponics.ModbusIngestionProxy
 
                 if (temperatureSensor != null && result.Temperature.HasValue)
                     this.ingestionClient.SendReading(SensorType.Temperature, temperatureSensor.Number, result.Temperature.Value);
-                if (carbonDioxideSensor != null && result.CarbonDioxide.HasValue)
+                if (carbonDioxideSensor != null && result.CarbonDioxide.HasValue && result.CarbonDioxide > 0)
                     this.ingestionClient.SendReading(SensorType.CarbonDioxide, carbonDioxideSensor.Number, result.CarbonDioxide.Value);
-                if (humiditySensor != null && result.Humidity.HasValue)
+                if (humiditySensor != null && result.Humidity.HasValue && result.Humidity > 0)
                     this.ingestionClient.SendReading(SensorType.Humidity, humiditySensor.Number, result.Humidity.Value);
             }
             catch (Exception ex)

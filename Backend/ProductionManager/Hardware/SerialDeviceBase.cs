@@ -15,7 +15,9 @@ namespace Solarponics.ProductionManager.Hardware
         private readonly SerialDeviceSettings settings;
         private SerialPort serialPort;
         private readonly byte[] dataSuffix;
+        private System.Timers.Timer timer;
         private readonly List<byte> bufferCarryOver = new List<byte>(10240);
+        private bool isError = false;
 
         public SerialDeviceBase(SerialDeviceSettings settings, byte[] dataSuffix)
         {
@@ -23,8 +25,41 @@ namespace Solarponics.ProductionManager.Hardware
             this.dataSuffix = dataSuffix;
         }
 
+        private void OnTimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            if (this.serialPort.IsOpen && !isError)
+            {
+                return;
+            }
+
+            try
+            {
+                this.serialPort.Dispose();
+            }
+            catch
+            {
+                // Intentionally swallowed
+            }
+
+            this.ResetPort();
+        }
+
         public void Start()
         {
+            this.ResetPort();
+        }
+
+        private void ResetPort()
+        {
+            isError = false;
+
+            if (this.serialPort != null)
+            {
+                this.serialPort.DataReceived -= OnDataReceived;
+                this.serialPort.ErrorReceived -= OnErrorReceived;
+                timer.Elapsed -= OnTimerElapsed;
+            }
+
             // Give ourselves up to five tries to open the port
             for (var i = 0; i < 5; i++)
             {
@@ -40,6 +75,11 @@ namespace Solarponics.ProductionManager.Hardware
                         ReadTimeout = 500
                     };
                     this.serialPort.Open();
+                    this.timer = new System.Timers.Timer(1500)
+                    {
+                        AutoReset = true,
+                        Enabled = true
+                    };
                     break;
                 }
                 catch (Exception ex)
@@ -51,7 +91,6 @@ namespace Solarponics.ProductionManager.Hardware
                     Thread.Sleep(200);
                 }
             }
-
             this.serialPort.DiscardInBuffer();
             this.serialPort.DiscardOutBuffer();
             while (this.serialPort.BytesToRead > 0)
@@ -68,10 +107,27 @@ namespace Solarponics.ProductionManager.Hardware
                 }
             }
             this.serialPort.DataReceived += OnDataReceived;
+            this.serialPort.ErrorReceived += OnErrorReceived;
+            timer.Elapsed += OnTimerElapsed;
+        }
+
+        private void OnErrorReceived(object sender, SerialErrorReceivedEventArgs e)
+        {
+            isError = true;
         }
 
         public void Dispose()
         {
+            try
+            {
+                this.timer?.Dispose();
+            }
+            catch
+            {
+                // Intentionally swallowed
+            }
+            this.timer = null;
+
             try
             {
                 this.serialPort?.Close();

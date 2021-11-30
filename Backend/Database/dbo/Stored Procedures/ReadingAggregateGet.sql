@@ -9,7 +9,7 @@ BEGIN
 	(
 		SELECT TOP 35
 			ReadingMinimum [Minimum], ReadingMaximum [Maximum], ReadingAverage [Average], PeriodBegin [Time]
-			FROM ReadingAggregate ra
+			FROM ReadingAggregate ra (NOLOCK)
 			WHERE
 				ra.SensorId = @id AND
 				ra.PeriodType = @timeframe

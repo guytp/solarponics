@@ -7,7 +7,13 @@
     [NumberReadings] INT             NOT NULL,
     [PeriodBegin]    DATETIME        NOT NULL,
     [PeriodType]     NVARCHAR (3)    NULL,
-    PRIMARY KEY CLUSTERED ([Id] ASC),
+    PRIMARY KEY NONCLUSTERED ([Id] ASC),
     FOREIGN KEY ([SensorId]) REFERENCES [dbo].[Sensor] ([Id])
 );
+GO
 
+CREATE CLUSTERED INDEX IX_ReadingAggregate_Id_PeriodType ON dbo.ReadingAggregate (SensorId, [PeriodType])
+GO
+
+CREATE INDEX IX_ReadingAggregate_PeriodBegin ON dbo.ReadingAggregate (PeriodBegin)
+GO
