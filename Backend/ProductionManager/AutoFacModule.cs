@@ -65,10 +65,9 @@ namespace Solarponics.ProductionManager
             builder.RegisterType<AutoclaveApiClient>().As<IAutoclaveApiClient>();
             builder.RegisterType<ShelfApiClient>().As<IShelfApiClient>();
             builder.RegisterType<GrainSpawnApiClient>().As<IGrainSpawnApiClient>();
+            builder.RegisterType<FruitingBlockApiClient>().As<IFruitingBlockApiClient>();
             builder.RegisterType<WasteReasonApiClient>().As<IWasteReasonApiClient>();
 
-            builder.RegisterType<GrainSpawnCreateView>().As<IGrainSpawnCreateView>().SingleInstance();
-            builder.RegisterType<GrainSpawnCreateViewModel>().As<IGrainSpawnCreateViewModel>().SingleInstance();
             builder.RegisterType<CultureAgarLiquidPrepView>().As<ICultureAgarLiquidPrepView>().SingleInstance();
             builder.RegisterType<CultureAgarLiquidPrepViewModel>().As<ICultureAgarLiquidPrepViewModel>().SingleInstance();
             builder.RegisterType<CultureInnoculateView>().As<ICultureInnoculateView>().SingleInstance();
@@ -88,6 +87,18 @@ namespace Solarponics.ProductionManager
             builder.RegisterType<GrainSpawnShelfPlaceView>().As<IGrainSpawnShelfPlaceView>().SingleInstance();
             builder.RegisterType<GrainSpawnShelfPlaceViewModel>().As<IGrainSpawnShelfPlaceViewModel>().SingleInstance();
             builder.RegisterType<GrainSpawnModule>().As<IGrainSpawnModule>().SingleInstance();
+
+            builder.RegisterType<FruitingBlockCreateView>().As<IFruitingBlockCreateView>().SingleInstance();
+            builder.RegisterType<FruitingBlockCreateViewModel>().As<IFruitingBlockCreateViewModel>().SingleInstance();
+            builder.RegisterType<FruitingBlockListView>().As<IFruitingBlockListView>().SingleInstance();
+            builder.RegisterType<FruitingBlockListViewModel>().As<IFruitingBlockListViewModel>().SingleInstance();
+            builder.RegisterType<FruitingBlockInnoculateView>().As<IFruitingBlockInnoculateView>().SingleInstance();
+            builder.RegisterType<FruitingBlockInnoculateViewModel>().As<IFruitingBlockInnoculateViewModel>().SingleInstance();
+            builder.RegisterType<FruitingBlockFruitingShelfPlaceView>().As<IFruitingBlockFruitingShelfPlaceView>().SingleInstance();
+            builder.RegisterType<FruitingBlockIncubateShelfPlaceView>().As<IFruitingBlockIncubateShelfPlaceView>().SingleInstance();
+            builder.RegisterType<FruitingBlockFruitingShelfPlaceViewModel>().As<IFruitingBlockFruitingShelfPlaceViewModel>().SingleInstance();
+            builder.RegisterType<FruitingBlockIncubateShelfPlaceViewModel>().As<IFruitingBlockIncubateShelfPlaceViewModel>().SingleInstance();
+            builder.RegisterType<FruitingBlockModule>().As<IFruitingBlockModule>().SingleInstance();
 
             builder.RegisterType<EnvironmentSensorReadingsCurrentView>().As<IEnvironmentSensorReadingsCurrentView>().SingleInstance();
             builder.RegisterType<EnvironmentSensorReadingsCurrentViewModel>().As<IEnvironmentSensorReadingsCurrentViewModel>().SingleInstance();

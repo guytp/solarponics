@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[RecipeAdd]
 (
-	@name NVARCHAR(200),
+	@name NVARCHAR(MAX),
 	@type TINYINT,
 	@text NVARCHAR(MAX),
 	@unitsCreated INT,

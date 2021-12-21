@@ -162,6 +162,7 @@ namespace Solarponics.WebApi
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ISupplierRepository, SupplierRepository>();
             services.AddTransient<IGrainSpawnRepository, GrainSpawnRepository>();
+            services.AddTransient<IFruitingBlockRepository, FruitingBlockRepository>();
             services.AddTransient<IRecipeRepository, RecipeRepository>();
             services.AddTransient<IHardwareRepository, HardwareRepository>();
             services.AddTransient<ISensorModuleRepository, SensorModuleRepository>();
