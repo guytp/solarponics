@@ -38,6 +38,7 @@ namespace Solarponics.ProductionManager.ViewModels
 
         public Recipe[] Recipes { get; private set; }
 
+        public string Quantity { get; set; }
         public string Weight { get; set; }
 
         public string Notes { get; set; }
@@ -46,7 +47,7 @@ namespace Solarponics.ProductionManager.ViewModels
 
         public ICommand AddCommand { get; }
 
-        public bool IsAddEnabled => SelectedRecipe != null && !string.IsNullOrEmpty(Weight) && decimal.TryParse(Weight, out _);
+        public bool IsAddEnabled => SelectedRecipe != null && !string.IsNullOrEmpty(Weight) && decimal.TryParse(Weight, out _) && !string.IsNullOrEmpty(Quantity) && int.TryParse(Quantity, out _);
 
         public bool IsUiEnabled { get; private set; }
 
@@ -91,6 +92,7 @@ namespace Solarponics.ProductionManager.ViewModels
             this.SelectedRecipe = null;
             this.Weight = null;
             this.Notes = null;
+            this.Quantity = null;
         }
 
         private async void Add()
@@ -104,21 +106,31 @@ namespace Solarponics.ProductionManager.ViewModels
                 return;
             }
 
-            this.IsUiEnabled = false;
+            int quantity;
+            if (!int.TryParse(Quantity, out quantity))
+            {
+                this.dialogBox.Show("Invalid quantity");
+                return;
+            }
+
             try
             {
-                var fruitingBlock = await this.fruitingBlockApiClient.Add(new FruitingBlockAddRequest
+                this.IsUiEnabled = false;
+                for (var i = 0; i < quantity; i++)
                 {
-                    RecipeId = this.SelectedRecipe.Id,
-                    Weight = decimal.Parse(this.Weight),
-                    Date = this.Date
-                });
+                    var fruitingBlock = await this.fruitingBlockApiClient.Add(new FruitingBlockAddRequest
+                    {
+                        RecipeId = this.SelectedRecipe.Id,
+                        Weight = decimal.Parse(this.Weight),
+                        Date = this.Date
+                    });
 
-                this.hardwareProvider.LabelPrinterLarge.Print(new FruitingBlockLabelDefinition(fruitingBlock));
+                    this.hardwareProvider.LabelPrinterLarge.Print(new FruitingBlockLabelDefinition(fruitingBlock));
+                }
 
                 this.ResetUi();
 
-                this.dialogBox.Show("Created fruiting block and label printed");
+                this.dialogBox.Show($"Generated {quantity} fruiting block abels");
             }
             catch (Exception ex)
             {

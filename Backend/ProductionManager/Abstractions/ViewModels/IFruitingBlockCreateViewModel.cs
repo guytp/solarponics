@@ -19,6 +19,7 @@ namespace Solarponics.ProductionManager.Abstractions.ViewModels
         string Weight { get; set; }
 
         string Notes { get; set; }
+        string Quantity { get; set; }
 
         ICommand AddCommand { get; }
         DateTime Date { get; }

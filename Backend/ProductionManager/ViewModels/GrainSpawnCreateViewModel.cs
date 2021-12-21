@@ -41,10 +41,11 @@ namespace Solarponics.ProductionManager.ViewModels
         public string Weight { get; set; }
 
         public string Notes { get; set; }
+        public string Quantity { get; set; }
 
         public ICommand AddCommand { get; }
 
-        public bool IsAddEnabled => SelectedRecipe != null && !string.IsNullOrEmpty(Weight) && decimal.TryParse(Weight, out _);
+        public bool IsAddEnabled => SelectedRecipe != null && !string.IsNullOrEmpty(Weight) && decimal.TryParse(Weight, out _) && !string.IsNullOrEmpty(Quantity) && int.TryParse(Quantity, out _);
 
         public bool IsUiEnabled { get; private set; }
 
@@ -89,6 +90,7 @@ namespace Solarponics.ProductionManager.ViewModels
             this.SelectedRecipe = null;
             this.Weight = null;
             this.Notes = null;
+            this.Quantity = null;
         }
 
         private async void Add()
@@ -102,21 +104,31 @@ namespace Solarponics.ProductionManager.ViewModels
                 return;
             }
 
-            this.IsUiEnabled = false;
+            int quantity;
+            if (!int.TryParse(Quantity, out quantity))
+            {
+                this.dialogBox.Show("Invalid quantity");
+                return;
+            }
+
             try
             {
-                var grainSpawn = await this.grainSpawnApiClient.Add(new GrainSpawnAddRequest
+                this.IsUiEnabled = false;
+                for (var i = 0; i < quantity; i++)
                 {
-                    RecipeId = this.SelectedRecipe.Id,
-                    Weight = decimal.Parse(this.Weight),
-                    Date = this.Date
-                });
+                    var grainSpawn = await this.grainSpawnApiClient.Add(new GrainSpawnAddRequest
+                    {
+                        RecipeId = this.SelectedRecipe.Id,
+                        Weight = decimal.Parse(this.Weight),
+                        Date = this.Date
+                    });
 
-                this.hardwareProvider.LabelPrinterLarge.Print(new GrainSpawnLabelDefinition(grainSpawn));
+                    this.hardwareProvider.LabelPrinterLarge.Print(new GrainSpawnLabelDefinition(grainSpawn));
+                }
 
                 this.ResetUi();
 
-                this.dialogBox.Show("Created grain spawn and label printed");
+                this.dialogBox.Show($"Generated {quantity} grain spawn labels");
             }
             catch (Exception ex)
             {

@@ -38,9 +38,12 @@
 
         <TextBlock Text="Date" Grid.Row="1" Grid.Column="4" Foreground="White" FontSize="24" Margin="10" />
         <DatePicker SelectedDate="{Binding Path=Date, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="5" MinWidth="200" Margin="10" FontSize="24" VerticalAlignment="Top" />
+
+        <TextBlock Text="Quantity" Grid.Row="3" Grid.Column="0" Foreground="White" FontSize="24" Margin="10" />
+        <TextBox Text="{Binding Path=Quantity, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" MinWidth="200" Margin="10" FontSize="24" VerticalAlignment="Top" />
         
-        <TextBlock Text="Notes" Grid.Row="3" Grid.Column="0" Foreground="White" FontSize="24" Margin="10" />
-        <TextBox Text="{Binding Path=Notes, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" Margin="10" FontSize="24" VerticalAlignment="Top" Grid.ColumnSpan="5" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Height="120" />
+        <TextBlock Text="Notes" Grid.Row="3" Grid.Column="2" Foreground="White" FontSize="24" Margin="10" />
+        <TextBox Text="{Binding Path=Notes, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="3" Margin="10" FontSize="24" VerticalAlignment="Top" Grid.ColumnSpan="3" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Height="120" />
 
         <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6" Content="Add" IsEnabled="{Binding Path=IsAddEnabled}" Command="{Binding Path=AddCommand}" Margin="10" MinWidth="200" FontSize="24" Padding="50,15,50,15" />
 
