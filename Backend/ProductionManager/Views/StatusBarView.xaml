@@ -18,6 +18,7 @@
         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
             <TextBlock Text="{Binding Path=Time, FallbackValue='HH:mm:ss'}" Style="{StaticResource StatusBarItem}" />
             <TextBlock Text="{Binding Path=Date, FallbackValue='DD Mmm YYYY'}" Style="{StaticResource StatusBarItem}" />
+            <TextBlock Text="{Binding Path=DayOfYear, FallbackValue='###', StringFormat='Day #{0}'}" Style="{StaticResource StatusBarItem}" />
         </StackPanel>
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
             <TextBlock Text="{Binding Path=UserName, FallbackValue='Full Name'}" Style="{StaticResource StatusBarItem}" />

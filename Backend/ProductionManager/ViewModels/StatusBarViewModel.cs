@@ -22,12 +22,14 @@ namespace Solarponics.ProductionManager.ViewModels
         public string UserName { get; private set; }
         public string Date { get; private set; }
         public string Time { get; private set; }
+        public int DayOfYear { get; private set; }
 
         private void UpdateTime()
         {
             var time = DateTime.Now;
             this.Time = time.ToShortTimeString();
             this.Date = time.ToLongDateString();
+            this.DayOfYear = time.DayOfYear;
         }
     }
 }
