@@ -6,10 +6,12 @@
     <UseWPF>true</UseWPF>
     <AssemblyName>Solarponics.ProductionManager</AssemblyName>
     <RootNamespace>Solarponics.ProductionManager</RootNamespace>
+    <ApplicationIcon>logo.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Images\solarponics_horztl_trans.png" />
+    <None Remove="logo.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,6 +38,7 @@
 
   <ItemGroup>
     <Resource Include="Images\solarponics_horztl_trans.png" />
+    <Resource Include="logo.ico" />
   </ItemGroup>
 
   <ItemGroup>

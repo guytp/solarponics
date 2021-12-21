@@ -9,11 +9,13 @@
         d:DataContext="{d:DesignInstance Type=abstractions:IMainWindowViewModel}"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
+        Icon="../logo.ico"
         ShowInTaskbar="True"
         ResizeMode="NoResize"
         Background="#071D27"
         Title="Solarponics Production Manager" Height="450" Width="800">
-    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+    <Viewbox Stretch="Uniform" StretchDirection="Both">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Width="1920" Height="1080">
         <Grid Margin="20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -24,4 +26,5 @@
             <UserControl Grid.Row="1" Content="{Binding Path=ActiveView}" />
         </Grid>
     </ScrollViewer>
+    </Viewbox>
 </Window>
