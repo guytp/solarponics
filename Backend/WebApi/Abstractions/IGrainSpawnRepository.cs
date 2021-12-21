@@ -1,4 +1,5 @@
 ﻿using Solarponics.Models;
+using System;
 using System.Threading.Tasks;
 
 namespace Solarponics.WebApi.Abstractions
@@ -10,10 +11,10 @@ namespace Solarponics.WebApi.Abstractions
 
         Task<GrainSpawn> Get(int id);
 
-        Task Innoculate(int id, int cultureId, string additionalNotes, int userId);
+        Task Innoculate(int id, int cultureId, string additionalNotes, int userId, DateTime date);
 
-        Task ShelfPlace(int id, int shelfId, string additionalNotes, int userId);
+        Task ShelfPlace(int id, int shelfId, string additionalNotes, int userId, DateTime date);
 
-        Task<int> Add(int userId, int recipeId, decimal weight, string notes);
+        Task<int> Add(int userId, int recipeId, decimal weight, string notes, DateTime date);
     }
 }

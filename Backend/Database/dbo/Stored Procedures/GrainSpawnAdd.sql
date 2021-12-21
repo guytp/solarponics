@@ -3,7 +3,8 @@
 	@userId INT,
 	@recipeId INT,
 	@weight DECIMAL(5, 3),
-	@notes NVARCHAR(MAX)
+	@notes NVARCHAR(MAX),
+	@date DATETIME
 )
 AS
 BEGIN
@@ -12,11 +13,9 @@ BEGIN
 
 	BEGIN TRAN
 
-	DECLARE @createDate DATETIME = GETUTCDATE()
-
 	INSERT INTO GrainSpawn
 		(RecipeId, CreateUserId, CreateDate, [Weight], Notes)
-		VALUES(@recipeId, @userId, @createDate, @weight, @notes)
+		VALUES(@recipeId, @userId, @date, @weight, @notes)
 
 	DECLARE @id INT
 	SELECT @id = SCOPE_IDENTITY()
@@ -24,7 +23,7 @@ BEGIN
 	EXEC AuditAdd @table = 'GrainSpawn', @column = 'CreateUserId', @action = 'Add', @userId = @userId, @key = @id, @newValue = @userId
 	EXEC AuditAdd @table = 'GrainSpawn', @column = 'RecipeId', @action = 'Add', @userId = @userId, @key = @id, @newValue = @recipeId
 	EXEC AuditAdd @table = 'GrainSpawn', @column = 'Weight', @action = 'Add', @userId = @userId, @key = @id, @newValue = @weight
-	EXEC AuditAdd @table = 'GrainSpawn', @column = 'CreateDate', @action = 'Add', @userId = @userId, @key = @id, @newValue = @createDate
+	EXEC AuditAdd @table = 'GrainSpawn', @column = 'CreateDate', @action = 'Add', @userId = @userId, @key = @id, @newValue = @date
 	EXEC AuditAdd @table = 'GrainSpawn', @column = 'Notes', @action = 'Add', @userId = @userId, @key = @id, @newValue = @notes
 	
 	SELECT @id [Id]

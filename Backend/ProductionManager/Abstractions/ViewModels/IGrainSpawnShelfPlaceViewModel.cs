@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 
 namespace Solarponics.ProductionManager.Abstractions.ViewModels
 {
@@ -14,7 +15,7 @@ namespace Solarponics.ProductionManager.Abstractions.ViewModels
         string Notes { get; set; }
 
         string ActionMessage { get; }
-
+        DateTime Date { get; }
         ICommand CancelCommand { get; }
         ICommand ConfirmCommand { get; }
     }

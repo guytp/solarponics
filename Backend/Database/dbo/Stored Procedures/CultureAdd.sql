@@ -8,7 +8,8 @@
 	@orderDate DATETIME,
 	@strain NVARCHAR(500),
 	@generation INT,
-	@notes NVARCHAR(MAX)
+	@notes NVARCHAR(MAX),
+	@date DATETIME
 )
 AS
 BEGIN
@@ -16,12 +17,10 @@ BEGIN
 	SET XACT_ABORT ON
 
 	BEGIN TRAN
-
-	DECLARE @createDate DATETIME = GETUTCDATE()
-
+	
 	INSERT INTO Culture
 		(SupplierId, ParentCultureId, RecipeId, UserId, MediumType, OrderDate, CreateDate, Strain, Notes, Generation)
-		VALUES(@supplierId, @parentCultureId, @recipeId, @userId, @mediumType, @orderDate, @createDate, @strain, @notes, @generation)
+		VALUES(@supplierId, @parentCultureId, @recipeId, @userId, @mediumType, @orderDate, @date, @strain, @notes, @generation)
 
 	DECLARE @id INT
 	SELECT @id = SCOPE_IDENTITY()
@@ -32,7 +31,7 @@ BEGIN
 	EXEC AuditAdd @table = 'Culture', @column = 'RecipeId', @action = 'Add', @userId = @userId, @key = @id, @newValue = @recipeId
 	EXEC AuditAdd @table = 'Culture', @column = 'MediumType', @action = 'Add', @userId = @userId, @key = @id, @newValue = @mediumType
 	EXEC AuditAdd @table = 'Culture', @column = 'OrderDate', @action = 'Add', @userId = @userId, @key = @id, @newValue = @orderDate
-	EXEC AuditAdd @table = 'Culture', @column = 'CreateDate', @action = 'Add', @userId = @userId, @key = @id, @newValue = @createDate
+	EXEC AuditAdd @table = 'Culture', @column = 'CreateDate', @action = 'Add', @userId = @userId, @key = @id, @newValue = @date
 	EXEC AuditAdd @table = 'Culture', @column = 'Strain', @action = 'Add', @userId = @userId, @key = @id, @newValue = @strain
 	EXEC AuditAdd @table = 'Culture', @column = 'Notes', @action = 'Add', @userId = @userId, @key = @id, @newValue = @notes
 	EXEC AuditAdd @table = 'Culture', @column = 'Generation', @action = 'Add', @userId = @userId, @key = @id, @newValue = @generation

@@ -11,8 +11,8 @@ namespace Solarponics.WebApi.Abstractions
 
         Task<Culture> Get(int id);
 
-        Task Innoculate(int id, int parentCultureId, string additionalNotes, int userId);
+        Task Innoculate(int id, int parentCultureId, string additionalNotes, int userId, DateTime date);
 
-        Task<int> Add(int? supplierId, int? parentCultureId, int userId, int? recipeId, CultureMediumType mediumType, DateTime? orderDate, string strain, string notes, int? generation);
+        Task<int> Add(int? supplierId, int? parentCultureId, int userId, int? recipeId, CultureMediumType mediumType, DateTime? orderDate, string strain, string notes, int? generation, DateTime date);
     }
 }

@@ -36,19 +36,20 @@ namespace Solarponics.WebApi.Data
             return (await storedProcedure.GetDataSetAsync<Culture>()).ToArray();
         }
 
-        public async Task Innoculate(int id, int parentCultureId, string additionalNotes, int userId)
+        public async Task Innoculate(int id, int parentCultureId, string additionalNotes, int userId, DateTime date)
         {
             using var storedProcedure = Connection.CreateStoredProcedure(ProcedureNameInnoculate, new StoredProcedureParameter[]
                 {
                     new StoredProcedureParameter("@id", id),
                     new StoredProcedureParameter("@parentCultureId", parentCultureId),
                     new StoredProcedureParameter("@additionalNotes", additionalNotes),
+                    new StoredProcedureParameter("@date", date),
                     new StoredProcedureParameter("@userId", userId)
                 });
             await storedProcedure.ExecuteNonQueryAsync();
         }
 
-        public async Task<int> Add(int? supplierId, int? parentCultureId, int userId, int? recipeId, CultureMediumType mediumType, DateTime? orderDate, string strain, string notes, int? generation)
+        public async Task<int> Add(int? supplierId, int? parentCultureId, int userId, int? recipeId, CultureMediumType mediumType, DateTime? orderDate, string strain, string notes, int? generation, DateTime date)
         {
             using var storedProcedure = Connection.CreateStoredProcedure(ProcedureNameAdd, new StoredProcedureParameter[]
                 {
@@ -60,6 +61,7 @@ namespace Solarponics.WebApi.Data
                     new StoredProcedureParameter("@orderDate", orderDate),
                     new StoredProcedureParameter("@strain", strain),
                     new StoredProcedureParameter("@notes", notes),
+                    new StoredProcedureParameter("@date", date),
                     new StoredProcedureParameter("@generation", generation)
                 });
             var id = await storedProcedure.ExecuteScalarAsync<int>();

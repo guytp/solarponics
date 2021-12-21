@@ -39,7 +39,7 @@ namespace Solarponics.ProductionManager.ViewModels
         public bool IsGenerateEnabled => SelectedRecipe != null && SelectedMediumType != null && !string.IsNullOrEmpty(Quantity);
 
         public bool IsUiEnabled { get; private set; }
-
+        public DateTime Date { get; set; }
         public ILoggedInButtonsViewModel LoggedInButtonsViewModel { get; }
 
         public string Quantity { get; set; }
@@ -60,6 +60,7 @@ namespace Solarponics.ProductionManager.ViewModels
         {
             try
             {
+                this.Date = DateTime.UtcNow;
                 this.IsUiEnabled = false;
                 this.recipes = await this.recipeApiClient.Get();
                 this.ResetUi();
@@ -126,7 +127,8 @@ namespace Solarponics.ProductionManager.ViewModels
                     {
                         MediumType = this.SelectedMediumType.Value,
                         Notes = this.Notes,
-                        RecipeId = this.SelectedRecipe.Id
+                        RecipeId = this.SelectedRecipe.Id,
+                        Date = this.Date
                     });
 
                     this.hardwareProvider.LabelPrinterSmall.Print(new CultureLabelDefinition(culture, null, this.SelectedRecipe));

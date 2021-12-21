@@ -1,4 +1,5 @@
 ﻿using Solarponics.Models;
+using System;
 using System.Windows.Input;
 
 namespace Solarponics.ProductionManager.Abstractions.ViewModels
@@ -24,5 +25,6 @@ namespace Solarponics.ProductionManager.Abstractions.ViewModels
         string Notes { get; set; }
 
         ICommand GenerateCommand { get; }
+        DateTime Date { get; }
     }
 }

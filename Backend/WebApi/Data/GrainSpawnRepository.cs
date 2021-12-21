@@ -37,37 +37,40 @@ namespace Solarponics.WebApi.Data
             return (await storedProcedure.GetDataSetAsync<GrainSpawn>()).ToArray();
         }
 
-        public async Task Innoculate(int id, int cultureId, string additionalNotes, int userId)
+        public async Task Innoculate(int id, int cultureId, string additionalNotes, int userId, DateTime date)
         {
             using var storedProcedure = Connection.CreateStoredProcedure(ProcedureNameInnoculate, new StoredProcedureParameter[]
                 {
                     new StoredProcedureParameter("@id", id),
                     new StoredProcedureParameter("@cultureId", cultureId),
                     new StoredProcedureParameter("@additionalNotes", additionalNotes),
+                    new StoredProcedureParameter("@date", date),
                     new StoredProcedureParameter("@userId", userId)
                 });
             await storedProcedure.ExecuteNonQueryAsync();
         }
 
-        public async Task ShelfPlace(int id, int shelfId, string additionalNotes, int userId)
+        public async Task ShelfPlace(int id, int shelfId, string additionalNotes, int userId, DateTime date)
         {
             using var storedProcedure = Connection.CreateStoredProcedure(ProcedureNamePlaceShelf, new StoredProcedureParameter[]
                 {
                     new StoredProcedureParameter("@id", id),
                     new StoredProcedureParameter("@shelfId", shelfId),
                     new StoredProcedureParameter("@additionalNotes", additionalNotes),
+                    new StoredProcedureParameter("@date", date),
                     new StoredProcedureParameter("@userId", userId)
                 });
             await storedProcedure.ExecuteNonQueryAsync();
         }
 
-        public async Task<int> Add(int userId, int recipeId, decimal weight, string notes)
+        public async Task<int> Add(int userId, int recipeId, decimal weight, string notes, DateTime date)
         {
             using var storedProcedure = Connection.CreateStoredProcedure(ProcedureNameAdd, new StoredProcedureParameter[]
                 {
                     new StoredProcedureParameter("@userId", userId),
                     new StoredProcedureParameter("@recipeId", recipeId),
                     new StoredProcedureParameter("@weight", weight),
+                    new StoredProcedureParameter("@date", date),
                     new StoredProcedureParameter("@notes", notes)
                 });
             var id = await storedProcedure.ExecuteScalarAsync<int>();

@@ -3,7 +3,8 @@
 	@id INT,
 	@shelfId INT,
 	@userId INT,
-	@additionalNotes NVARCHAR(MAX)
+	@additionalNotes NVARCHAR(MAX),
+	@date DATETIME
 )
 AS
 BEGIN
@@ -28,18 +29,17 @@ BEGIN
 
 	SET XACT_ABORT ON
 	BEGIN TRAN
-	DECLARE @createDate DATETIME = GETUTCDATE()
 
 	UPDATE [GrainSpawn]
 		SET
 			ShelfId = @shelfId,
 			ShelfPlaceUserId = @userId,
-			ShelfPlaceDate = @createDate
+			ShelfPlaceDate = @date
 		WHERE Id = @id
 		
 	EXEC AuditAdd @table = 'GrainSpawn', @column = 'ShelfId', @action = 'Update', @userId = @userId, @key = @id, @newValue = @shelfId, @oldValue = NULL
 	EXEC AuditAdd @table = 'GrainSpawn', @column = 'ShelfPlaceUserId', @action = 'Update', @userId = @userId, @key = @id, @newValue = @userId, @oldValue = NULL
-	EXEC AuditAdd @table = 'GrainSpawn', @column = 'ShelfPlaceDate', @action = 'Update', @userId = @userId, @key = @id, @newValue = @createDate, @oldValue = NULL
+	EXEC AuditAdd @table = 'GrainSpawn', @column = 'ShelfPlaceDate', @action = 'Update', @userId = @userId, @key = @id, @newValue = @date, @oldValue = NULL
 	IF @notes <> @existingNotes
 		EXEC AuditAdd @table = 'GrainSpawn', @column = 'Notes', @action = 'Update', @userId = @userId, @key = @id, @newValue = @notes, @oldValue = @existingNotes
 

@@ -35,7 +35,7 @@ namespace Solarponics.ProductionManager.ViewModels
         public ILoggedInButtonsViewModel LoggedInButtonsViewModel { get; }
 
         public Recipe SelectedRecipe { get; set; }
-
+        public DateTime Date { get; set; }
         public Recipe[] Recipes { get; private set; }
 
         public string Weight { get; set; }
@@ -52,6 +52,7 @@ namespace Solarponics.ProductionManager.ViewModels
         {
             try
             {
+                this.Date = DateTime.UtcNow;
                 this.IsUiEnabled = false;
                 this.Recipes = (await this.recipeApiClient.Get()).Where(r => r.Type == RecipeType.GrainSpawn).ToArray();
                 this.ResetUi();
@@ -107,7 +108,8 @@ namespace Solarponics.ProductionManager.ViewModels
                 var grainSpawn = await this.grainSpawnApiClient.Add(new GrainSpawnAddRequest
                 {
                     RecipeId = this.SelectedRecipe.Id,
-                    Weight = decimal.Parse(this.Weight)
+                    Weight = decimal.Parse(this.Weight),
+                    Date = this.Date
                 });
 
                 this.hardwareProvider.LabelPrinterLarge.Print(new GrainSpawnLabelDefinition(grainSpawn));

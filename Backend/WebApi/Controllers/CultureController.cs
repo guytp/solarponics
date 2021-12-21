@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -48,7 +49,7 @@ namespace Solarponics.WebApi.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> BookIn([FromBody] CultureBookInRequest request)
         {
-            var id = await repo.Add(request.SupplierId, null, this.UserId!.Value, null, request.MediumType, request.OrderDate, request.Strain, request.Notes, 1);
+            var id = await repo.Add(request.SupplierId, null, this.UserId!.Value, null, request.MediumType, request.OrderDate, request.Strain, request.Notes, 1, DateTime.UtcNow);
             var culture = await repo.Get(id);
             return this.Ok(culture);
         }
@@ -58,7 +59,7 @@ namespace Solarponics.WebApi.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> FromRecipe([FromBody] CultureCreateFromReciptRequest request)
         {
-            var id = await repo.Add(null, null, this.UserId!.Value, request.RecipeId, request.MediumType, null, null, request.Notes, null);
+            var id = await repo.Add(null, null, this.UserId!.Value, request.RecipeId, request.MediumType, null, null, request.Notes, null, request.Date);
             var culture = await repo.Get(id);
             return this.Ok(culture);
         }
@@ -68,7 +69,7 @@ namespace Solarponics.WebApi.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Innoculate([FromBody] CultureInnoculateRequest request)
         {
-            await repo.Innoculate(request.Id, request.ParentCultureId, request.AdditionalNotes, this.UserId!.Value);
+            await repo.Innoculate(request.Id, request.ParentCultureId, request.AdditionalNotes, this.UserId!.Value, request.Date);
             var culture = await repo.Get(request.Id);
             return this.Ok(culture);
         }

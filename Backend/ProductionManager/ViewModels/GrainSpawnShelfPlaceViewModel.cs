@@ -36,6 +36,7 @@ namespace Solarponics.ProductionManager.ViewModels
         public bool IsConfirmEnabled => GrainSpawn != null && Shelf != null;
         public bool IsCancelEnabled => GrainSpawn != null || Shelf != null;
 
+        public DateTime Date { get; set; }
         private GrainSpawn GrainSpawn { get; set; }
 
         private Shelf Shelf { get; set; }
@@ -51,6 +52,7 @@ namespace Solarponics.ProductionManager.ViewModels
 
         public override Task OnShow()
         {
+            this.Date = DateTime.UtcNow;
             if (hardwareProvider.BarcodeScanner != null)
                 hardwareProvider.BarcodeScanner.BarcodeRead += OnBarcodeRead;
             else
@@ -85,7 +87,8 @@ namespace Solarponics.ProductionManager.ViewModels
                 var grainSpawn = await this.grainSpawnApiClient.ShelfPlace(this.GrainSpawn.Id, new Models.WebApi.GrainSpawnShelfPlaceRequest
                 {
                     AdditionalNotes = Notes,
-                    ShelfId = this.Shelf.Id
+                    ShelfId = this.Shelf.Id,
+                    Date = this.Date
                 });
 
                 this.ResetUi();

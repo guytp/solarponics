@@ -3,7 +3,8 @@
 	@id INT,
 	@cultureId INT,
 	@userId INT,
-	@additionalNotes NVARCHAR(MAX)
+	@additionalNotes NVARCHAR(MAX),
+	@date DATETIME
 )
 AS
 BEGIN
@@ -28,18 +29,16 @@ BEGIN
 
 	SET XACT_ABORT ON
 	BEGIN TRAN
-	DECLARE @createDate DATETIME = GETUTCDATE()
-
 	UPDATE [GrainSpawn]
 		SET
 			CultureId = @cultureId,
 			InnoculateUserId = @userId,
-			InnoculateDate = @createDate
+			InnoculateDate = @date
 		WHERE Id = @id
 		
 	EXEC AuditAdd @table = 'GrainSpawn', @column = 'CultureId', @action = 'Update', @userId = @userId, @key = @id, @newValue = @cultureId, @oldValue = NULL
 	EXEC AuditAdd @table = 'GrainSpawn', @column = 'InnoculateUserId', @action = 'Update', @userId = @userId, @key = @id, @newValue = @userId, @oldValue = NULL
-	EXEC AuditAdd @table = 'GrainSpawn', @column = 'InnoculateDate', @action = 'Update', @userId = @userId, @key = @id, @newValue = @createDate, @oldValue = NULL
+	EXEC AuditAdd @table = 'GrainSpawn', @column = 'InnoculateDate', @action = 'Update', @userId = @userId, @key = @id, @newValue = @date, @oldValue = NULL
 	IF @notes <> @existingNotes
 		EXEC AuditAdd @table = 'GrainSpawn', @column = 'Notes', @action = 'Update', @userId = @userId, @key = @id, @newValue = @notes, @oldValue = @existingNotes
 

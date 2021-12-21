@@ -48,7 +48,7 @@ namespace Solarponics.WebApi.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([FromBody] GrainSpawnAddRequest request)
         {
-            var id = await repo.Add(this.UserId!.Value, request.RecipeId, request.Weight, request.Notes);
+            var id = await repo.Add(this.UserId!.Value, request.RecipeId, request.Weight, request.Notes, request.Date);
             var grainSpawn = await repo.Get(id);
             return this.Ok(grainSpawn);
         }
@@ -58,7 +58,7 @@ namespace Solarponics.WebApi.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Innoculate(int id, [FromBody] GrainSpawnInnoculateRequest request)
         {
-            await repo.Innoculate(id, request.CultureId, request.AdditionalNotes, this.UserId!.Value);
+            await repo.Innoculate(id, request.CultureId, request.AdditionalNotes, this.UserId!.Value, request.Date);
             var culture = await repo.Get(id);
             return this.Ok(culture);
         }
@@ -68,7 +68,7 @@ namespace Solarponics.WebApi.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ShelfPlace(int id, [FromBody] GrainSpawnShelfPlaceRequest request)
         {
-            await repo.ShelfPlace(id, request.ShelfId, request.AdditionalNotes, this.UserId!.Value);
+            await repo.ShelfPlace(id, request.ShelfId, request.AdditionalNotes, this.UserId!.Value, request.Date);
             var culture = await repo.Get(id);
             return this.Ok(culture);
         }

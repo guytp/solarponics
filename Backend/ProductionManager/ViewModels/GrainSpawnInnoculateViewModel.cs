@@ -36,7 +36,7 @@ namespace Solarponics.ProductionManager.ViewModels
 
         public bool IsConfirmEnabled => GrainSpawn != null && Culture != null;
         public bool IsCancelEnabled => GrainSpawn != null || Culture != null;
-
+        public DateTime Date { get; set; }
         private GrainSpawn GrainSpawn { get; set; }
 
         private Culture Culture { get; set; }
@@ -52,6 +52,7 @@ namespace Solarponics.ProductionManager.ViewModels
 
         public override Task OnShow()
         {
+            this.Date = DateTime.UtcNow;
             if (hardwareProvider.BarcodeScanner != null)
                 hardwareProvider.BarcodeScanner.BarcodeRead += OnBarcodeRead;
             else
@@ -92,7 +93,8 @@ namespace Solarponics.ProductionManager.ViewModels
                 var grainSpawn = await this.grainSpawnApiClient.Innoculate(this.GrainSpawn.Id, new Models.WebApi.GrainSpawnInnoculateRequest
                 {
                     AdditionalNotes = Notes,
-                    CultureId = this.Culture.Id
+                    CultureId = this.Culture.Id,
+                    Date = this.Date
                 });
 
                 this.hardwareProvider.LabelPrinterLarge.Print(new GrainSpawnLabelDefinition(grainSpawn));

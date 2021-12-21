@@ -37,7 +37,7 @@ namespace Solarponics.ProductionManager.ViewModels
         }
 
         public bool IsUiEnabled { get; private set; }
-
+        public DateTime Date { get; set; }
         public bool IsConfirmEnabled => OriginCulture != null && DestinationCulture != null;
         public bool IsCancelEnabled => OriginCulture != null || DestinationCulture != null;
 
@@ -62,6 +62,7 @@ namespace Solarponics.ProductionManager.ViewModels
                 this.dialogBox.Show("No barcode scanner attached, innoculation won't work");
             try
             {
+                this.Date = DateTime.UtcNow;
                 this.ActionMessage = "Loading data...";
                 this.IsUiEnabled = false;
                 this.suppliers = await supplierApiClient.Get();
@@ -111,7 +112,8 @@ namespace Solarponics.ProductionManager.ViewModels
                 {
                     AdditionalNotes = Notes,
                     Id = this.DestinationCulture.Id,
-                    ParentCultureId = this.OriginCulture.Id
+                    ParentCultureId = this.OriginCulture.Id,
+                    Date = this.Date
                 });
 
                 var recipe = this.recipes.First(r => r.Id == culture.RecipeId);

@@ -24,16 +24,21 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
         <views:ViewHeader Category="Grain Spawn" Title="Innoculate" Grid.Row="0" Grid.ColumnSpan="4" />
 
-        <TextBlock Text="{Binding Path=ActionMessage, FallbackValue='Action message goes here'}" TextWrapping="Wrap" Grid.Row="1" Grid.ColumnSpan="2" Foreground="White" FontSize="48" TextAlignment="Center" HorizontalAlignment="Stretch" />
+        <TextBlock Text="{Binding Path=ActionMessage, FallbackValue='Action message goes here'}" TextWrapping="Wrap" Grid.Row="1" Grid.ColumnSpan="4" Foreground="White" FontSize="48" TextAlignment="Center" HorizontalAlignment="Stretch" />
 
         <TextBlock Text="Notes" Grid.Row="2" Grid.Column="0" Foreground="White" FontSize="24" Margin="10" Visibility="{Binding Path=IsConfirmEnabled, Converter={StaticResource BooleanToVisibilityConverter}}" />
         <TextBox Text="{Binding Path=Notes, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" Margin="10" FontSize="24" VerticalAlignment="Top" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Height="120" Visibility="{Binding Path=IsConfirmEnabled, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,20,0,0">
+        <TextBlock Text="Date" Grid.Row="2" Grid.Column="2" Foreground="White" FontSize="24" Margin="10" Visibility="{Binding Path=IsConfirmEnabled, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        <DatePicker SelectedDate="{Binding Path=Date, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="3" MinWidth="200" Margin="10" FontSize="24" VerticalAlignment="Top" Visibility="{Binding Path=IsConfirmEnabled, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="0,20,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
