@@ -145,5 +145,7 @@
     <Build Include="dbo\Stored Procedures\FruitingBlockFruitingShelfPlace.sql" />
     <Build Include="dbo\Tables\FruitingBlock.sql" />
     <Build Include="dbo\Stored Procedures\FruitingBlockIncubateShelfPlace.sql" />
+    <Build Include="dbo\Tables\GrainSpawnMix.sql" />
+    <Build Include="dbo\Stored Procedures\GrainSpawnAddMix.sql" />
   </ItemGroup>
 </Project>

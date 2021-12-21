@@ -84,6 +84,8 @@ namespace Solarponics.ProductionManager
             builder.RegisterType<GrainSpawnListViewModel>().As<IGrainSpawnListViewModel>().SingleInstance();
             builder.RegisterType<GrainSpawnInnoculateView>().As<IGrainSpawnInnoculateView>().SingleInstance();
             builder.RegisterType<GrainSpawnInnoculateViewModel>().As<IGrainSpawnInnoculateViewModel>().SingleInstance();
+            builder.RegisterType<GrainSpawnMixView>().As<IGrainSpawnMixView>().SingleInstance();
+            builder.RegisterType<GrainSpawnMixViewModel>().As<IGrainSpawnMixViewModel>().SingleInstance();
             builder.RegisterType<GrainSpawnShelfPlaceView>().As<IGrainSpawnShelfPlaceView>().SingleInstance();
             builder.RegisterType<GrainSpawnShelfPlaceViewModel>().As<IGrainSpawnShelfPlaceViewModel>().SingleInstance();
             builder.RegisterType<GrainSpawnModule>().As<IGrainSpawnModule>().SingleInstance();

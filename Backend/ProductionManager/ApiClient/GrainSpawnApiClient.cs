@@ -20,10 +20,15 @@ namespace Solarponics.ProductionManager.ApiClient
             };
             refitClient = RestService.For<IGrainSpawnApiClient>(settings.ApiBaseUrl, refitSettings);
         }
-        
+
         public async Task<GrainSpawn> Add(GrainSpawnAddRequest request)
         {
             return await this.refitClient.Add(request);
+        }
+
+        public async Task Mix(int id, GrainSpawnAddMixRequest request)
+        {
+            await this.refitClient.Mix(id, request);
         }
 
         public async Task<GrainSpawn> Innoculate(int id, [Body] GrainSpawnInnoculateRequest request)

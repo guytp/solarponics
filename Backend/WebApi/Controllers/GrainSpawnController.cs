@@ -72,5 +72,16 @@ namespace Solarponics.WebApi.Controllers
             var culture = await repo.Get(id);
             return this.Ok(culture);
         }
+
+        [HttpPost("by-id/{id}/mix")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(GrainSpawn))]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Mix(int id, [FromBody] GrainSpawnAddMixRequest request)
+        {
+            await repo.AddMix(id, this.UserId!.Value, request.Date, request.Notes);
+            var culture = await repo.Get(id);
+            return this.NoContent();
+        }
+
     }
 }

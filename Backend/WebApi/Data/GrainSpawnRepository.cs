@@ -13,6 +13,7 @@ namespace Solarponics.WebApi.Data
         private const string ProcedureNameInnoculate = "[dbo].[GrainSpawnInnoculate]";
         private const string ProcedureNamePlaceShelf = "[dbo].[GrainSpawnShelfPlace]";
         private const string ProcedureNameAdd = "[dbo].[GrainSpawnAdd]";
+        private const string ProcedureNameAddMix = "[dbo].[GrainSpawnAddMix]";
 
         public GrainSpawnRepository(IDatabaseConnection connection)
         {
@@ -75,6 +76,19 @@ namespace Solarponics.WebApi.Data
                 });
             var id = await storedProcedure.ExecuteScalarAsync<int>();
             return id;
+        }
+
+        public async Task AddMix(int id, int userId, DateTime date, string notes)
+        {
+            using var storedProcedure = Connection.CreateStoredProcedure(ProcedureNameAddMix, new StoredProcedureParameter[]
+                {
+                    new StoredProcedureParameter("@id", id),
+                    new StoredProcedureParameter("@userId", userId),
+                    new StoredProcedureParameter("@notes", notes),
+                    new StoredProcedureParameter("@date", date)
+                });
+            await storedProcedure.ExecuteNonQueryAsync();
+
         }
     }
 }

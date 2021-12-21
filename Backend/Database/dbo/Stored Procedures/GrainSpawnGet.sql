@@ -8,7 +8,7 @@ BEGIN
 	SET XACT_ABORT ON
 
 	SELECT
-		g.Id, CultureId, g.RecipeId, g.CreateUserId, g.InnoculateUserId, g.ShelfPlaceUserId, g.CreateDate, g.InnoculateDate, g.ShelfPlaceDate, [Weight], g.Notes, cu.[Name] CreateUser, iu.[Name] [InnoculateUser], su.[Name] [ShelfPlaceUser], c.[Strain], c.[Generation], c.MediumType, r.[Name] RecipeName, s.[Name] [ShelfName], s.[Id] ShelfId
+		g.Id, CultureId, g.RecipeId, g.CreateUserId, g.InnoculateUserId, g.ShelfPlaceUserId, g.CreateDate, g.InnoculateDate, g.ShelfPlaceDate, [Weight], g.Notes, cu.[Name] CreateUser, iu.[Name] [InnoculateUser], su.[Name] [ShelfPlaceUser], c.[Strain], c.[Generation], c.MediumType, r.[Name] RecipeName, s.[Name] [ShelfName], s.[Id] ShelfId, (SELECT COUNT(1) FROM GrainSpawnMix gsm WHERE gsm.Id = g.Id) [MixCount]
 	FROM [GrainSpawn] g
 	JOIN [User] cu ON cu.Id = g.CreateUserId
 	JOIN Recipe r ON r.Id = g.RecipeId

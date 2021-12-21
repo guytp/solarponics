@@ -16,6 +16,10 @@ namespace Solarponics.ProductionManager.Abstractions.ApiClients
         Task<GrainSpawn> Innoculate(int id, [Body] GrainSpawnInnoculateRequest request);
 
         [Headers("Authorization: Bearer")]
+        [Post("/grain-spawn/by-id/{id}/mix")]
+        Task Mix(int id, [Body] GrainSpawnAddMixRequest request);
+
+        [Headers("Authorization: Bearer")]
         [Post("/grain-spawn/by-id/{id}/shelf")]
         Task<GrainSpawn> ShelfPlace(int id, [Body] GrainSpawnShelfPlaceRequest request);
 

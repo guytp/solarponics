@@ -13,14 +13,14 @@ using System.Windows.Input;
 
 namespace Solarponics.ProductionManager.ViewModels
 {
-    public class GrainSpawnInnoculateViewModel : ViewModelBase, IGrainSpawnInnoculateViewModel
+    public class GrainSpawnMixViewModel : ViewModelBase, IGrainSpawnMixViewModel
     {
         private readonly IDialogBox dialogBox;
         private readonly IGrainSpawnApiClient grainSpawnApiClient;
         private readonly IHardwareProvider hardwareProvider;
         private readonly ICultureApiClient cultureApiClient;
 
-        public GrainSpawnInnoculateViewModel(IDialogBox dialogBox, IGrainSpawnApiClient grainSpawnApiClient, ICultureApiClient cultureApiClient, IHardwareProvider hardwareProvider, ILoggedInButtonsViewModel loggedInButtonsViewModel)
+        public GrainSpawnMixViewModel(IDialogBox dialogBox, IGrainSpawnApiClient grainSpawnApiClient, ICultureApiClient cultureApiClient, IHardwareProvider hardwareProvider, ILoggedInButtonsViewModel loggedInButtonsViewModel)
         {
             this.LoggedInButtonsViewModel = loggedInButtonsViewModel;
             this.dialogBox = dialogBox;
@@ -34,12 +34,10 @@ namespace Solarponics.ProductionManager.ViewModels
 
         public bool IsUiEnabled { get; private set; }
 
-        public bool IsConfirmEnabled => GrainSpawn != null && Culture != null;
-        public bool IsCancelEnabled => GrainSpawn != null || Culture != null;
+        public bool IsConfirmEnabled => GrainSpawn != null;
+        public bool IsCancelEnabled => GrainSpawn != null;
         public DateTime Date { get; set; }
         private GrainSpawn GrainSpawn { get; set; }
-
-        private Culture Culture { get; set; }
 
         public ILoggedInButtonsViewModel LoggedInButtonsViewModel { get; }
 
@@ -56,7 +54,7 @@ namespace Solarponics.ProductionManager.ViewModels
             if (hardwareProvider.BarcodeScanner != null)
                 hardwareProvider.BarcodeScanner.BarcodeRead += OnBarcodeRead;
             else
-                this.dialogBox.Show("No barcode scanner attached, innoculation won't work");
+                this.dialogBox.Show("No barcode scanner attached, mixing won't work");
             this.ResetUi();
             return Task.CompletedTask;
         }
@@ -81,29 +79,21 @@ namespace Solarponics.ProductionManager.ViewModels
             if (!this.IsUiEnabled || !this.IsConfirmEnabled)
                 return;
 
-            if (hardwareProvider?.LabelPrinterLarge == null)
-            {
-                this.dialogBox.Show("Unable to innoculate grain spawn without large label printer");
-                return;
-            }
-
             try
             {
                 this.IsUiEnabled = false;
-                var grainSpawn = await this.grainSpawnApiClient.Innoculate(this.GrainSpawn.Id, new Models.WebApi.GrainSpawnInnoculateRequest
+                await this.grainSpawnApiClient.Mix(this.GrainSpawn.Id, new Models.WebApi.GrainSpawnAddMixRequest
                 {
-                    AdditionalNotes = Notes,
-                    CultureId = this.Culture.Id,
+                    Notes = Notes,
                     Date = this.Date
                 });
 
-                this.hardwareProvider.LabelPrinterLarge.Print(new GrainSpawnLabelDefinition(grainSpawn));
                 this.ResetUi();
-                this.dialogBox.Show("Confirmed innoculation and new label printed");
+                this.dialogBox.Show($"Confirmed grain spawn as mixed on {this.Date.ToShortDateString()}");
             }
             catch (Exception ex)
             {
-                this.dialogBox.Show("There was an unexpected problem confirming the innoculation.", exception: ex);
+                this.dialogBox.Show("There was an unexpected problem confirming the mix.", exception: ex);
             }
             finally
             {
@@ -114,31 +104,18 @@ namespace Solarponics.ProductionManager.ViewModels
         private void ResetUi()
         {
             this.GrainSpawn = null;
-            this.Culture = null;
             this.Notes = null;
             this.ActionMessage = "Scan the grain spawn.";
         }
 
         private async void OnBarcodeRead(object sender, Data.BarcodeReadEventArgs e)
         {
-            if ((this.Culture != null && this.GrainSpawn != null) || !this.IsUiEnabled)
+            if (this.GrainSpawn != null || !this.IsUiEnabled)
             {
                 return;
             }
 
-            if (this.GrainSpawn == null)
-            {
-                await HandleGrainSpawnScan(e.Barcode);
-            }
-
-            else if (this.Culture == null)
-            {
-                await HandleCultureScan(e.Barcode);
-            }
-        }
-
-        private async Task HandleGrainSpawnScan(string barcode)
-        {
+            var barcode = e.Barcode;
             if (!barcode.StartsWith("GS") || barcode.Length < 3)
             {
                 this.dialogBox.Show("Invalid barcode, please scan a grain spawn.");
@@ -159,50 +136,16 @@ namespace Solarponics.ProductionManager.ViewModels
                 return;
             }
 
-            if (grainSpawn.CultureId.HasValue)
+            if (!grainSpawn.CultureId.HasValue)
             {
-                this.dialogBox.Show("This grain spawn has already been innoculated");
+                this.dialogBox.Show("This grain spawn has not been innoculated so cannot be mixed");
                 return;
             }
 
             this.GrainSpawn = grainSpawn;
             this.ActionMessage = "Spawn is " + grainSpawn.RecipeName;
             this.ActionMessage += Environment.NewLine + Environment.NewLine;
-            this.ActionMessage += "Please scan culture";
-        }
-
-        private async Task HandleCultureScan(string barcode)
-        {
-            if (!barcode.StartsWith("C") || barcode.Length < 2)
-            {
-                this.dialogBox.Show("Invalid barcode, please scan a culture.");
-                return;
-            }
-
-            int cultureId;
-            if (!int.TryParse(barcode.Substring(1), out cultureId))
-            {
-                this.dialogBox.Show("Invalid barcode");
-                return;
-            }
-
-            var culture = await this.cultureApiClient.Get(cultureId);
-            if (culture== null)
-            {
-                this.dialogBox.Show("Culture not found");
-                return;
-            }
-
-            if (!culture.InnoculateDate.HasValue && !culture.SupplierId.HasValue)
-            {
-                this.dialogBox.Show("You scanned a non-innoculated culture, it must be innoculated for use in grain spawn");
-                return;
-            }
-
-            this.Culture = culture;
-            this.ActionMessage = "Spawn is " + this.GrainSpawn.RecipeName;
-            this.ActionMessage += Environment.NewLine + Environment.NewLine;
-            this.ActionMessage += "Culture is " + this.Culture.Strain;
+            this.ActionMessage += "Check date and enter notes";
             this.ActionMessage += Environment.NewLine + Environment.NewLine;
             this.ActionMessage += "Press Confirm or Cancel to continue";
         }

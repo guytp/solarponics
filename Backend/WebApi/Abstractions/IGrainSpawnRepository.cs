@@ -16,5 +16,6 @@ namespace Solarponics.WebApi.Abstractions
         Task ShelfPlace(int id, int shelfId, string additionalNotes, int userId, DateTime date);
 
         Task<int> Add(int userId, int recipeId, decimal weight, string notes, DateTime date);
+        Task AddMix(int id, int userId, DateTime date, string additionalNotes);
     }
 }

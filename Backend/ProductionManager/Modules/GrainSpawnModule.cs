@@ -6,9 +6,9 @@ namespace Solarponics.ProductionManager.Modules
 {
     public class GrainSpawnModule : IGrainSpawnModule
     {
-        public GrainSpawnModule(IGrainSpawnCreateView createView, IGrainSpawnInnoculateView innoculateView, IGrainSpawnShelfPlaceView shelfPlaceView, IGrainSpawnListView listView)
+        public GrainSpawnModule(IGrainSpawnCreateView createView, IGrainSpawnInnoculateView innoculateView, IGrainSpawnShelfPlaceView shelfPlaceView, IGrainSpawnListView listView, IGrainSpawnMixView mixView)
         {
-            this.MenuItems = new [] { new MenuItem("Create", createView), new MenuItem("Shelf Place", shelfPlaceView), new MenuItem("Innoculate", innoculateView), new MenuItem("List", listView) } ;
+            this.MenuItems = new [] { new MenuItem("Create", createView), new MenuItem("Shelf Place", shelfPlaceView), new MenuItem("Innoculate", innoculateView), new MenuItem("List", listView), new MenuItem("Mix", mixView) } ;
         }
         public string Category => "Grain Spawn";
 
