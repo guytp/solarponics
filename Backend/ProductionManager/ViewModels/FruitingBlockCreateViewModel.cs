@@ -130,7 +130,7 @@ namespace Solarponics.ProductionManager.ViewModels
 
                 this.ResetUi();
 
-                this.dialogBox.Show($"Generated {quantity} fruiting block abels");
+                this.dialogBox.Show($"Generated {quantity} fruiting block labels");
             }
             catch (Exception ex)
             {
