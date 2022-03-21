@@ -1,6 +1,5 @@
 ﻿using Solarponics.Models;
 using Solarponics.ProductionManager.Abstractions;
-using Solarponics.ProductionManager.Abstractions.ApiClients;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Data;
 using System;
@@ -8,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
+using Solarponics.ProductionManager.Core.Abstractions;
+using Solarponics.ProductionManager.Core.Abstractions.ApiClients;
 
 namespace Solarponics.ProductionManager.ViewModels
 {

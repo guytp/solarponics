@@ -1,9 +1,10 @@
 ﻿using Solarponics.Models;
 using Solarponics.ProductionManager.Abstractions;
-using Solarponics.ProductionManager.Abstractions.ApiClients;
 using Solarponics.ProductionManager.Abstractions.Hardware;
 using System;
 using System.Threading.Tasks;
+using Solarponics.ProductionManager.Core.Abstractions;
+using Solarponics.ProductionManager.Core.Abstractions.ApiClients;
 
 namespace Solarponics.ProductionManager.Hardware
 {

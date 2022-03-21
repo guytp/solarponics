@@ -1,8 +1,8 @@
 ﻿using System;
-using Solarponics.ProductionManager.Abstractions;
 using Solarponics.ProductionManager.Abstractions.Factories;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
-using Solarponics.ProductionManager.Enums;
+using Solarponics.ProductionManager.Core.Abstractions;
+using Solarponics.ProductionManager.Core.Enums;
 
 namespace Solarponics.ProductionManager.Domain
 {

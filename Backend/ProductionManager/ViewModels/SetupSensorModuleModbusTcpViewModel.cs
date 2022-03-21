@@ -1,6 +1,5 @@
 ﻿using Solarponics.Models;
 using Solarponics.ProductionManager.Abstractions;
-using Solarponics.ProductionManager.Abstractions.ApiClients;
 using Solarponics.ProductionManager.Abstractions.Hardware;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Commands;
@@ -11,6 +10,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ProductionManager.Core.Abstractions;
+using Solarponics.ProductionManager.Core.Abstractions;
+using Solarponics.ProductionManager.Core.Abstractions.ApiClients;
+using Solarponics.ProductionManager.Core.Enums;
 
 namespace Solarponics.ProductionManager.ViewModels
 {
@@ -323,7 +325,7 @@ namespace Solarponics.ProductionManager.ViewModels
 
             try
             {
-                if (!this.dialogBox.Show("Are you sure you want to delete this module?", buttons: Enums.DialogBoxButtons.YesNo))
+                if (!this.dialogBox.Show("Are you sure you want to delete this module?", buttons: DialogBoxButtons.YesNo))
                 {
                     return;
                 }

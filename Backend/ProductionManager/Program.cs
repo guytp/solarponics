@@ -3,6 +3,7 @@ using Solarponics.ProductionManager.Factories;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using Solarponics.ProductionManager.Core.Enums;
 
 namespace Solarponics.ProductionManager
 {
@@ -17,7 +18,7 @@ namespace Solarponics.ProductionManager
                 var procs = Process.GetProcesses();
                 if (procs.Any(p => p.Id != proc.Id && p.ProcessName == proc.ProcessName))
                 {
-                    var res = new DialogBox(new DialogBoxWindowFactory(), new DialogBoxWindowViewModelFactory()).Show("Production manager is already running.  Do you want to terminate the existing instance?  If you select Yes the existing production manager will be stopped a new instance will run.  If you select No the existing instance will remain.", buttons: Enums.DialogBoxButtons.YesNo);
+                    var res = new DialogBox(new DialogBoxWindowFactory(), new DialogBoxWindowViewModelFactory()).Show("Production manager is already running.  Do you want to terminate the existing instance?  If you select Yes the existing production manager will be stopped a new instance will run.  If you select No the existing instance will remain.", buttons: DialogBoxButtons.YesNo);
                     if (!res)
                         return;
 

@@ -1,6 +1,5 @@
 ﻿using Solarponics.Models;
 using Solarponics.ProductionManager.Abstractions;
-using Solarponics.ProductionManager.Abstractions.ApiClients;
 using Solarponics.ProductionManager.Abstractions.Hardware;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Commands;
@@ -9,6 +8,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ProductionManager.Core.Abstractions;
+using Solarponics.ProductionManager.Core.Abstractions;
+using Solarponics.ProductionManager.Core.Abstractions.ApiClients;
+using Solarponics.ProductionManager.Core.Enums;
 
 namespace Solarponics.ProductionManager.ViewModels
 {
@@ -95,7 +97,7 @@ namespace Solarponics.ProductionManager.ViewModels
             if (!this.IsUiEnabled || !this.IsWasteReasonSelected || this.SelectedWasteReason == null)
                 return;
 
-            if (!this.dialogBox.Show("Do you want to delete " + this.SelectedWasteReason.Reason + "?", buttons: Enums.DialogBoxButtons.YesNo))
+            if (!this.dialogBox.Show("Do you want to delete " + this.SelectedWasteReason.Reason + "?", buttons: DialogBoxButtons.YesNo))
             {
                 return;
             }

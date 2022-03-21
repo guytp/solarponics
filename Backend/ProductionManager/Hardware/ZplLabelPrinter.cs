@@ -6,6 +6,7 @@ using Solarponics.ProductionManager.Abstractions.Hardware;
 using Solarponics.ProductionManager.LabelDefinitions;
 using System;
 using System.Collections.Generic;
+using Solarponics.ProductionManager.Core.Abstractions;
 
 namespace Solarponics.ProductionManager.Hardware
 {

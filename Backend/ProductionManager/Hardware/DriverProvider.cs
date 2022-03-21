@@ -1,6 +1,7 @@
 ﻿using Solarponics.Models;
 using Solarponics.ProductionManager.Abstractions;
 using Solarponics.ProductionManager.Abstractions.Hardware;
+using Solarponics.ProductionManager.Core.Abstractions;
 using Solarponics.ProductionManager.Exceptions;
 
 namespace Solarponics.ProductionManager.Hardware

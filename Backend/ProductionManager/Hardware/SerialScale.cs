@@ -3,6 +3,7 @@ using Solarponics.ProductionManager.Abstractions;
 using Solarponics.ProductionManager.Abstractions.Hardware;
 using Solarponics.ProductionManager.Data;
 using System;
+using Solarponics.ProductionManager.Core.Abstractions;
 
 namespace Solarponics.ProductionManager.Hardware
 {

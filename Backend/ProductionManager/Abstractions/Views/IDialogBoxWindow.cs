@@ -1,4 +1,4 @@
-﻿using Solarponics.ProductionManager.Enums;
+﻿using Solarponics.ProductionManager.Core.Enums;
 
 namespace Solarponics.ProductionManager.Abstractions.Views
 {

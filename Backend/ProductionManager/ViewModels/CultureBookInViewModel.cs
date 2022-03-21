@@ -1,16 +1,15 @@
 ﻿using Solarponics.Models;
 using Solarponics.Models.WebApi;
-using Solarponics.ProductionManager.Abstractions;
-using Solarponics.ProductionManager.Abstractions.ApiClients;
 using Solarponics.ProductionManager.Abstractions.Hardware;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Commands;
-using Solarponics.ProductionManager.Data;
 using Solarponics.ProductionManager.LabelDefinitions;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ProductionManager.Core.Abstractions;
+using Solarponics.ProductionManager.Core.Abstractions;
+using Solarponics.ProductionManager.Core.Abstractions.ApiClients;
 
 namespace Solarponics.ProductionManager.ViewModels
 {

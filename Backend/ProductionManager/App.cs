@@ -7,6 +7,7 @@ using Serilog;
 using Solarponics.ProductionManager.Abstractions;
 using Solarponics.ProductionManager.Abstractions.Hardware;
 using Solarponics.ProductionManager.Abstractions.Views;
+using Solarponics.ProductionManager.Core.Data;
 using Solarponics.ProductionManager.Data;
 
 namespace Solarponics.ProductionManager

@@ -1,6 +1,5 @@
 ﻿using Solarponics.Models;
 using Solarponics.ProductionManager.Abstractions;
-using Solarponics.ProductionManager.Abstractions.ApiClients;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Commands;
 using Solarponics.ProductionManager.Core;
@@ -10,6 +9,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ProductionManager.Core.Abstractions;
+using Solarponics.ProductionManager.Core.Abstractions;
+using Solarponics.ProductionManager.Core.Abstractions.ApiClients;
+using Solarponics.ProductionManager.Core.Enums;
 
 namespace Solarponics.ProductionManager.ViewModels
 {
@@ -113,7 +115,7 @@ namespace Solarponics.ProductionManager.ViewModels
             if (this.SelectedRecipe == null)
                 return;
 
-            if (!this.dialogBox.Show("Do you want to delete " + this.SelectedRecipe.Name + "?", buttons: Enums.DialogBoxButtons.YesNo))
+            if (!this.dialogBox.Show("Do you want to delete " + this.SelectedRecipe.Name + "?", buttons: DialogBoxButtons.YesNo))
             {
                 return;
             }
