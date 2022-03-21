@@ -4,12 +4,12 @@ using Solarponics.ProductionManager.Abstractions.ApiClients;
 using Solarponics.ProductionManager.Abstractions.Hardware;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Commands;
-using Solarponics.ProductionManager.Core;
 using Solarponics.ProductionManager.LabelDefinitions;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ProductionManager.Core.Abstractions;
 
 namespace Solarponics.ProductionManager.ViewModels
 {
@@ -19,8 +19,9 @@ namespace Solarponics.ProductionManager.ViewModels
         private readonly IDialogBox dialogBox;
         private readonly IHardwareProvider hardwareProvider;
         private readonly ILocationApiClient locationApiClient;
+        private readonly IBannerNotifier bannerNotifier;
 
-        public SetupShelvesViewModel(ILoggedInButtonsViewModel loggedInButtonsViewModel, IShelfApiClient apiClient, IDialogBox dialogBox, IHardwareProvider hardwareProvider, ILocationApiClient locationApiClient)
+        public SetupShelvesViewModel(ILoggedInButtonsViewModel loggedInButtonsViewModel, IShelfApiClient apiClient, IDialogBox dialogBox, IHardwareProvider hardwareProvider, ILocationApiClient locationApiClient, IBannerNotifier bannerNotifier)
         {
             this.LoggedInButtonsViewModel = loggedInButtonsViewModel;
             this.apiClient = apiClient;
@@ -31,6 +32,7 @@ namespace Solarponics.ProductionManager.ViewModels
             this.DeleteCommand = new RelayCommand(_ => this.Delete());
             this.IsUiEnabled = true;
             this.hardwareProvider = hardwareProvider;
+            this.bannerNotifier = bannerNotifier;
         }
 
         public ILoggedInButtonsViewModel LoggedInButtonsViewModel { get; }
@@ -102,7 +104,7 @@ namespace Solarponics.ProductionManager.ViewModels
                         this.dialogBox.Show("Failed to print label.", exception: ex);
                     }
                 }
-                this.dialogBox.Show("Shelf added.");
+                this.bannerNotifier.DisplayMessage("Shelf added.");
             }
             catch (Exception ex)
             {
@@ -128,7 +130,7 @@ namespace Solarponics.ProductionManager.ViewModels
             try
             {
                 hardwareProvider.LabelPrinterLarge.Print(new ShelfLabelDefinition(this.SelectedShelf));
-                this.dialogBox.Show("Label printed.");
+                this.bannerNotifier.DisplayMessage("Label printed.");
             }
             catch (Exception ex)
             {
@@ -152,7 +154,7 @@ namespace Solarponics.ProductionManager.ViewModels
                 await this.apiClient.Delete(this.SelectedShelf.Id);
                 this.Shelves = this.Shelves.Where(s => s != this.SelectedShelf).ToArray();
                 this.SelectedShelf = null;
-                this.dialogBox.Show("Shelf deleted.");
+                this.bannerNotifier.DisplayMessage("Shelf deleted.");
             }
             catch (Exception ex)
             {

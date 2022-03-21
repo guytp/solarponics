@@ -3,12 +3,12 @@ using Solarponics.ProductionManager.Abstractions;
 using Solarponics.ProductionManager.Abstractions.ApiClients;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Commands;
-using Solarponics.ProductionManager.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ProductionManager.Core.Abstractions;
 
 namespace Solarponics.ProductionManager.ViewModels
 {
@@ -16,8 +16,9 @@ namespace Solarponics.ProductionManager.ViewModels
     {
         private readonly ISupplierApiClient supplierApiClient;
         private readonly IDialogBox dialogBox;
+        private readonly IBannerNotifier bannerNotifier;
 
-        public SetupSupplierViewModel(ILoggedInButtonsViewModel loggedInButtonsViewModel, ISupplierApiClient supplierApiClient, IDialogBox dialogBox)
+        public SetupSupplierViewModel(ILoggedInButtonsViewModel loggedInButtonsViewModel, ISupplierApiClient supplierApiClient, IDialogBox dialogBox, IBannerNotifier bannerNotifier)
         {
             this.LoggedInButtonsViewModel = loggedInButtonsViewModel;
             this.supplierApiClient = supplierApiClient;
@@ -25,6 +26,7 @@ namespace Solarponics.ProductionManager.ViewModels
             this.AddCommand = new RelayCommand(_ => this.Add());
             this.DeleteCommand = new RelayCommand(_ => this.Delete());
             this.IsUiEnabled = true;
+            this.bannerNotifier = bannerNotifier;
         }
 
         public ILoggedInButtonsViewModel LoggedInButtonsViewModel { get; }
@@ -71,7 +73,7 @@ namespace Solarponics.ProductionManager.ViewModels
                 suppliers.Add(supplier);
                 this.Suppliers = suppliers.OrderBy(s => s.Name).ToArray();
                 this.NewName = null;
-                this.dialogBox.Show("Supplier added.");
+                this.bannerNotifier.DisplayMessage("Supplier added.");
             }
             catch (Exception ex)
             {
@@ -102,7 +104,7 @@ namespace Solarponics.ProductionManager.ViewModels
                 await this.supplierApiClient.Delete(this.SelectedSupplier.Id);
                 this.Suppliers = this.Suppliers.Where(s => s != this.SelectedSupplier).ToArray();
                 this.SelectedSupplier = null;
-                this.dialogBox.Show("Supplier deleted.");
+                this.bannerNotifier.DisplayMessage("Supplier deleted.");
             }
             catch (Exception ex)
             {

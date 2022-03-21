@@ -6,7 +6,6 @@ using Solarponics.ProductionManager.Abstractions.ApiClients;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Abstractions.Views;
 using Solarponics.ProductionManager.Commands;
-using Solarponics.ProductionManager.Core;
 
 namespace Solarponics.ProductionManager.ViewModels
 {

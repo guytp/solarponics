@@ -4,12 +4,12 @@ using Solarponics.ProductionManager.Abstractions.ApiClients;
 using Solarponics.ProductionManager.Abstractions.Hardware;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Commands;
-using Solarponics.ProductionManager.Core;
 using Solarponics.ProductionManager.LabelDefinitions;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ProductionManager.Core.Abstractions;
 
 namespace Solarponics.ProductionManager.ViewModels
 {
@@ -19,11 +19,13 @@ namespace Solarponics.ProductionManager.ViewModels
         private readonly IFruitingBlockApiClient fruitingBlockApiClient;
         private readonly IHardwareProvider hardwareProvider;
         private readonly IGrainSpawnApiClient grainSpawnApiClient;
+        private readonly IBannerNotifier bannerNotifier;
 
-        public FruitingBlockInnoculateViewModel(IDialogBox dialogBox, IFruitingBlockApiClient fruitingBlockApiClient, IGrainSpawnApiClient grainSpawnApiClient, IHardwareProvider hardwareProvider, ILoggedInButtonsViewModel loggedInButtonsViewModel)
+        public FruitingBlockInnoculateViewModel(IDialogBox dialogBox, IFruitingBlockApiClient fruitingBlockApiClient, IGrainSpawnApiClient grainSpawnApiClient, IHardwareProvider hardwareProvider, ILoggedInButtonsViewModel loggedInButtonsViewModel, IBannerNotifier bannerNotifier)
         {
             this.LoggedInButtonsViewModel = loggedInButtonsViewModel;
             this.dialogBox = dialogBox;
+            this.bannerNotifier = bannerNotifier;
             this.fruitingBlockApiClient = fruitingBlockApiClient;
             this.grainSpawnApiClient = grainSpawnApiClient;
             this.hardwareProvider = hardwareProvider;
@@ -99,7 +101,7 @@ namespace Solarponics.ProductionManager.ViewModels
 
                 this.hardwareProvider.LabelPrinterLarge.Print(new FruitingBlockLabelDefinition(fruitingBlock));
                 this.ResetUi();
-                this.dialogBox.Show("Confirmed innoculation and new label printed");
+                this.bannerNotifier.DisplayMessage("Confirmed innoculation and new label printed");
             }
             catch (Exception ex)
             {

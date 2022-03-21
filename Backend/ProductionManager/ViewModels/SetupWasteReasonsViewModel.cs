@@ -4,11 +4,11 @@ using Solarponics.ProductionManager.Abstractions.ApiClients;
 using Solarponics.ProductionManager.Abstractions.Hardware;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Commands;
-using Solarponics.ProductionManager.Core;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ProductionManager.Core.Abstractions;
 
 namespace Solarponics.ProductionManager.ViewModels
 {
@@ -16,8 +16,9 @@ namespace Solarponics.ProductionManager.ViewModels
     {
         private readonly IWasteReasonApiClient apiClient;
         private readonly IDialogBox dialogBox;
+        private readonly IBannerNotifier bannerNotifier;
 
-        public SetupWasteReasonsViewModel(ILoggedInButtonsViewModel loggedInButtonsViewModel, IWasteReasonApiClient apiClient, IDialogBox dialogBox, IHardwareProvider hardwareProvider)
+        public SetupWasteReasonsViewModel(ILoggedInButtonsViewModel loggedInButtonsViewModel, IWasteReasonApiClient apiClient, IDialogBox dialogBox, IHardwareProvider hardwareProvider, IBannerNotifier bannerNotifier)
         {
             this.LoggedInButtonsViewModel = loggedInButtonsViewModel;
             this.apiClient = apiClient;
@@ -25,6 +26,7 @@ namespace Solarponics.ProductionManager.ViewModels
             this.AddCommand = new RelayCommand(_ => this.Add());
             this.DeleteCommand = new RelayCommand(_ => this.Delete());
             this.IsUiEnabled = true;
+            this.bannerNotifier = bannerNotifier;
         }
 
         public ILoggedInButtonsViewModel LoggedInButtonsViewModel { get; }
@@ -76,7 +78,7 @@ namespace Solarponics.ProductionManager.ViewModels
                 });
                 this.ResetUi();
                 this.WasteReasons = await this.apiClient.Get();
-                this.dialogBox.Show("Waste reason added.");
+                this.bannerNotifier.DisplayMessage("Waste reason added.");
             }
             catch (Exception ex)
             {
@@ -104,7 +106,7 @@ namespace Solarponics.ProductionManager.ViewModels
                 await this.apiClient.Delete(this.SelectedWasteReason.Id);
                 this.WasteReasons = this.WasteReasons.Where(s => s != this.SelectedWasteReason).ToArray();
                 this.SelectedWasteReason = null;
-                this.dialogBox.Show("Waste reason deleted.");
+                this.bannerNotifier.DisplayMessage("Waste reason deleted.");
             }
             catch (Exception ex)
             {

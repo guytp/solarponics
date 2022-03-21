@@ -5,12 +5,12 @@ using Solarponics.ProductionManager.Abstractions.ApiClients;
 using Solarponics.ProductionManager.Abstractions.Hardware;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Commands;
-using Solarponics.ProductionManager.Core;
 using Solarponics.ProductionManager.LabelDefinitions;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ProductionManager.Core.Abstractions;
 
 namespace Solarponics.ProductionManager.ViewModels
 {
@@ -20,10 +20,12 @@ namespace Solarponics.ProductionManager.ViewModels
         private readonly IRecipeApiClient recipeApiClient;
         private readonly IDialogBox dialogBox;
         private readonly IHardwareProvider hardwareProvider;
+        private readonly IBannerNotifier bannerNotifier;
 
-        public FruitingBlockCreateViewModel(ILoggedInButtonsViewModel loggedInButtonsViewModel, IRecipeApiClient recipeApiClient, IFruitingBlockApiClient fruitingBlockApiClient, IDialogBox dialogBox, IHardwareProvider hardwareProvider)
+        public FruitingBlockCreateViewModel(ILoggedInButtonsViewModel loggedInButtonsViewModel, IRecipeApiClient recipeApiClient, IFruitingBlockApiClient fruitingBlockApiClient, IDialogBox dialogBox, IHardwareProvider hardwareProvider, IBannerNotifier bannerNotifier)
         {
             this.LoggedInButtonsViewModel = loggedInButtonsViewModel;
+            this.bannerNotifier = bannerNotifier;
             this.recipeApiClient = recipeApiClient;
             this.AddCommand = new RelayCommand(_ => Add());
             this.dialogBox = dialogBox;
@@ -130,7 +132,7 @@ namespace Solarponics.ProductionManager.ViewModels
 
                 this.ResetUi();
 
-                this.dialogBox.Show($"Generated {quantity} fruiting block labels");
+                this.bannerNotifier.DisplayMessage($"Generated {quantity} fruiting block labels");
             }
             catch (Exception ex)
             {

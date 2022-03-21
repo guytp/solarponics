@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:abstractions="clr-namespace:Solarponics.ProductionManager.Abstractions"
         xmlns:views="clr-namespace:Solarponics.ProductionManager.Views"
+        xmlns:viewModels="clr-namespace:Solarponics.ProductionManager.Abstractions.ViewModels"
         mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance Type=abstractions:IMainWindowViewModel}"
+        d:DataContext="{d:DesignInstance Type=viewModels:IMainWindowViewModel}"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         Icon="../logo.ico"
@@ -22,6 +23,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <views:StatusBarView VerticalAlignment="Top" DataContext="{Binding Path=StatusBarViewModel}" Margin="-20,-20,-20,0" />
+            <views:BannerNotificationView VerticalAlignment="Top" DataContext="{Binding Path=BannerNotificationViewModel}" Margin="-20,-20,-20,0" />
             <Image Source="pack://application:,,,/Solarponics.ProductionManager;component/Images/solarponics_horztl_trans.png" StretchDirection="DownOnly" HorizontalAlignment="Left" Margin="0,40,0,0" />
             <UserControl Grid.Row="1" Content="{Binding Path=ActiveView}" />
         </Grid>

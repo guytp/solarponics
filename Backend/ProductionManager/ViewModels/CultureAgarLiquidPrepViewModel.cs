@@ -4,12 +4,12 @@ using Solarponics.ProductionManager.Abstractions.ApiClients;
 using Solarponics.ProductionManager.Abstractions.Hardware;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Commands;
-using Solarponics.ProductionManager.Core;
 using Solarponics.ProductionManager.LabelDefinitions;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ProductionManager.Core.Abstractions;
 
 namespace Solarponics.ProductionManager.ViewModels
 {
@@ -20,13 +20,15 @@ namespace Solarponics.ProductionManager.ViewModels
         private readonly IRecipeApiClient recipeApiClient;
         private readonly ICultureApiClient cultureApiClient;
         private readonly IHardwareProvider hardwareProvider;
+        private readonly IBannerNotifier bannerNotifier;
 
-        public CultureAgarLiquidPrepViewModel(IDialogBox dialogBox, IRecipeApiClient recipeApiClient, ICultureApiClient cultureApiClient, IHardwareProvider hardwareProvider, ILoggedInButtonsViewModel loggedInButtonsViewModel)
+        public CultureAgarLiquidPrepViewModel(IDialogBox dialogBox, IRecipeApiClient recipeApiClient, ICultureApiClient cultureApiClient, IHardwareProvider hardwareProvider, ILoggedInButtonsViewModel loggedInButtonsViewModel, IBannerNotifier bannerNotifier)
         {
             this.LoggedInButtonsViewModel = loggedInButtonsViewModel;
             this.dialogBox = dialogBox;
             this.recipeApiClient = recipeApiClient;
             this.cultureApiClient = cultureApiClient;
+            this.bannerNotifier = bannerNotifier;
             this.hardwareProvider = hardwareProvider;
             MediumTypes = new[]
             {
@@ -135,7 +137,7 @@ namespace Solarponics.ProductionManager.ViewModels
                 }
                 this.ResetUi();
 
-                this.dialogBox.Show($"Generated {quantity} {SelectedMediumType} labels");
+                this.bannerNotifier.DisplayMessage($"Generated {quantity} {SelectedMediumType} labels");
             }
             catch (Exception ex)
             {

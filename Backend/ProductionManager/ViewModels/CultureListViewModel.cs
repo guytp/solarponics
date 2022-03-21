@@ -5,7 +5,6 @@ using Solarponics.ProductionManager.Abstractions.ApiClients;
 using Solarponics.ProductionManager.Abstractions.Hardware;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Commands;
-using Solarponics.ProductionManager.Core;
 using Solarponics.ProductionManager.Data;
 using Solarponics.ProductionManager.LabelDefinitions;
 using System;
@@ -14,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ProductionManager.Core.Abstractions;
 
 namespace Solarponics.ProductionManager.ViewModels
 {
@@ -24,10 +24,12 @@ namespace Solarponics.ProductionManager.ViewModels
         private readonly IDialogBox dialogBox;
         private readonly ISupplierApiClient supplierApiClient;
         private readonly IRecipeApiClient recipeApiClient;
+        private readonly IBannerNotifier bannerNotifier;
 
-        public CultureListViewModel(ILoggedInButtonsViewModel loggedInButtonsViewModel, ICultureApiClient apiClient, IHardwareProvider hardwareProvider, IDialogBox dialogBox, ISupplierApiClient supplierApiClient, IRecipeApiClient recipeApiClient)
+        public CultureListViewModel(ILoggedInButtonsViewModel loggedInButtonsViewModel, ICultureApiClient apiClient, IHardwareProvider hardwareProvider, IDialogBox dialogBox, ISupplierApiClient supplierApiClient, IRecipeApiClient recipeApiClient, IBannerNotifier bannerNotifier)
         {
             this.LoggedInButtonsViewModel = loggedInButtonsViewModel;
+            this.bannerNotifier = bannerNotifier;
             this.apiClient = apiClient;
             this.hardwareProvider = hardwareProvider;
             this.dialogBox = dialogBox;
@@ -68,7 +70,7 @@ namespace Solarponics.ProductionManager.ViewModels
                 }
 
                 this.hardwareProvider.LabelPrinterSmall.Print(definition);
-                this.dialogBox.Show("Printed label");
+                this.bannerNotifier.DisplayMessage("Printed label");
             }
             catch (Exception ex)
             {

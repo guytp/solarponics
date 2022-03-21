@@ -4,12 +4,12 @@ using Solarponics.ProductionManager.Abstractions.ApiClients;
 using Solarponics.ProductionManager.Abstractions.Hardware;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Commands;
-using Solarponics.ProductionManager.Core;
 using Solarponics.ProductionManager.LabelDefinitions;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ProductionManager.Core.Abstractions;
 
 namespace Solarponics.ProductionManager.ViewModels
 {
@@ -19,10 +19,12 @@ namespace Solarponics.ProductionManager.ViewModels
         private readonly IGrainSpawnApiClient grainSpawnApiClient;
         private readonly IHardwareProvider hardwareProvider;
         private readonly ICultureApiClient cultureApiClient;
+        private readonly IBannerNotifier bannerNotifier;
 
-        public GrainSpawnInnoculateViewModel(IDialogBox dialogBox, IGrainSpawnApiClient grainSpawnApiClient, ICultureApiClient cultureApiClient, IHardwareProvider hardwareProvider, ILoggedInButtonsViewModel loggedInButtonsViewModel)
+        public GrainSpawnInnoculateViewModel(IDialogBox dialogBox, IGrainSpawnApiClient grainSpawnApiClient, ICultureApiClient cultureApiClient, IHardwareProvider hardwareProvider, ILoggedInButtonsViewModel loggedInButtonsViewModel, IBannerNotifier bannerNotifier)
         {
             this.LoggedInButtonsViewModel = loggedInButtonsViewModel;
+            this.bannerNotifier = bannerNotifier;
             this.dialogBox = dialogBox;
             this.grainSpawnApiClient = grainSpawnApiClient;
             this.cultureApiClient = cultureApiClient;
@@ -83,7 +85,7 @@ namespace Solarponics.ProductionManager.ViewModels
 
             if (hardwareProvider?.LabelPrinterLarge == null)
             {
-                this.dialogBox.Show("Unable to innoculate grain spawn without large label printer");
+                this.dialogBox.Show("Unable to inoculate grain spawn without large label printer");
                 return;
             }
 
@@ -99,11 +101,11 @@ namespace Solarponics.ProductionManager.ViewModels
 
                 this.hardwareProvider.LabelPrinterLarge.Print(new GrainSpawnLabelDefinition(grainSpawn));
                 this.ResetUi();
-                this.dialogBox.Show("Confirmed innoculation and new label printed");
+                this.bannerNotifier.DisplayMessage("Confirmed inoculation and new label printed");
             }
             catch (Exception ex)
             {
-                this.dialogBox.Show("There was an unexpected problem confirming the innoculation.", exception: ex);
+                this.dialogBox.Show("There was an unexpected problem confirming the inoculation.", exception: ex);
             }
             finally
             {

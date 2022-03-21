@@ -4,11 +4,11 @@ using Solarponics.ProductionManager.Abstractions.ApiClients;
 using Solarponics.ProductionManager.Abstractions.Hardware;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Commands;
-using Solarponics.ProductionManager.Core;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ProductionManager.Core.Abstractions;
 
 namespace Solarponics.ProductionManager.ViewModels
 {
@@ -18,9 +18,11 @@ namespace Solarponics.ProductionManager.ViewModels
         private readonly IFruitingBlockApiClient fruitingBlockApiClient;
         private readonly IHardwareProvider hardwareProvider;
         private readonly IShelfApiClient shelfApiClient;
+        private readonly IBannerNotifier bannerNotifier;
 
-        public FruitingBlockIncubateShelfPlaceViewModel(IDialogBox dialogBox, IFruitingBlockApiClient fruitingBlockApiClient, IShelfApiClient shelfApiClient, IHardwareProvider hardwareProvider, ILoggedInButtonsViewModel loggedInButtonsViewModel)
+        public FruitingBlockIncubateShelfPlaceViewModel(IDialogBox dialogBox, IFruitingBlockApiClient fruitingBlockApiClient, IShelfApiClient shelfApiClient, IHardwareProvider hardwareProvider, ILoggedInButtonsViewModel loggedInButtonsViewModel, IBannerNotifier bannerNotifier)
         {
+            this.bannerNotifier = bannerNotifier;
             this.LoggedInButtonsViewModel = loggedInButtonsViewModel;
             this.dialogBox = dialogBox;
             this.fruitingBlockApiClient = fruitingBlockApiClient;
@@ -91,7 +93,7 @@ namespace Solarponics.ProductionManager.ViewModels
                 });
 
                 this.ResetUi();
-                this.dialogBox.Show("Confirmed shelf placement");
+                this.bannerNotifier.DisplayMessage("Confirmed shelf placement");
             }
             catch (Exception ex)
             {

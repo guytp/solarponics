@@ -6,10 +6,10 @@ using Solarponics.ProductionManager.Abstractions.Factories;
 using Solarponics.ProductionManager.Abstractions.Hardware;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Commands;
-using Solarponics.ProductionManager.Core;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ProductionManager.Core.Abstractions;
 
 namespace Solarponics.ProductionManager.ViewModels
 {
@@ -21,11 +21,13 @@ namespace Solarponics.ProductionManager.ViewModels
         private readonly ISerialDeviceSettingsViewModelFactory serialDeviceSettingsViewModelFactory;
         private readonly IPrinterSettingsViewModelFactory printerSettingsViewModelFactory;
         private readonly IDialogBox dialogBox;
+        private readonly IBannerNotifier bannerNotifier;
 
-        public SetupHardwareViewModel(ILoggedInButtonsViewModel loggedInButtonsViewModel, IHardwareProvider hardwareProvider, IHardwareApiClient apiClient, ISerialDeviceSettingsViewModelFactory serialDeviceSettingsViewModelFactory, IPrinterSettingsViewModelFactory printerSettingsViewModelFactory, IDialogBox dialogBox)
+        public SetupHardwareViewModel(ILoggedInButtonsViewModel loggedInButtonsViewModel, IHardwareProvider hardwareProvider, IHardwareApiClient apiClient, ISerialDeviceSettingsViewModelFactory serialDeviceSettingsViewModelFactory, IPrinterSettingsViewModelFactory printerSettingsViewModelFactory, IDialogBox dialogBox, IBannerNotifier bannerNotifier)
         {
             this.LoggedInButtonsViewModel = loggedInButtonsViewModel;
             this.hardwareProvider = hardwareProvider;
+            this.bannerNotifier = bannerNotifier;
             this.apiClient = apiClient;
             this.SaveCommand = new RelayCommand(_ => Save());
             this.LabelPrintSmallCommand = new RelayCommand(_ => LabelTestSmall());
@@ -182,7 +184,7 @@ namespace Solarponics.ProductionManager.ViewModels
                 await OnHide();
                 await OnShow();
 
-                this.dialogBox.Show("Updated hardware settings, changes should take immediate effect.");
+                this.bannerNotifier.DisplayMessage("Updated hardware settings, changes should take immediate effect.");
             }
             catch (Exception ex)
             {
@@ -202,12 +204,12 @@ namespace Solarponics.ProductionManager.ViewModels
         
         private void OnWeightRead(object sender, Data.WeightReadEventArgs e)
         {
-            this.dialogBox.Show("Scale weighed: " + e.Weight);
+            this.bannerNotifier.DisplayMessage("Scale weighed: " + e.Weight);
         }
 
         private void OnBarcodeRead(object sender, Data.BarcodeReadEventArgs e)
         {
-            this.dialogBox.Show("Barcode scanned: " + e.Barcode);
+            this.bannerNotifier.DisplayMessage("Barcode scanned: " + e.Barcode);
         }
 
         private void LabelTestSmall()

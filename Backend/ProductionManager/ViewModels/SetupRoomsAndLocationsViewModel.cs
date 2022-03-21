@@ -4,7 +4,6 @@ using Solarponics.ProductionManager.Abstractions.ApiClients;
 using Solarponics.ProductionManager.Abstractions.Hardware;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Commands;
-using Solarponics.ProductionManager.Core;
 using Solarponics.ProductionManager.Data;
 using Solarponics.ProductionManager.LabelDefinitions;
 using System;
@@ -12,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ProductionManager.Core.Abstractions;
 
 namespace Solarponics.ProductionManager.ViewModels
 {
@@ -20,13 +20,15 @@ namespace Solarponics.ProductionManager.ViewModels
         private readonly ILocationApiClient locationApiClient;
         private readonly IDialogBox dialogBox;
         private readonly IHardwareProvider hardwareProvider;
+        private readonly IBannerNotifier bannerNotifier;
 
-        public SetupRoomsAndLocationsViewModel(ILoggedInButtonsViewModel loggedInButtonsViewModel, ILocationApiClient locationApiClient, IDialogBox dialogBox, IHardwareProvider hardwareProvider)
+        public SetupRoomsAndLocationsViewModel(ILoggedInButtonsViewModel loggedInButtonsViewModel, ILocationApiClient locationApiClient, IDialogBox dialogBox, IHardwareProvider hardwareProvider, IBannerNotifier bannerNotifier)
         {
             this.LoggedInButtonsViewModel = loggedInButtonsViewModel;
             this.locationApiClient = locationApiClient;
             this.dialogBox = dialogBox;
             this.hardwareProvider = hardwareProvider;
+            this.bannerNotifier = bannerNotifier;
 
             this.NewRoomCommand = new RelayCommand(_ => this.NewRoom());
             this.NewLocationCommand = new RelayCommand(_ => this.NewLocation());
@@ -91,7 +93,7 @@ namespace Solarponics.ProductionManager.ViewModels
                         this.dialogBox.Show($"Added '{room.Name}' to '{this.SelectedLocation.Name}' but failed to print label.", exception: ex2);
                             return;
                     }
-                this.dialogBox.Show($"Added '{room.Name}' to '{this.SelectedLocation.Name}'");
+                this.bannerNotifier.DisplayMessage($"Added '{room.Name}' to '{this.SelectedLocation.Name}'");
             }
             catch (Exception ex)
             {
@@ -123,7 +125,7 @@ namespace Solarponics.ProductionManager.ViewModels
                 };
                 this.Locations = locations.OrderBy(l => l.Name).ToArray();
                 this.NewLocationName = null;
-                this.dialogBox.Show($"Added '{location.Name}'");
+                this.bannerNotifier.DisplayMessage($"Added '{location.Name}'");
             }
             catch (Exception ex)
             {
@@ -150,7 +152,7 @@ namespace Solarponics.ProductionManager.ViewModels
             {
                 this.IsUiEnabled = false;
                 this.hardwareProvider.LabelPrinterLarge.Print(new RoomLabelDefinition(this.SelectedRoom));
-                this.dialogBox.Show("Room label printed.");
+                this.bannerNotifier.DisplayMessage("Room label printed.");
             }
             catch (Exception ex)
             {

@@ -5,12 +5,12 @@ using Solarponics.ProductionManager.Abstractions.ApiClients;
 using Solarponics.ProductionManager.Abstractions.Hardware;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Commands;
-using Solarponics.ProductionManager.Core;
 using Solarponics.ProductionManager.LabelDefinitions;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ProductionManager.Core.Abstractions;
 
 namespace Solarponics.ProductionManager.ViewModels
 {
@@ -20,11 +20,13 @@ namespace Solarponics.ProductionManager.ViewModels
         private readonly IRecipeApiClient recipeApiClient;
         private readonly IDialogBox dialogBox;
         private readonly IHardwareProvider hardwareProvider;
+        private readonly IBannerNotifier bannerNotifier;
 
-        public GrainSpawnCreateViewModel(ILoggedInButtonsViewModel loggedInButtonsViewModel, IRecipeApiClient recipeApiClient, IGrainSpawnApiClient grainSpawnApiClient, IDialogBox dialogBox, IHardwareProvider hardwareProvider)
+        public GrainSpawnCreateViewModel(ILoggedInButtonsViewModel loggedInButtonsViewModel, IRecipeApiClient recipeApiClient, IGrainSpawnApiClient grainSpawnApiClient, IDialogBox dialogBox, IHardwareProvider hardwareProvider, IBannerNotifier bannerNotifier)
         {
             this.LoggedInButtonsViewModel = loggedInButtonsViewModel;
             this.recipeApiClient = recipeApiClient;
+            this.bannerNotifier = bannerNotifier;
             this.AddCommand = new RelayCommand(_ => Add());
             this.dialogBox = dialogBox;
             this.hardwareProvider = hardwareProvider;
@@ -128,7 +130,7 @@ namespace Solarponics.ProductionManager.ViewModels
 
                 this.ResetUi();
 
-                this.dialogBox.Show($"Generated {quantity} grain spawn labels");
+                this.bannerNotifier.DisplayMessage($"Generated {quantity} grain spawn labels");
             }
             catch (Exception ex)
             {

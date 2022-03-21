@@ -5,12 +5,12 @@ using Solarponics.ProductionManager.Abstractions.ApiClients;
 using Solarponics.ProductionManager.Abstractions.Hardware;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Commands;
-using Solarponics.ProductionManager.Core;
 using Solarponics.ProductionManager.Data;
 using Solarponics.ProductionManager.LabelDefinitions;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ProductionManager.Core.Abstractions;
 
 namespace Solarponics.ProductionManager.ViewModels
 {
@@ -20,9 +20,11 @@ namespace Solarponics.ProductionManager.ViewModels
         private readonly ISupplierApiClient supplierApiClient;
         private readonly IDialogBox dialogBox;
         private readonly IHardwareProvider hardwareProvider;
+        private readonly IBannerNotifier bannerNotifier;
 
-        public CultureBookInViewModel(ILoggedInButtonsViewModel loggedInButtonsViewModel, ISupplierApiClient supplierApiClient, ICultureApiClient cultureApiClient, IDialogBox dialogBox, IHardwareProvider hardwareProvider)
+        public CultureBookInViewModel(ILoggedInButtonsViewModel loggedInButtonsViewModel, ISupplierApiClient supplierApiClient, ICultureApiClient cultureApiClient, IDialogBox dialogBox, IHardwareProvider hardwareProvider, IBannerNotifier bannerNotifier)
         {
+            this.bannerNotifier = bannerNotifier;
             this.LoggedInButtonsViewModel = loggedInButtonsViewModel;
             this.supplierApiClient = supplierApiClient;
             this.BookInCommand = new RelayCommand(_ => BookIn());
@@ -114,7 +116,7 @@ namespace Solarponics.ProductionManager.ViewModels
 
                 this.ResetUi();
 
-                this.dialogBox.Show("Booked in culture and label printed");
+                this.bannerNotifier.DisplayMessage("Booked in culture and label printed");
             }
             catch (Exception ex)
             {

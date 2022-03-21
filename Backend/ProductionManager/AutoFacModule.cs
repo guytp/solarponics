@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using ProductionManager.Core.Abstractions;
 using Solarponics.ProductionManager.Abstractions;
 using Solarponics.ProductionManager.Abstractions.ApiClients;
 using Solarponics.ProductionManager.Abstractions.Factories;
@@ -7,6 +8,7 @@ using Solarponics.ProductionManager.Abstractions.Modules;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Abstractions.Views;
 using Solarponics.ProductionManager.ApiClient;
+using Solarponics.ProductionManager.Core.Domain;
 using Solarponics.ProductionManager.Data;
 using Solarponics.ProductionManager.Domain;
 using Solarponics.ProductionManager.Factories;
@@ -14,6 +16,7 @@ using Solarponics.ProductionManager.Hardware;
 using Solarponics.ProductionManager.Modules;
 using Solarponics.ProductionManager.ViewModels;
 using Solarponics.ProductionManager.Views;
+using AuthenticationSession = Solarponics.ProductionManager.Domain.AuthenticationSession;
 
 namespace Solarponics.ProductionManager
 {
@@ -53,6 +56,8 @@ namespace Solarponics.ProductionManager
             builder.RegisterType<SerialDeviceSettingsViewModelFactory>().As<ISerialDeviceSettingsViewModelFactory>().SingleInstance();
 
             builder.RegisterType<DialogBox>().As<IDialogBox>();
+            builder.RegisterType<BannerNotificationViewModel>().As<IBannerNotificationViewModel>();
+            builder.RegisterType<BannerNotifier>().As<IBannerNotifier>().SingleInstance();
 
             builder.RegisterType<AuthenticationApiClient>().As<IAuthenticationApiClient>();
             builder.RegisterType<SupplierApiClient>().As<ISupplierApiClient>();

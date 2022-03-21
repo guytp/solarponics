@@ -4,13 +4,13 @@ using Solarponics.ProductionManager.Abstractions.ApiClients;
 using Solarponics.ProductionManager.Abstractions.Hardware;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Commands;
-using Solarponics.ProductionManager.Core;
 using Solarponics.ProductionManager.Data;
 using Solarponics.ProductionManager.LabelDefinitions;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ProductionManager.Core.Abstractions;
 
 namespace Solarponics.ProductionManager.ViewModels
 {
@@ -23,10 +23,12 @@ namespace Solarponics.ProductionManager.ViewModels
         private readonly IHardwareProvider hardwareProvider;
         private Supplier[] suppliers;
         private Recipe[] recipes;
+        private readonly IBannerNotifier bannerNotifier;
 
-        public CultureInnoculateViewModel(IDialogBox dialogBox, ICultureApiClient cultureApiClient, ISupplierApiClient supplierApiClient, IRecipeApiClient recipeApiClient, IHardwareProvider hardwareProvider, ILoggedInButtonsViewModel loggedInButtonsViewModel)
+        public CultureInnoculateViewModel(IDialogBox dialogBox, ICultureApiClient cultureApiClient, ISupplierApiClient supplierApiClient, IRecipeApiClient recipeApiClient, IHardwareProvider hardwareProvider, ILoggedInButtonsViewModel loggedInButtonsViewModel, IBannerNotifier bannerNotifier)
         {
             this.LoggedInButtonsViewModel = loggedInButtonsViewModel;
+            this.bannerNotifier = bannerNotifier;
             this.dialogBox = dialogBox;
             this.cultureApiClient = cultureApiClient;
             this.supplierApiClient = supplierApiClient;
@@ -119,7 +121,7 @@ namespace Solarponics.ProductionManager.ViewModels
                 var recipe = this.recipes.First(r => r.Id == culture.RecipeId);
                 this.hardwareProvider.LabelPrinterSmall.Print(new CultureLabelDefinition(culture, this.OriginCulture, recipe));
                 this.ResetUi();
-                this.dialogBox.Show("Confirmed innoculation and new label printed");
+                this.bannerNotifier.DisplayMessage("Confirmed innoculation and new label printed");
             }
             catch (Exception ex)
             {

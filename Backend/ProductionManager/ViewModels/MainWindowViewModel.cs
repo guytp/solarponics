@@ -1,6 +1,5 @@
 ﻿using Solarponics.ProductionManager.Abstractions;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
-using Solarponics.ProductionManager.Core;
 
 namespace Solarponics.ProductionManager.ViewModels
 {
@@ -8,12 +7,15 @@ namespace Solarponics.ProductionManager.ViewModels
     {
         private IView activeView;
 
-        public MainWindowViewModel(INavigator navigator, IStatusBarViewModel statusBarViewModel)
+        public MainWindowViewModel(INavigator navigator, IStatusBarViewModel statusBarViewModel, IBannerNotificationViewModel bannerNotificationViewModel)
         {
             this.StatusBarViewModel = statusBarViewModel;
+            this.BannerNotificationViewModel = bannerNotificationViewModel;
             ActiveView = navigator.ActiveView;
             navigator.ViewChanged += (sender, args) => ActiveView = navigator.ActiveView;
         }
+
+        public IBannerNotificationViewModel BannerNotificationViewModel { get; }
 
         public IStatusBarViewModel StatusBarViewModel { get; }
 

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Solarponics.ProductionManagerMobile.Views.LoginPage"
+             Shell.NavBarIsVisible="False">
+    <ContentPage.Content>
+        <StackLayout IsEnabled="{Binding Path=IsEnabled}" Margin="5">
+
+            <Label Text="User" />
+            <Entry Text="{Binding Path=UserId}" />
+
+            <Label Text="PIN" />
+            <Entry IsPassword="True" Text="{Binding Path=Pin}" />
+
+            <Button IsEnabled="{Binding Path=IsLoginEnabled}" Text="Login"
+                Command="{Binding Path=LoginCommand}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

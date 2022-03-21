@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using Solarponics.ProductionManager.Abstractions;
 
-namespace Solarponics.ProductionManager.Core
+namespace Solarponics.ProductionManager
 {
     public class ViewBase : UserControl, IView
     {

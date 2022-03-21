@@ -2,7 +2,6 @@
 using Solarponics.ProductionManager.Abstractions;
 using Solarponics.ProductionManager.Abstractions.ApiClients;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
-using Solarponics.ProductionManager.Core;
 using Solarponics.ProductionManager.Data;
 using System;
 using System.Collections.Generic;

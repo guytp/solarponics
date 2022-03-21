@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ProductionManager.Core.Abstractions;
 
 namespace Solarponics.ProductionManager.ViewModels
 {
@@ -16,13 +17,15 @@ namespace Solarponics.ProductionManager.ViewModels
     {
         private readonly IRecipeApiClient recipeApiClient;
         private readonly IDialogBox dialogBox;
+        private readonly IBannerNotifier bannerNotifier;
 
-        public SetupRecipeViewModel(ILoggedInButtonsViewModel loggedInButtonsViewModel, IRecipeApiClient recipeApiClient, IDialogBox dialogBox)
+        public SetupRecipeViewModel(ILoggedInButtonsViewModel loggedInButtonsViewModel, IRecipeApiClient recipeApiClient, IDialogBox dialogBox, IBannerNotifier bannerNotifier)
         {
             this.LoggedInButtonsViewModel = loggedInButtonsViewModel;
             this.recipeApiClient = recipeApiClient;
             this.dialogBox = dialogBox;
             this.AddCommand = new RelayCommand(_ => this.Add());
+            this.bannerNotifier = bannerNotifier;
             this.DeleteCommand = new RelayCommand(_ => this.Delete());
             this.IsUiEnabled = true;
             Types = new RecipeType?[]
@@ -90,7 +93,7 @@ namespace Solarponics.ProductionManager.ViewModels
                 this.NewName = null;
                 this.NewText = null;
                 this.NewType = null;
-                this.dialogBox.Show("Recipe added.");
+                this.bannerNotifier.DisplayMessage("Recipe added.");
             }
             catch (Exception ex)
             {
@@ -121,7 +124,7 @@ namespace Solarponics.ProductionManager.ViewModels
                 await this.recipeApiClient.Delete(this.SelectedRecipe.Id);
                 this.Recipes = this.Recipes.Where(s => s != this.SelectedRecipe).ToArray();
                 this.SelectedRecipe = null;
-                this.dialogBox.Show("Recipe deleted.");
+                this.bannerNotifier.DisplayMessage("Recipe deleted.");
             }
             catch (Exception ex)
             {

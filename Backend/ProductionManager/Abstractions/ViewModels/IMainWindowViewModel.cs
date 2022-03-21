@@ -3,6 +3,9 @@
     public interface IMainWindowViewModel : IViewModel
     {
         IView ActiveView { get; }
+
         IStatusBarViewModel StatusBarViewModel { get; }
+
+        IBannerNotificationViewModel BannerNotificationViewModel { get; }
     }
 }

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModelAbstractions="clr-namespace:Solarponics.ProductionManager.Abstractions.ViewModels"
              xmlns:views="clr-namespace:Solarponics.ProductionManager.Views"
-             xmlns:core="clr-namespace:Solarponics.ProductionManager.Core"
+             xmlns:core="clr-namespace:Solarponics.ProductionManager"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=viewModelAbstractions:ILoggedInViewModel}">
     <Grid>

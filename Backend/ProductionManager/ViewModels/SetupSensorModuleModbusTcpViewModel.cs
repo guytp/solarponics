@@ -4,13 +4,13 @@ using Solarponics.ProductionManager.Abstractions.ApiClients;
 using Solarponics.ProductionManager.Abstractions.Hardware;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Commands;
-using Solarponics.ProductionManager.Core;
 using Solarponics.ProductionManager.LabelDefinitions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ProductionManager.Core.Abstractions;
 
 namespace Solarponics.ProductionManager.ViewModels
 {
@@ -20,12 +20,14 @@ namespace Solarponics.ProductionManager.ViewModels
         private readonly ISensorModuleApiClient apiClient;
         private readonly IHardwareProvider hardwareProvider;
         private readonly ILocationApiClient locationApiClient;
+        private readonly IBannerNotifier bannerNotifier;
 
-        public SetupSensorModuleModbusTcpViewModel(IDialogBox dialogBox, ILoggedInButtonsViewModel loggedInButtonsViewModel, ISensorModuleApiClient apiClient, IHardwareProvider hardwareProvider, ILocationApiClient locationApiClient)
+        public SetupSensorModuleModbusTcpViewModel(IDialogBox dialogBox, ILoggedInButtonsViewModel loggedInButtonsViewModel, ISensorModuleApiClient apiClient, IHardwareProvider hardwareProvider, ILocationApiClient locationApiClient, IBannerNotifier bannerNotifier)
         {
             this.dialogBox = dialogBox;
             LoggedInButtonsViewModel = loggedInButtonsViewModel;
             this.apiClient = apiClient;
+            this.bannerNotifier = bannerNotifier;
             this.hardwareProvider = hardwareProvider;
             this.locationApiClient = locationApiClient;
             AddCommand = new RelayCommand(_ => this.Add());
@@ -302,7 +304,7 @@ namespace Solarponics.ProductionManager.ViewModels
                     }
                 }
                 this.ResetAddUi();
-                this.dialogBox.Show("Sensor module added.");
+                this.bannerNotifier.DisplayMessage("Sensor module added.");
             }
             catch (Exception ex)
             {
@@ -331,7 +333,7 @@ namespace Solarponics.ProductionManager.ViewModels
                 await this.apiClient.Delete(deletedModule.Id);
                 this.SelectedSensorModule = null;
                 this.SensorModules = this.SensorModules.Where(sm => sm != deletedModule).ToArray();
-                this.dialogBox.Show("Sensor module deleted.");
+                this.bannerNotifier.DisplayMessage("Sensor module deleted.");
             }
             catch (Exception ex)
             {
@@ -357,7 +359,7 @@ namespace Solarponics.ProductionManager.ViewModels
             try
             {
                 hardwareProvider.LabelPrinterSmall.Print(new SensorModuleLabelDefinition(this.SelectedSensorModule));
-                this.dialogBox.Show("Label printed.");
+                this.bannerNotifier.DisplayMessage("Label printed.");
             }
             catch (Exception ex)
             {

@@ -1,7 +1,6 @@
 ﻿using Solarponics.Models;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Commands;
-using Solarponics.ProductionManager.Core;
 using System.Windows.Input;
 
 namespace Solarponics.ProductionManager.ViewModels

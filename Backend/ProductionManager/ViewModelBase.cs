@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Threading.Tasks;
 
-namespace Solarponics.ProductionManager.Core
+namespace Solarponics.ProductionManager
 {
     public abstract class ViewModelBase : INotifyPropertyChanged
     {

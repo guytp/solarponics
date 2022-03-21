@@ -5,11 +5,11 @@ using Solarponics.ProductionManager.Abstractions.ApiClients;
 using Solarponics.ProductionManager.Abstractions.Hardware;
 using Solarponics.ProductionManager.Abstractions.ViewModels;
 using Solarponics.ProductionManager.Commands;
-using Solarponics.ProductionManager.Core;
 using Solarponics.ProductionManager.LabelDefinitions;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ProductionManager.Core.Abstractions;
 
 namespace Solarponics.ProductionManager.ViewModels
 {
@@ -18,12 +18,14 @@ namespace Solarponics.ProductionManager.ViewModels
         private readonly IGrainSpawnApiClient apiClient;
         private readonly IHardwareProvider hardwareProvider;
         private readonly IDialogBox dialogBox;
+        private readonly IBannerNotifier bannerNotifier;
 
-        public GrainSpawnListViewModel(ILoggedInButtonsViewModel loggedInButtonsViewModel, IGrainSpawnApiClient apiClient, IHardwareProvider hardwareProvider, IDialogBox dialogBox)
+        public GrainSpawnListViewModel(ILoggedInButtonsViewModel loggedInButtonsViewModel, IGrainSpawnApiClient apiClient, IHardwareProvider hardwareProvider, IDialogBox dialogBox, IBannerNotifier bannerNotifier)
         {
             this.LoggedInButtonsViewModel = loggedInButtonsViewModel;
             this.apiClient = apiClient;
             this.hardwareProvider = hardwareProvider;
+            this.bannerNotifier = bannerNotifier;
             this.dialogBox = dialogBox;
             this.PrintLabelCommand = new RelayCommand(o => this.PrintLabel((GrainSpawn)o));
         }
@@ -49,7 +51,7 @@ namespace Solarponics.ProductionManager.ViewModels
                 this.IsUiEnabled = false;
                 var definition = new GrainSpawnLabelDefinition(grainSpawn);
                 this.hardwareProvider.LabelPrinterLarge.Print(definition);
-                this.dialogBox.Show("Printed label");
+                this.bannerNotifier.DisplayMessage("Printed label");
             }
             catch (Exception ex)
             {
